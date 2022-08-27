@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const skillSchema = new Schema({
@@ -10,10 +10,6 @@ const skillSchema = new Schema({
     type: String,
     required: true,
   },
-  experienceLevel: {
-    type: String,
-    required: true,
-  },
 });
 
-module.exports = mongoose.model("Skill", skillSchema);
+export const SkillModel = mongoose.model("Skill", skillSchema);

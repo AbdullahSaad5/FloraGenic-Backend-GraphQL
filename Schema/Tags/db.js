@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const tagSchema = new Schema({
@@ -20,4 +20,4 @@ tagSchema.pre("findOneAndUpdate", function () {
   this.update({}, { $set: { updatedAt: Date.now() } });
 });
 
-module.exports = mongoose.model("Tag", tagSchema);
+export const TagModel = mongoose.model("Tag", tagSchema);

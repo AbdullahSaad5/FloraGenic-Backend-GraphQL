@@ -2,26 +2,25 @@
 
 export const CustomerTypes = `
     type Customer {
-      userID: ID!
+      id: ID!
       firstName: String!
       lastName: String!
       dateOfBirth: String!
       nationality: String!
       phoneNumber: String!
       gender: String!
-      image: String!
+      image: String
       createdAt: String!
       updatedAt: String!
     }
 
     extend type Query {
       customer(id: ID!): Customer
-      customers: [Customer]
+      customers: [Customer!]
       customerSearch(search: String!): [Customer!]
     }
 
     input CustomerCreateInput {
-      userID: ID!
       firstName: String!
       lastName: String!
       dateOfBirth: String!
@@ -32,7 +31,6 @@ export const CustomerTypes = `
     }
 
     input CustomerUpdateInput {
-      id: ID!
       firstName: String
       lastName: String
       dateOfBirth: String
@@ -48,8 +46,8 @@ export const CustomerTypes = `
 
     extend type Mutation {
      customerCreate(data: CustomerCreateInput!): Customer!
-     customerUpdate(data: CustomerUpdateInput!): Customer! 
+     customerUpdate(id: ID!, data: CustomerUpdateInput!): Customer! 
      customerDelete(data: ID!): String!
-     customerBlock(data:ID!): String
+     customerBlock(data:ID!): String!
     }
 `;

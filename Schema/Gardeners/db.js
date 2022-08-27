@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const gardenerSchema = new Schema({
@@ -7,11 +7,19 @@ const gardenerSchema = new Schema({
     ref: "User",
     required: true,
   },
-  name: {
+  firstName: {
     type: String,
     required: true,
   },
-  phone: {
+  lastName: {
+    type: String,
+    required: true,
+  },
+  nationality: {
+    type: String,
+    required: true,
+  },
+  phoneNumber: {
     type: String,
     required: true,
     unique: true,
@@ -26,6 +34,13 @@ const gardenerSchema = new Schema({
     required: true,
     default: "https://i.imgur.com/QQHJY9A.png",
   },
+  services: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Skill",
+      required: true,
+    },
+  ],
   createdAt: {
     type: Date,
     default: Date.now,
@@ -34,13 +49,6 @@ const gardenerSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  services: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Skill",
-      required: true,
-    },
-  ],
 });
 
 gardenerSchema.pre("findOneAndUpdate", function (next) {
@@ -48,4 +56,4 @@ gardenerSchema.pre("findOneAndUpdate", function (next) {
   next();
 });
 
-module.exports = mongoose.model("Gardener", gardenerSchema);
+export const GardenerModel = mongoose.model("Gardener", gardenerSchema);

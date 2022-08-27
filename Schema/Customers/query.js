@@ -2,20 +2,23 @@
 import { CustomerModel } from "./db.js";
 
 export const CustomerQuery = {
-  customer: async (parent, args) => {
+  customer: async (_, args) => {
     const { id } = args;
     const customer = await CustomerModel.findOne({ _id: id });
     return customer;
   },
-  customers: async (parent, args) => {
+  customers: async (_, args, { req }) => {
+    console.log(req.headers.authorization);
     const customers = await CustomerModel.find({});
     return customers;
   },
-  customerSearch: async (parent, args) => {
+  customerSearch: async (_, args) => {
     const { search } = args;
     const customers = await CustomerModel.find({
-      firstName: { $regex: search, $options: "i" },
-      lastName: { $regex: search, $options: "i" },
+      $or: [
+        { firstName: { $regex: search, $options: "i" } },
+        { lastName: { $regex: search, $options: "i" } },
+      ],
     });
     return customers;
   },

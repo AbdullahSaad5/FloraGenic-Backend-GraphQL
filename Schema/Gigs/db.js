@@ -1,55 +1,53 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
-const productSchema = new Schema({
-  nurseryID: {
+const gigSchema = new Schema({
+  sellerID: {
     type: Schema.Types.ObjectId,
-    ref: "Nursery",
+    ref: "User",
     required: true,
   },
   name: {
     type: String,
     required: true,
   },
-  price: {
-    type: Number,
-    required: true,
-  },
   description: {
     type: String,
     required: true,
-  },
-  category: {
-    type: String,
-    required: true,
-  },
-  stock: {
-    type: Number,
-    required: true,
-  },
-  sold: {
-    type: Number,
-    default: 0,
-  },
-  image: {
-    type: String,
-    required: true,
-    default: "",
   },
   overallRating: {
     type: Number,
     default: 0,
   },
-  tags: [
+  type: {
+    type: String,
+    required: true,
+  },
+  images: [
     {
-      type: Schema.Types.ObjectId,
-      ref: "Tag",
+      type: String,
       required: true,
+    },
+  ],
+  packages: [
+    {
+      description: {
+        type: String,
+        required: true,
+      },
+      price: {
+        type: Number,
+        required: true,
+      },
+      deliverWithinDays: {
+        type: Number,
+        required: true,
+      },
     },
   ],
   reviews: [
     {
-      userID: {
+      userId: {
         type: Schema.Types.ObjectId,
         ref: "User",
         required: true,
@@ -69,4 +67,4 @@ const productSchema = new Schema({
   ],
 });
 
-module.exports = mongoose.model("Product", productSchema);
+export const GigModel = mongoose.model("Gig", gigSchema);

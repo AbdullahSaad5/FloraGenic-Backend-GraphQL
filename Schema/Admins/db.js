@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const adminSchema = new Schema({
@@ -8,14 +8,22 @@ const adminSchema = new Schema({
     required: true,
     unique: true,
   },
-  name: {
+  firstName: {
     type: String,
     required: true,
   },
-  phone: {
+  lastName: {
+    type: String,
+    required: true,
+  },
+  phoneNumber: {
     type: String,
     required: true,
     unique: true,
+  },
+  nationality: {
+    type: String,
+    required: true,
   },
   CNIC: {
     type: String,
@@ -43,4 +51,4 @@ adminSchema.pre("findOneAndUpdate", function (next) {
   next();
 });
 
-module.exports = mongoose.model("Admin", adminSchema);
+export const AdminModel = mongoose.model("Admin", adminSchema);

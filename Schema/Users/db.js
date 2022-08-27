@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
-const bcrypt = require("bcrypt");
+import bcrypt from "bcrypt";
 const SALT_WORK_FACTOR = 10;
 
 const userSchema = new Schema({
@@ -20,8 +20,15 @@ const userSchema = new Schema({
   },
   userType: {
     type: String,
-    default: "customer",
     required: true,
+  },
+  passwordResetToken: {
+    type: String,
+    required: false,
+  },
+  passwordResetExpires: {
+    type: Date,
+    required: false,
   },
 });
 
@@ -45,11 +52,15 @@ userSchema.pre("save", function (next) {
   });
 });
 
-userSchema.methods.comparePassword = function (candidatePassword) {
-  bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
-    if (err) return err;
+// TODO Implement password reset method
+
+userSchema.methods.comparePassword = async function (candidatePassword) {
+  try {
+    const isMatch = await bcrypt.compare(candidatePassword, this.password);
     return isMatch;
-  });
+  } catch (err) {
+    return err;
+  }
 };
 
-module.exports = mongoose.model("User", userSchema);
+export const UserModel = mongoose.model("User", userSchema);
