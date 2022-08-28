@@ -34,6 +34,13 @@ import {
   SkillResolvers,
 } from "./Skills/index.js";
 
+import {
+  AddressTypes,
+  AddressQuery,
+  AddressMutation,
+  AddressResolvers,
+} from "./Addresses/index.js";
+
 import { UnionResolvers } from "./UnionResolvers.js";
 
 // remember we only use gql in this file. types in other files are just simple strings
@@ -45,6 +52,7 @@ export const typeDefs = gql`
   ${AdminTypes}
   ${GardenerTypes}
   ${SkillTypes}
+  ${AddressTypes}
 `;
 export const resolvers = {
   Query: {
@@ -53,6 +61,7 @@ export const resolvers = {
     ...AdminQuery,
     ...GardenerQuery,
     ...SkillQuery,
+    ...AddressQuery,
   },
   Mutation: {
     ...CustomerMutation,
@@ -60,11 +69,13 @@ export const resolvers = {
     ...AdminMutation,
     ...GardenerMutation,
     ...SkillMutation,
+    ...AddressMutation,
   },
   Customer: CustomerResolvers,
   User: UserResolvers,
   Admin: AdminResolvers,
   Gardener: GardenerResolvers,
   Skill: SkillResolvers,
+  Address: AddressResolvers,
   ...UnionResolvers,
 };
