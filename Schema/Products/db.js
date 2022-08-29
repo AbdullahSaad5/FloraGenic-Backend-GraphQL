@@ -11,20 +11,24 @@ const productSchema = new Schema({
     type: String,
     required: true,
   },
-  retailPrice: {
-    type: Number,
-    required: true,
-  },
-  wholesalePrice: {
-    type: Number,
-    required: true,
-  },
   description: {
     type: String,
     required: true,
   },
   category: {
     type: String,
+    required: true,
+  },
+  hidden: {
+    type: Boolean,
+    default: false,
+  },
+  retailPrice: {
+    type: Number,
+    required: true,
+  },
+  wholesalePrice: {
+    type: Number,
     required: true,
   },
   stock: {
@@ -38,8 +42,6 @@ const productSchema = new Schema({
   images: [
     {
       type: String,
-      required: true,
-      default: "",
     },
   ],
   overallRating: {
@@ -53,6 +55,19 @@ const productSchema = new Schema({
       required: true,
     },
   ],
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
+productSchema.pre("findOneAndUpdate", function (next) {
+  this.update({}, { $set: { updatedAt: new Date() } });
+  next();
 });
 
 export const ProductModel = mongoose.model("Product", productSchema);
