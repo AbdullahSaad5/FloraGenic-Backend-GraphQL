@@ -6,10 +6,12 @@ import {
 import express from "express";
 import http from "http";
 import mongoose from "mongoose";
+import morgan from "morgan";
 import { resolvers, typeDefs } from "./Schema/index.js";
 
 async function startApolloServer(typeDefs, resolvers) {
   const app = express();
+  app.use(morgan("dev"));
   const httpServer = http.createServer(app);
   const server = new ApolloServer({
     typeDefs,

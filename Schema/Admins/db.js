@@ -33,8 +33,6 @@ const adminSchema = new Schema({
   },
   image: {
     type: String,
-    default:
-      "https://res.cloudinary.com/dzqbzqgqw/image/upload/v1589788981/default_avatar_qxqzqr.png",
   },
   createdAt: {
     type: Date,

@@ -1,4 +1,5 @@
 import { AdminModel } from "./db.js";
+import { UserModel } from "../Users/db.js";
 export const AdminMutation = {
   adminCreate: async (_, args) => {
     const { data } = args;
@@ -26,14 +27,14 @@ export const AdminMutation = {
   },
 
   adminBlock: async (_, args) => {
-    const { id } = args;
-    const admin = await AdminModel.findById(id);
-    await UserModel.findByIdAndUpdate(admin.userID, {
+    const { data } = args;
+    const admin = await AdminModel.findById(data);
+    const user = await UserModel.findById(admin.userID);
+    await user.updateOne({
       $set: {
-        isBlocked: !this.isBlocked,
+        bannedStatus: !user.bannedStatus,
       },
     });
-
     return "Admin blocked successfully";
   },
 };

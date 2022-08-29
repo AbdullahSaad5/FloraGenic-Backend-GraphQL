@@ -1,5 +1,6 @@
 import { UserModel } from "./db.js";
 import { CustomerModel } from "../Customers/db.js";
+import { AdminModel } from "../Admins/db.js";
 
 export const UserMutation = {
   registerCustomer: async (_, args) => {

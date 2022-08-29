@@ -1,4 +1,5 @@
 import { AdminModel } from "./db.js";
+import { UserModel } from "../Users/db.js";
 export const AdminQuery = {
   admin: async (_, args) => {
     const { id } = args;
@@ -7,7 +8,18 @@ export const AdminQuery = {
   },
   admins: async (_, args) => {
     const admins = await AdminModel.find();
-    return admins;
+    // Attach user details to each admin and return
+    const adminsWithUserDetails = await Promise.all(
+      admins.map(async (admin) => {
+        const user = await UserModel.findById(admin.userID);
+        return {
+          id: admin.id,
+          ...admin._doc,
+          ...user._doc,
+        };
+      })
+    );
+    return adminsWithUserDetails;
   },
   adminSearch: async (_, args) => {
     const { search } = args;

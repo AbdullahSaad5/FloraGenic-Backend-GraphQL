@@ -28,8 +28,8 @@ export const UserTypes = `
 
     extend type Mutation{
         registerCustomer(credentials: UserRegisterInput!, details: CustomerCreateInput!): String!
-        registerAdmin(credentials: UserRegisterInput!, details: AdminCreateInput): String!
-        registerGardener(credentials: UserRegisterInput!, details: GardenerCreateInput): String!
+        registerAdmin(credentials: UserRegisterInput!, details: AdminCreateInput!): String!
+        registerGardener(credentials: UserRegisterInput!, details: GardenerCreateInput!): String!
         resetPassword(password: String!): String!
     }
 `;

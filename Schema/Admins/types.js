@@ -1,6 +1,8 @@
 export const AdminTypes = `
   type Admin {
     id: ID!
+    email: String!
+    bannedStatus: Boolean!
     firstName: String!
     lastName: String!
     nationality: String!
