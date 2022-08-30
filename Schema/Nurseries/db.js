@@ -26,13 +26,14 @@ const nurserySchema = new Schema({
     type: Number,
     default: 0,
   },
-  contactNumber: {
+  phoneNumber: {
     type: String,
-    default: "",
   },
-  emailAddress: {
+  email: {
     type: String,
-    default: "",
+  },
+  website: {
+    type: String,
   },
   images: [
     {
@@ -40,6 +41,19 @@ const nurserySchema = new Schema({
       required: true,
     },
   ],
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
+nurserySchema.pre("findOneAndUpdate", function (next) {
+  this.update({}, { $set: { updatedAt: new Date() } });
+  next();
 });
 
 export const NurseryModel = mongoose.model("Nursery", nurserySchema);

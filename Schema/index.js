@@ -63,6 +63,13 @@ import {
   ComplaintResolvers,
 } from "./Complaints/index.js";
 
+import {
+  NurseryTypes,
+  NurseryQuery,
+  NurseryMutation,
+  NurseryResolvers,
+} from "./Nurseries/index.js";
+
 import { UnionResolvers } from "./UnionResolvers.js";
 
 // remember we only use gql in this file. types in other files are just simple strings
@@ -78,6 +85,7 @@ export const typeDefs = gql`
   ${ProductTypes}
   ${CartItemTypes}
   ${ComplaintTypes}
+  ${NurseryTypes}
 `;
 export const resolvers = {
   Query: {
@@ -90,6 +98,7 @@ export const resolvers = {
     ...ProductQuery,
     ...CartItemQuery,
     ...ComplaintQuery,
+    ...NurseryQuery,
   },
   Mutation: {
     ...CustomerMutation,
@@ -101,6 +110,7 @@ export const resolvers = {
     ...ProductMutation,
     ...CartItemMutation,
     ...ComplaintMutation,
+    ...NurseryMutation,
   },
   Customer: CustomerResolvers,
   User: UserResolvers,
@@ -111,5 +121,6 @@ export const resolvers = {
   Product: ProductResolvers,
   CartItem: CartItemResolvers,
   Complaint: ComplaintResolvers,
+  Nursery: NurseryResolvers,
   ...UnionResolvers,
 };
