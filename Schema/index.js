@@ -1,4 +1,5 @@
 import { gql } from "apollo-server-express";
+
 import {
   CustomerTypes,
   CustomerQuery,
@@ -48,6 +49,20 @@ import {
   ProductResolvers,
 } from "./Products/index.js";
 
+import {
+  CartItemTypes,
+  CartItemQuery,
+  CartItemMutation,
+  CartItemResolvers,
+} from "./CartItems/index.js";
+
+import {
+  ComplaintTypes,
+  ComplaintQuery,
+  ComplaintMutation,
+  ComplaintResolvers,
+} from "./Complaints/index.js";
+
 import { UnionResolvers } from "./UnionResolvers.js";
 
 // remember we only use gql in this file. types in other files are just simple strings
@@ -61,6 +76,8 @@ export const typeDefs = gql`
   ${SkillTypes}
   ${AddressTypes}
   ${ProductTypes}
+  ${CartItemTypes}
+  ${ComplaintTypes}
 `;
 export const resolvers = {
   Query: {
@@ -71,6 +88,8 @@ export const resolvers = {
     ...SkillQuery,
     ...AddressQuery,
     ...ProductQuery,
+    ...CartItemQuery,
+    ...ComplaintQuery,
   },
   Mutation: {
     ...CustomerMutation,
@@ -80,6 +99,8 @@ export const resolvers = {
     ...SkillMutation,
     ...AddressMutation,
     ...ProductMutation,
+    ...CartItemMutation,
+    ...ComplaintMutation,
   },
   Customer: CustomerResolvers,
   User: UserResolvers,
@@ -88,5 +109,7 @@ export const resolvers = {
   Skill: SkillResolvers,
   Address: AddressResolvers,
   Product: ProductResolvers,
+  CartItem: CartItemResolvers,
+  Complaint: ComplaintResolvers,
   ...UnionResolvers,
 };

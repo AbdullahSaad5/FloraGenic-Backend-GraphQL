@@ -16,10 +16,19 @@ const cartItemSchema = new Schema({
     type: Number,
     required: true,
   },
-  totalPrice: {
-    type: Number,
-    required: true,
+  createdAt: {
+    type: Date,
+    default: Date.now,
   },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
+cartItemSchema.pre("findOneAndUpdate", function (next) {
+  this.update({}, { $set: { updatedAt: new Date() } });
+  next();
 });
 
 export const CartItemModel = mongoose.model("CartItem", cartItemSchema);
