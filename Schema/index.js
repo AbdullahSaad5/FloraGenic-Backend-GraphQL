@@ -70,6 +70,13 @@ import {
   NurseryResolvers,
 } from "./Nurseries/index.js";
 
+import {
+  FavoriteItemTypes,
+  FavoriteItemQuery,
+  FavoriteItemMutation,
+  FavoriteItemResolvers,
+} from "./FavoriteItems/index.js";
+
 import { UnionResolvers } from "./UnionResolvers.js";
 
 // remember we only use gql in this file. types in other files are just simple strings
@@ -86,6 +93,7 @@ export const typeDefs = gql`
   ${CartItemTypes}
   ${ComplaintTypes}
   ${NurseryTypes}
+  ${FavoriteItemTypes}
 `;
 export const resolvers = {
   Query: {
@@ -99,6 +107,7 @@ export const resolvers = {
     ...CartItemQuery,
     ...ComplaintQuery,
     ...NurseryQuery,
+    ...FavoriteItemQuery,
   },
   Mutation: {
     ...CustomerMutation,
@@ -111,6 +120,7 @@ export const resolvers = {
     ...CartItemMutation,
     ...ComplaintMutation,
     ...NurseryMutation,
+    ...FavoriteItemMutation,
   },
   Customer: CustomerResolvers,
   User: UserResolvers,
@@ -122,5 +132,6 @@ export const resolvers = {
   CartItem: CartItemResolvers,
   Complaint: ComplaintResolvers,
   Nursery: NurseryResolvers,
+  FavoriteItem: FavoriteItemResolvers,
   ...UnionResolvers,
 };
