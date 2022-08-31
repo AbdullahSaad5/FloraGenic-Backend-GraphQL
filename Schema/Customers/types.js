@@ -12,6 +12,7 @@ export const CustomerTypes = `
       image: String
       createdAt: String!
       updatedAt: String!
+      userDetails: String!
     }
 
     extend type Query {

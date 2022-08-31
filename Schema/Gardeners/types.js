@@ -12,6 +12,7 @@ export const GardenerTypes = `
         image: String
         createdAt: String!
         updatedAt: String!
+        userDetails: User!
     }
 
     extend type Query{

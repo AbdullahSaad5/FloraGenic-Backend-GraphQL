@@ -1,3 +1,5 @@
+import { GardenerModel } from "./db.js";
+
 export const GardenerMutation = {
   gardenerCreate: async (_, args) => {
     const { data } = args;
