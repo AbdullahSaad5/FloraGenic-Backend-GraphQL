@@ -2,6 +2,7 @@ export const UserTypes = `
     type User{
         email: String!
         userType: String!
+        bannedStatus: Boolean!
         details: UserDetails!
     }
    

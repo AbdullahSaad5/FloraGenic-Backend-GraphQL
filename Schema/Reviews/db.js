@@ -22,11 +22,20 @@ const reviewSchema = new Schema({
     type: Number,
     default: 0,
   },
-  date: {
+  createdAt: {
     type: Date,
-    required: true,
+    default: Date.now,
+    immutable: true,
+  },
+  updatedAt: {
+    type: Date,
     default: Date.now,
   },
+});
+
+reviewSchema.pre("findOneAndUpdate", function (next) {
+  this.update({}, { $set: { updatedAt: new Date() } });
+  next();
 });
 
 export const ReviewModel = mongoose.model("Review", reviewSchema);

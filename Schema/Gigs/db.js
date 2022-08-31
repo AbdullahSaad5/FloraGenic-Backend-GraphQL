@@ -2,9 +2,9 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const gigSchema = new Schema({
-  sellerID: {
+  gardenerID: {
     type: Schema.Types.ObjectId,
-    ref: "User",
+    ref: "Gardener",
     required: true,
   },
   name: {
@@ -15,13 +15,17 @@ const gigSchema = new Schema({
     type: String,
     required: true,
   },
-  overallRating: {
-    type: Number,
-    default: 0,
-  },
   type: {
     type: String,
     required: true,
+  },
+  hidden: {
+    type: Boolean,
+    default: false,
+  },
+  overallRating: {
+    type: Number,
+    default: 0,
   },
   images: [
     {
@@ -31,6 +35,10 @@ const gigSchema = new Schema({
   ],
   packages: [
     {
+      name: {
+        type: String,
+        required: true,
+      },
       description: {
         type: String,
         required: true,
@@ -42,26 +50,6 @@ const gigSchema = new Schema({
       deliverWithinDays: {
         type: Number,
         required: true,
-      },
-    },
-  ],
-  reviews: [
-    {
-      userId: {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
-      },
-      rating: {
-        type: Number,
-        required: true,
-      },
-      comment: {
-        type: String,
-      },
-      likes: {
-        type: Number,
-        default: 0,
       },
     },
   ],
