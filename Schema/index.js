@@ -107,6 +107,8 @@ import {
   PromoResolvers,
 } from "./Promos/index.js";
 
+import { TagTypes, TagQuery, TagMutation, TagResolvers } from "./Tags/index.js";
+
 import { UnionResolvers } from "./UnionResolvers.js";
 
 // remember we only use gql in this file. types in other files are just simple strings
@@ -129,6 +131,7 @@ export const typeDefs = gql`
   ${OrderTypes}
   ${PaymentTypes}
   ${PromoTypes}
+  ${TagTypes}
 `;
 export const resolvers = {
   Query: {
@@ -148,6 +151,7 @@ export const resolvers = {
     ...OrderQuery,
     ...PaymentQuery,
     ...PromoQuery,
+    ...TagQuery,
   },
   Mutation: {
     ...CustomerMutation,
@@ -166,6 +170,7 @@ export const resolvers = {
     ...OrderMutation,
     ...PaymentMutation,
     ...PromoMutation,
+    ...TagMutation,
   },
   Customer: CustomerResolvers,
   User: UserResolvers,
@@ -183,5 +188,6 @@ export const resolvers = {
   Order: OrderResolvers,
   Payment: PaymentResolvers,
   Promo: PromoResolvers,
+  Tag: TagResolvers,
   ...UnionResolvers,
 };
