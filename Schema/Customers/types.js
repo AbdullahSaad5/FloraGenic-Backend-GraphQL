@@ -13,6 +13,8 @@ export const CustomerTypes = `
       createdAt: String!
       updatedAt: String!
       userDetails: String!
+      payments: [Payment!]
+      addresses: [Address!]
     }
 
     extend type Query {

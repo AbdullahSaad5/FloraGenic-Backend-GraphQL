@@ -6,3 +6,4 @@
 1. Check for email, CNIC, phone etc`` before registering
 1. Make sure the cart user is a customer
 1. Remove IDs from being updated
+1. Send String instead of Object in delete message

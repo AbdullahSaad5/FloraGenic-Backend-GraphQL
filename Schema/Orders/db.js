@@ -9,7 +9,7 @@ const orderSchema = new Schema({
   },
   products: [
     {
-      productId: {
+      productID: {
         type: Schema.Types.ObjectId,
         ref: "Product",
         required: true,
@@ -56,7 +56,7 @@ const orderSchema = new Schema({
     ref: "Payment",
     required: true,
   },
-  paymentStatus: {
+  paymentStatus: {  
     type: String,
     required: true,
   },

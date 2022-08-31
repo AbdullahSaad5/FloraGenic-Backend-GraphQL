@@ -84,7 +84,21 @@ import {
   ReviewResolvers,
 } from "./Reviews/index.js";
 
+import {
+  OrderTypes,
+  OrderQuery,
+  OrderMutation,
+  OrderResolvers,
+} from "./Orders/index.js";
+
 import { GigTypes, GigQuery, GigMutation, GigResolvers } from "./Gigs/index.js";
+
+import {
+  PaymentTypes,
+  PaymentQuery,
+  PaymentMutation,
+  PaymentResolvers,
+} from "./Payments/index.js";
 
 import { UnionResolvers } from "./UnionResolvers.js";
 
@@ -105,6 +119,8 @@ export const typeDefs = gql`
   ${FavoriteItemTypes}
   ${ReviewTypes}
   ${GigTypes}
+  ${OrderTypes}
+  ${PaymentTypes}
 `;
 export const resolvers = {
   Query: {
@@ -121,6 +137,8 @@ export const resolvers = {
     ...FavoriteItemQuery,
     ...ReviewQuery,
     ...GigQuery,
+    ...OrderQuery,
+    ...PaymentQuery,
   },
   Mutation: {
     ...CustomerMutation,
@@ -136,6 +154,8 @@ export const resolvers = {
     ...FavoriteItemMutation,
     ...ReviewMutation,
     ...GigMutation,
+    ...OrderMutation,
+    ...PaymentMutation,
   },
   Customer: CustomerResolvers,
   User: UserResolvers,
@@ -150,5 +170,7 @@ export const resolvers = {
   FavoriteItem: FavoriteItemResolvers,
   Review: ReviewResolvers,
   Gig: GigResolvers,
+  Order: OrderResolvers,
+  Payment: PaymentResolvers,
   ...UnionResolvers,
 };
