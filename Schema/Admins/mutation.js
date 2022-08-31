@@ -21,8 +21,8 @@ export const AdminMutation = {
   },
 
   adminDelete: async (_, args) => {
-    const { id } = args;
-    await AdminModel.findByIdAndDelete(id);
+    const { data } = args;
+    await AdminModel.findByIdAndDelete(data);
     return "Admin deleted successfully";
   },
 
