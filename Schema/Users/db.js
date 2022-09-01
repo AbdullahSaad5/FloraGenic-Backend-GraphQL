@@ -7,7 +7,6 @@ const userSchema = new Schema({
   email: {
     type: String,
     required: true,
-    unique: true,
     immutable: true,
   },
   password: {
@@ -31,6 +30,8 @@ const userSchema = new Schema({
     required: false,
   },
 });
+
+userSchema.index({ email: 1, userType: 1 }, { unique: true });
 
 userSchema.pre("save", function (next) {
   const user = this;

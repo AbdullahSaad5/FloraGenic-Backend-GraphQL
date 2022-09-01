@@ -50,7 +50,7 @@ export const CustomerTypes = `
     extend type Mutation {
      customerCreate(data: CustomerCreateInput!): Customer!
      customerUpdate(id: ID!, data: CustomerUpdateInput!): Customer! 
-     customerDelete(data: ID!): String!
-     customerBlock(data:ID!): String!
+     customerDelete(id: ID!): String!
+     customerBlock(id: ID!): String!
     }
 `;

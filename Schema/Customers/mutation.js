@@ -23,7 +23,8 @@ export const CustomerMutation = {
 
   customerDelete: async (_, args) => {
     const { id } = args;
-    await CustomerModel.findByIdAndDelete(id);
+    const customer = await CustomerModel.findByIdAndDelete(id);
+    await UserModel.findByIdAndDelete(customer.userID);
     return "Customer deleted successfully";
   },
 

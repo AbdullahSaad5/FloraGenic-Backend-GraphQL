@@ -8,6 +8,8 @@ import http from "http";
 import mongoose from "mongoose";
 import morgan from "morgan";
 import { resolvers, typeDefs } from "./Schema/index.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 async function startApolloServer(typeDefs, resolvers) {
   const app = express();
@@ -27,7 +29,7 @@ async function startApolloServer(typeDefs, resolvers) {
   });
 
   //   starting mongoose connection
-  await mongoose.connect("mongodb://127.0.0.1:27017/FloraGenic");
+  await mongoose.connect(process.env.MONGO_DB_URI);
   console.log("mongoose connected");
 
   await server.start();
@@ -37,7 +39,9 @@ async function startApolloServer(typeDefs, resolvers) {
     res.send("Hello to GraphQL Server");
   });
 
-  await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
+  await new Promise((resolve) =>
+    httpServer.listen({ port: process.env.PORT || 4000 }, resolve)
+  );
   console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
 }
 
