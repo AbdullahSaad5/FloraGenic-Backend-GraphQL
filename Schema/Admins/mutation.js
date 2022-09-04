@@ -17,6 +17,7 @@ export const AdminMutation = {
       },
       { new: true }
     );
+
     return admin;
   },
 

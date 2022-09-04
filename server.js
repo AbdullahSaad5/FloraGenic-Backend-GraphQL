@@ -13,7 +13,7 @@ dotenv.config();
 
 async function startApolloServer(typeDefs, resolvers) {
   const app = express();
-  // app.use(morgan("dev"));
+  app.use(morgan("dev"));
   const httpServer = http.createServer(app);
   const server = new ApolloServer({
     typeDefs,
