@@ -11,6 +11,10 @@ const paymentSchema = new Schema({
     required: true,
     unique: true,
   },
+  cardType: {
+    type: String,
+    required: true,
+  },
   cardExpiryDate: {
     type: String,
     required: true,

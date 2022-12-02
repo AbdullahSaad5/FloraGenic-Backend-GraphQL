@@ -10,6 +10,10 @@ const skillSchema = new Schema({
     type: String,
     required: true,
   },
+  hiddenStatus: {
+    type: Boolean,
+    required: true,
+  },
 });
 
 export const SkillModel = mongoose.model("Skill", skillSchema);

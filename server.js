@@ -32,6 +32,7 @@ async function startApolloServer(typeDefs, resolvers) {
   await mongoose.connect(process.env.MONGO_DB_URI);
   console.log("mongoose connected");
 
+  // Staring server
   await server.start();
   server.applyMiddleware({ app });
 

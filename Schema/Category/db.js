@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
-const tagSchema = new Schema({
+const categorySchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -12,6 +12,10 @@ const tagSchema = new Schema({
   },
   hiddenStatus: {
     type: Boolean,
+    default: false,
+  },
+  image: {
+    type: String,
     required: true,
   },
   createdAt: {
@@ -24,8 +28,9 @@ const tagSchema = new Schema({
   },
 });
 
-tagSchema.pre("findOneAndUpdate", function () {
-  this.update({}, { $set: { updatedAt: Date.now() } });
+categorySchema.pre("findOneAndUpdate", function (next) {
+  this.update({}, { $set: { updatedAt: new Date() } });
+  next();
 });
 
-export const TagModel = mongoose.model("Tag", tagSchema);
+export const CategoryModel = mongoose.model("Category", categorySchema);

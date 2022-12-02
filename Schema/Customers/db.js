@@ -17,10 +17,6 @@ const customerSchema = new Schema({
     type: String,
     required: true,
   },
-  dateOfBirth: {
-    type: Date,
-    required: true,
-  },
   nationality: {
     type: String,
     required: true,

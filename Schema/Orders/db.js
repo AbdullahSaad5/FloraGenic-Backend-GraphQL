@@ -7,17 +7,23 @@ const orderSchema = new Schema({
     ref: "User",
     required: true,
   },
+  // products: [
+  //   {
+  //     productID: {
+  //       type: Schema.Types.ObjectId,
+  //       ref: "Product",
+  //       required: true,
+  //     },
+  //     quantity: {
+  //       type: Number,
+  //       required: true,
+  //     },
+  //   },
+  // ],
   products: [
     {
-      productID: {
-        type: Schema.Types.ObjectId,
-        ref: "Product",
-        required: true,
-      },
-      quantity: {
-        type: Number,
-        required: true,
-      },
+      type: Schema.Types.ObjectId,
+      ref: "CartItem",
     },
   ],
   totalPrice: {
@@ -56,7 +62,7 @@ const orderSchema = new Schema({
     ref: "Payment",
     required: true,
   },
-  paymentStatus: {  
+  paymentStatus: {
     type: String,
     required: true,
   },

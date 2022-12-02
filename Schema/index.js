@@ -111,7 +111,8 @@ import { TagTypes, TagQuery, TagMutation, TagResolvers } from "./Tags/index.js";
 
 import { UnionResolvers } from "./UnionResolvers.js";
 
-// remember we only use gql in this file. types in other files are just simple strings
+// Remember, we only use gql in this file.
+// Types in other files are just simple strings.
 export const typeDefs = gql`
   type Query
   type Mutation
