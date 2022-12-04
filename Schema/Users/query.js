@@ -2,20 +2,21 @@ import { UserModel } from "./db.js";
 import { CustomerModel } from "../Customers/db.js";
 import { AdminModel } from "../Admins/db.js";
 import { GardenerModel } from "../Gardeners/db.js";
+import { ApolloError } from "apollo-server-core";
 
 export const UserQuery = {
   loginCustomer: async (_, args) => {
     const { email, password, userType } = args.credentials;
     const user = await UserModel.findOne({ email, userType });
     if (!user) {
-      throw new Error("User not found");
+      throw new ApolloError("User not found");
     }
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
-      throw new Error("Incorrect password");
+      throw new ApolloError("Incorrect password");
     }
     if (user.bannedStatus) {
-      throw new Error("User is banned");
+      throw new ApolloError("User is banned");
     }
     let userDetails;
     switch (userType) {
@@ -29,7 +30,7 @@ export const UserQuery = {
         userDetails = await GardenerModel.findOne({ userID: user._id });
         break;
       default:
-        throw new Error("User type not found");
+        throw new ApolloError("User type not found");
     }
     const data = {
       email: user.email,

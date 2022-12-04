@@ -1,12 +1,18 @@
 export const UserTypes = `
     type User{
         email: String!
-        userType: String!
+        userType: UserType!
         bannedStatus: Boolean!
-        details: UserDetails!
+        details: UserDetails
     }
    
     union UserDetails = Customer | Admin | Gardener
+
+    enum UserType{
+        Customer
+        Admin
+        Gardener
+    }
 
     input UserLoginInput {
         email: String!
@@ -28,6 +34,8 @@ export const UserTypes = `
     }
 
     extend type Mutation{
+        loginCustomer(credentials: UserLoginInput!): User
+        register(credentials: UserRegisterInput!): String!
         registerCustomer(credentials: UserRegisterInput!, details: CustomerCreateInput!): String!
         registerAdmin(credentials: UserRegisterInput!, details: AdminCreateInput!): String!
         registerGardener(credentials: UserRegisterInput!, details: GardenerCreateInput!): String!

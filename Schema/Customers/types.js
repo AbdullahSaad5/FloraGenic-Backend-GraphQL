@@ -5,14 +5,13 @@ export const CustomerTypes = `
       id: ID!
       firstName: String!
       lastName: String!
-      dateOfBirth: String!
       nationality: String!
       phoneNumber: String!
       gender: String!
       image: String
       createdAt: String!
       updatedAt: String!
-      userDetails: String!
+      userDetails: User!
       payments: [Payment!]
       addresses: [Address!]
     }
@@ -26,7 +25,6 @@ export const CustomerTypes = `
     input CustomerCreateInput {
       firstName: String!
       lastName: String!
-      dateOfBirth: String!
       nationality: String!
       phoneNumber: String!
       gender: String!
@@ -36,7 +34,6 @@ export const CustomerTypes = `
     input CustomerUpdateInput {
       firstName: String
       lastName: String
-      dateOfBirth: String
       nationality: String
       phoneNumber: String
       gender: String
