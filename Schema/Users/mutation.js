@@ -2,6 +2,8 @@ import { UserModel } from "./db.js";
 import { CustomerModel } from "../Customers/db.js";
 import { AdminModel } from "../Admins/db.js";
 import { ApolloError } from "apollo-server-core";
+import jwt from "jsonwebtoken";
+import { GardenerModel } from "../Gardeners/db.js";
 
 export const UserMutation = {
   loginCustomer: async (_, args) => {
@@ -11,6 +13,7 @@ export const UserMutation = {
       throw new ApolloError("Invalid Credentials. User not found");
     }
     const isMatch = await user.comparePassword(password);
+    console.log(!isMatch);
     if (!isMatch) {
       throw new ApolloError("Incorrect Password. Please try again");
     }
@@ -33,11 +36,26 @@ export const UserMutation = {
       default:
         throw new ApolloError("User type not found");
     }
+
+    const token = jwt.sign(
+      {
+        id: user._id,
+        userType: user.userType,
+        email: user.email,
+      },
+      process.env.JWT_SECRET_KEY,
+      {
+        expiresIn: "1d",
+      }
+    );
+
     const data = {
+      id: user._id,
       email: user.email,
       userType: user.userType,
       bannedStatus: user.bannedStatus,
       details: userDetails,
+      token,
     };
     console.log(data);
     return data;
@@ -78,6 +96,14 @@ export const UserMutation = {
     const user = await UserModel.create(args.credentials);
     await GardenerModel.create({
       userID: user.id,
+      ...args.details,
+    });
+    return "User created successfully";
+  },
+
+  addCustomer: async (_, args) => {
+    await CustomerModel.create({
+      userID: args.userID,
       ...args.details,
     });
     return "User created successfully";

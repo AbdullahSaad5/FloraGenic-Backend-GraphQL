@@ -45,7 +45,7 @@ export const NurseryTypes = `
     }
 
     extend type Mutation {
-        nurseryCreate(data: NurseryCreateInput!): Nursery
+        nurseryCreate(data: NurseryCreateInput!): String!
         nurseryUpdate(id: ID!, data: NurseryUpdateInput!): Nursery
         nurseryDelete(id: ID!): String!
     }

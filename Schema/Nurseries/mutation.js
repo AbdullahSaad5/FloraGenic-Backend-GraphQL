@@ -5,7 +5,7 @@ export const NurseryMutation = {
     const { data } = args;
     const nursery = new NurseryModel(data);
     await nursery.save();
-    return nursery;
+    return "Nursery created successfully";
   },
   nurseryUpdate: async (parent, args) => {
     const { id, data } = args;
