@@ -9,11 +9,13 @@ import mongoose from "mongoose";
 import morgan from "morgan";
 import { resolvers, typeDefs } from "./Schema/index.js";
 import dotenv from "dotenv";
+import cors from "cors";
 dotenv.config();
 
 async function startApolloServer(typeDefs, resolvers) {
   const app = express();
   app.use(morgan("dev"));
+  app.use(cors());
   const httpServer = http.createServer(app);
   const server = new ApolloServer({
     typeDefs,
