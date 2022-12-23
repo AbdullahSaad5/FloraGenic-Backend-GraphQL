@@ -21,6 +21,7 @@ export const NurseryTypes = `
         nurserySearch(search: String!): [Nursery!]!
     }
     input NurseryCreateInput {
+        nurseryOwnerID: ID!
         name: String!
         details: String!
         openingHours: String!

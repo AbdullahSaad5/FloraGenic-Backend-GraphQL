@@ -1,3 +1,4 @@
+import { NurseryOwnerModel } from "../NurseryOwner/db.js";
 import { NurseryModel } from "./db.js";
 
 export const NurseryMutation = {
@@ -5,6 +6,9 @@ export const NurseryMutation = {
     const { data } = args;
     const nursery = new NurseryModel(data);
     await nursery.save();
+    const nurseryOwner = await NurseryOwnerModel.findById(data.nurseryOwnerID);
+    nurseryOwner.nurseries.push(nursery._id);
+    await nurseryOwner.save();
     return "Nursery created successfully";
   },
   nurseryUpdate: async (parent, args) => {
