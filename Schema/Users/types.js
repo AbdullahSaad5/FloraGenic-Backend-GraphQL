@@ -45,7 +45,7 @@ export const UserTypes = `
         registerCustomer(credentials: UserRegisterInput!, details: CustomerCreateInput!): String!
         registerAdmin(credentials: UserRegisterInput!, details: AdminCreateInput!): String!
         registerGardener(credentials: UserRegisterInput!, details: GardenerCreateInput!): String!
-        registerNurseryOwner(credentials: UserRegisterInput!, details: NurseryCreateInput!): String!
+        registerNurseryOwner(credentials: UserRegisterInput!, details: NurseryOwnerCreateInput!): String!
         addCustomer(userID: ID!, details: CustomerCreateInput!): String!
         resetPassword(password: String!): String!
         deleteUser(id: ID!): String!
