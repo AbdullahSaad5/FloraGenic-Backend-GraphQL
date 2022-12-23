@@ -1,6 +1,7 @@
 import { UserModel } from "./db.js";
 import { CustomerModel } from "../Customers/db.js";
 import { AdminModel } from "../Admins/db.js";
+import { NurseryOwnerModel } from "../NurseryOwner/db.js";
 import { ApolloError } from "apollo-server-core";
 import jwt from "jsonwebtoken";
 import { GardenerModel } from "../Gardeners/db.js";
@@ -95,6 +96,15 @@ export const UserMutation = {
   registerGardener: async (_, args) => {
     const user = await UserModel.create(args.credentials);
     await GardenerModel.create({
+      userID: user.id,
+      ...args.details,
+    });
+    return "User created successfully";
+  },
+
+  registerNurseryOwner: async (_, args) => {
+    const user = await UserModel.create(args.credentials);
+    await NurseryOwnerModel.create({
       userID: user.id,
       ...args.details,
     });
