@@ -9,6 +9,9 @@ export const UnionResolvers = {
         console.log("Admin");
         return "Admin";
       }
+      if (obj.nurseries) {
+        return "NurseryOwner";
+      }
       console.log("Customer");
       return "Customer";
     },

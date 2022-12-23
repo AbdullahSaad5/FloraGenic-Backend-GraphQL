@@ -8,12 +8,13 @@ export const UserTypes = `
         token: String!
     }
    
-    union UserDetails = Customer | Admin | Gardener
+    union UserDetails = Customer | Admin | Gardener | NurseryOwner
 
     enum UserType{
         Customer
         Admin
         Gardener
+        NurseryOwner
     }
 
     input UserLoginInput {
