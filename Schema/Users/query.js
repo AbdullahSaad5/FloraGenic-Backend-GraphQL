@@ -64,6 +64,31 @@ export const UserQuery = {
     );
     return users;
   },
+
+  user: async (_, args) => {
+    const { id } = args;
+    const user = await UserModel.findById(id);
+    if (!user) {
+      throw new ApolloError("User not found");
+    }
+    let userDetails;
+    switch (user.userType) {
+      case "Customer":
+        userDetails = await CustomerModel.findOne({ userID: user._id });
+        console.log(userDetails);
+        break;
+      case "Admin":
+        userDetails = await AdminModel.findOne({ userID: user._id });
+        break;
+      case "Gardener":
+        userDetails = await GardenerModel.findOne({ userID: user._id });
+        break;
+      default:
+        throw new ApolloError("User type not found");
+    }
+    user.details = userDetails;
+  },
+
   // loginCustomer: async (_, args) => {
   //   const { email, password } = args.credentials;
   //   const user = await UserModel.findOne({ email });

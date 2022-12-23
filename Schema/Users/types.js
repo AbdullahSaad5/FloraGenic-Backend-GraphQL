@@ -27,6 +27,7 @@ export const UserTypes = `
         loginAdmin(credentials: UserLoginInput!): User
         loginGardener(credentials: UserLoginInput!): User
         users: [User!]
+        user(id: ID!): User
         sendResetEmail(email: String!): String!
     }
 
