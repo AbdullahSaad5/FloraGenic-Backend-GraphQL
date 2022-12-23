@@ -109,6 +109,13 @@ import {
 
 import { TagTypes, TagQuery, TagMutation, TagResolvers } from "./Tags/index.js";
 
+import {
+  NurseryOwnerTypes,
+  NurseryOwnerQuery,
+  NurseryOwnerMutation,
+  NurseryOwnerResolvers,
+} from "./NurseryOwner/index.js";
+
 import { UnionResolvers } from "./UnionResolvers.js";
 
 // Remember, we only use gql in this file.
@@ -133,6 +140,7 @@ export const typeDefs = gql`
   ${PaymentTypes}
   ${PromoTypes}
   ${TagTypes}
+  ${NurseryOwnerTypes}
 `;
 export const resolvers = {
   Query: {
@@ -153,6 +161,7 @@ export const resolvers = {
     ...PaymentQuery,
     ...PromoQuery,
     ...TagQuery,
+    ...NurseryOwnerQuery,
   },
   Mutation: {
     ...CustomerMutation,
@@ -172,6 +181,7 @@ export const resolvers = {
     ...PaymentMutation,
     ...PromoMutation,
     ...TagMutation,
+    ...NurseryOwnerMutation,
   },
   Customer: CustomerResolvers,
   User: UserResolvers,
@@ -190,5 +200,6 @@ export const resolvers = {
   Payment: PaymentResolvers,
   Promo: PromoResolvers,
   Tag: TagResolvers,
+  NurseryOwner: NurseryOwnerResolvers,
   ...UnionResolvers,
 };
