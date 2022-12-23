@@ -34,6 +34,9 @@ export const UserMutation = {
       case "Gardener":
         userDetails = await GardenerModel.findOne({ userID: user._id });
         break;
+      case "NurseryOwner":
+        userDetails = await NurseryOwnerModel.findOne({ userID: user._id });
+        break;
       default:
         throw new ApolloError("User type not found");
     }
@@ -146,6 +149,9 @@ export const UserMutation = {
         break;
       case "Gardener":
         await GardenerModel.findOneAndDelete({ userID: user._id });
+        break;
+      case "NurseryOwner":
+        await NurseryOwnerModel.findOneAndDelete({ userID: user._id });
         break;
       default:
         throw new ApolloError("User type not found");

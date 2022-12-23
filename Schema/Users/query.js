@@ -3,6 +3,7 @@ import { CustomerModel } from "../Customers/db.js";
 import { AdminModel } from "../Admins/db.js";
 import { GardenerModel } from "../Gardeners/db.js";
 import { ApolloError } from "apollo-server-core";
+import { NurseryOwnerModel } from "../NurseryOwner/db.js";
 
 export const UserQuery = {
   loginCustomer: async (_, args) => {
@@ -28,6 +29,9 @@ export const UserQuery = {
         break;
       case "Gardener":
         userDetails = await GardenerModel.findOne({ userID: user._id });
+        break;
+      case "NurseryOwner":
+        userDetails = await NurseryOwnerModel.findOne({ userID: user._id });
         break;
       default:
         throw new ApolloError("User type not found");
@@ -56,6 +60,9 @@ export const UserQuery = {
           case "Gardener":
             userDetails = await GardenerModel.findOne({ userID: user._id });
             break;
+          case "NurseryOwner":
+            userDetails = await NurseryOwnerModel.findOne({ userID: user._id });
+            break;
           default:
             throw new ApolloError("User type not found");
         }
@@ -82,6 +89,9 @@ export const UserQuery = {
         break;
       case "Gardener":
         userDetails = await GardenerModel.findOne({ userID: user._id });
+        break;
+      case "NurseryOwner":
+        userDetails = await NurseryOwnerModel.findOne({ userID: user._id });
         break;
       default:
         throw new ApolloError("User type not found");
