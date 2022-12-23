@@ -38,6 +38,10 @@ const nurseryOwnerSchema = new Schema({
   image: {
     type: String,
   },
+  nurseries: {
+    type: [Schema.Types.ObjectId],
+    ref: "Nursery",
+  },
   createdAt: {
     type: Date,
     default: Date.now,
