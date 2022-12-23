@@ -15,6 +15,10 @@ const gardenerSchema = new Schema({
     type: String,
     required: true,
   },
+  gender: {
+    type: String,
+    required: true,
+  },
   nationality: {
     type: String,
     required: true,
