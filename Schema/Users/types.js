@@ -46,6 +46,7 @@ export const UserTypes = `
         registerGardener(credentials: UserRegisterInput!, details: GardenerCreateInput!): String!
         addCustomer(userID: ID!, details: CustomerCreateInput!): String!
         resetPassword(password: String!): String!
+        deleteUser(id: ID!): String!
     }
 `;
 

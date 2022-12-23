@@ -120,4 +120,26 @@ export const UserMutation = {
     await user.save();
     return "Password reset successfully";
   },
+  deleteUser: async (_, args) => {
+    const { id } = args;
+    const user = await UserModel.findById(id);
+    if (!user) {
+      throw new Error("User not found");
+    }
+    await user.remove();
+    switch (user.userType) {
+      case "Customer":
+        await CustomerModel.findOneAndDelete({ userID: user._id });
+        break;
+      case "Admin":
+        await AdminModel.findOneAndDelete({ userID: user._id });
+        break;
+      case "Gardener":
+        await GardenerModel.findOneAndDelete({ userID: user._id });
+        break;
+      default:
+        throw new ApolloError("User type not found");
+    }
+    return "User deleted successfully";
+  },
 };
