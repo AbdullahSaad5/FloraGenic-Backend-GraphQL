@@ -3,6 +3,7 @@ export const AdminTypes = `
     id: ID!
     firstName: String!
     lastName: String!
+    gender: String!
     nationality: String!
     phoneNumber: String!
     CNIC: String!
@@ -21,6 +22,7 @@ export const AdminTypes = `
     input AdminCreateInput{
         firstName: String!
         lastName: String!
+        gender: String!
         nationality: String!
         phoneNumber: String!
         CNIC: String!
@@ -30,6 +32,7 @@ export const AdminTypes = `
     input AdminUpdateInput{
         firstName: String
         lastName: String
+        gender: String
         nationality: String
         phoneNumber: String
         CNIC: String

@@ -6,6 +6,7 @@ export const GardenerTypes = `
         id: ID!
         firstName: String!
         lastName: String!
+        gender: String!
         nationality: String!
         phoneNumber: String!
         CNIC: String!
@@ -24,6 +25,7 @@ export const GardenerTypes = `
     input GardenerCreateInput{
         firstName: String!
         lastName: String!
+        gender: String!
         nationality: String!
         phoneNumber: String!
         CNIC: String!
@@ -33,6 +35,7 @@ export const GardenerTypes = `
     input GardenerUpdateInput{
         firstName: String
         lastName: String
+        gender: String
         nationality: String
         phoneNumber: String
         CNIC: String
