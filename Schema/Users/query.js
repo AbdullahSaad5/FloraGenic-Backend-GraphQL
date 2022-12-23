@@ -87,6 +87,7 @@ export const UserQuery = {
         throw new ApolloError("User type not found");
     }
     user.details = userDetails;
+    return user;
   },
 
   // loginCustomer: async (_, args) => {
