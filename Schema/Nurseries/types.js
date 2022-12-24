@@ -1,6 +1,7 @@
 export const NurseryTypes = `
     type Nursery {
         id: ID!
+        nurseryOwnerID: ID!
         name: String!
         details: String!
         openingHours: String!
@@ -34,6 +35,7 @@ export const NurseryTypes = `
     }
 
     input NurseryUpdateInput {
+        nurseryOwnerID: ID
         name: String
         details: String
         openingHours: String
