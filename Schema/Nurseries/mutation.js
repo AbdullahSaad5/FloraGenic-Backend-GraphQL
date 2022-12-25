@@ -26,7 +26,26 @@ export const NurseryMutation = {
   },
   nurseryDelete: async (parent, args) => {
     const { id } = args;
-    await NurseryModel.findByIdAndDelete(id);
+
+    // Finding nursery
+    const nursery = await NurseryModel.findById(id);
+    if (!nursery) throw new Error("Nursery not found");
+    // Finding the owner
+    const nurseryOwner = await NurseryOwnerModel.findOne({
+      nurseries: {
+        $in: [nursery._id],
+      },
+    });
+    if (!nurseryOwner) throw new Error("Nursery Owner not found");
+
+    // Removing the nursery from the owner's nurseries array
+    nurseryOwner.nurseries = nurseryOwner.nurseries.filter(
+      (nurseryID) => nurseryID != nursery._id
+    );
+
+    // Saving the owner and removing the nursery
+    await nurseryOwner.save();
+    await nursery.remove();
     return "Nursery deleted successfully";
   },
 };
