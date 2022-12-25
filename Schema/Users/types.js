@@ -38,6 +38,12 @@ export const UserTypes = `
         userType: String!
     }
 
+    input UserUpdateInput {
+        email: String
+        password: String
+        userType: String
+    }
+
 
     extend type Mutation{
         loginCustomer(credentials: UserLoginInput!): User
@@ -46,6 +52,10 @@ export const UserTypes = `
         registerAdmin(credentials: UserRegisterInput!, details: AdminCreateInput!): String!
         registerGardener(credentials: UserRegisterInput!, details: GardenerCreateInput!): String!
         registerNurseryOwner(credentials: UserRegisterInput!, details: NurseryOwnerCreateInput!): String!
+        updateAdmin(id: ID!, credentials: UserUpdateInput!, details: AdminUpdateInput!): String!
+        updateGardener(id: ID!, credentials: UserUpdateInput!, details: GardenerUpdateInput!): String!
+        updateNurseryOwner(id: ID!, credentials: UserUpdateInput!, details: NurseryOwnerUpdateInput!): String!
+        updateCustomer(id: ID!, credentials: UserUpdateInput!, details: CustomerUpdateInput!): String!
         addCustomer(userID: ID!, details: CustomerCreateInput!): String!
         resetPassword(password: String!): String!
         deleteUser(id: ID!): String!
