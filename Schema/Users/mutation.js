@@ -120,11 +120,11 @@ export const UserMutation = {
     if (!user) {
       throw new ApolloError("User not found");
     }
-    await user.updateOne({
-      $set: {
-        ...credentials,
-      },
-    });
+    user.userType = credentials.userType;
+    if (credentials.password) {
+      user.password = credentials.password;
+    }
+    await user.save();
     await AdminModel.findOneAndUpdate({ userID: id }, { $set: { ...details } });
     return "User updated successfully";
   },
@@ -135,11 +135,11 @@ export const UserMutation = {
     if (!user) {
       throw new ApolloError("User not found");
     }
-    await user.updateOne({
-      $set: {
-        ...credentials,
-      },
-    });
+    user.userType = credentials.userType;
+    if (credentials.password) {
+      user.password = credentials.password;
+    }
+    await user.save();
     await GardenerModel.findOneAndUpdate(
       { userID: id },
       { $set: { ...details } }
@@ -153,11 +153,11 @@ export const UserMutation = {
     if (!user) {
       throw new ApolloError("User not found");
     }
-    await user.updateOne({
-      $set: {
-        ...credentials,
-      },
-    });
+    user.userType = credentials.userType;
+    if (credentials.password) {
+      user.password = credentials.password;
+    }
+    await user.save();
     await NurseryOwnerModel.findOneAndUpdate(
       { userID: id },
       { $set: { ...details } }
@@ -171,11 +171,11 @@ export const UserMutation = {
     if (!user) {
       throw new ApolloError("User not found");
     }
-    await user.updateOne({
-      $set: {
-        ...credentials,
-      },
-    });
+    user.userType = credentials.userType;
+    if (credentials.password) {
+      user.password = credentials.password;
+    }
+    await user.save();
     await CustomerModel.findOneAndUpdate(
       { userID: id },
       { $set: { ...details } }
