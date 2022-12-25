@@ -114,6 +114,75 @@ export const UserMutation = {
     return "User created successfully";
   },
 
+  updateAdmin: async (_, args) => {
+    const { id, credentials, details } = args;
+    const user = await UserModel.findById(id);
+    if (!user) {
+      throw new ApolloError("User not found");
+    }
+    await user.updateOne({
+      $set: {
+        ...credentials,
+      },
+    });
+    await AdminModel.findOneAndUpdate({ userID: id }, { $set: { ...details } });
+    return "User updated successfully";
+  },
+
+  updateGardener: async (_, args) => {
+    const { id, credentials, details } = args;
+    const user = await UserModel.findById(id);
+    if (!user) {
+      throw new ApolloError("User not found");
+    }
+    await user.updateOne({
+      $set: {
+        ...credentials,
+      },
+    });
+    await GardenerModel.findOneAndUpdate(
+      { userID: id },
+      { $set: { ...details } }
+    );
+    return "User updated successfully";
+  },
+
+  updateNurseryOwner: async (_, args) => {
+    const { id, credentials, details } = args;
+    const user = await UserModel.findById(id);
+    if (!user) {
+      throw new ApolloError("User not found");
+    }
+    await user.updateOne({
+      $set: {
+        ...credentials,
+      },
+    });
+    await NurseryOwnerModel.findOneAndUpdate(
+      { userID: id },
+      { $set: { ...details } }
+    );
+    return "User updated successfully";
+  },
+
+  updateCustomer: async (_, args) => {
+    const { id, credentials, details } = args;
+    const user = await UserModel.findById(id);
+    if (!user) {
+      throw new ApolloError("User not found");
+    }
+    await user.updateOne({
+      $set: {
+        ...credentials,
+      },
+    });
+    await CustomerModel.findOneAndUpdate(
+      { userID: id },
+      { $set: { ...details } }
+    );
+    return "User updated successfully";
+  },
+
   addCustomer: async (_, args) => {
     await CustomerModel.create({
       userID: args.userID,
