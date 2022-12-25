@@ -7,9 +7,13 @@ export const NurseryQuery = {
   },
   nursery: async (parent, args) => {
     const nursery = await NurseryModel.findById(args.id);
-    const nurseryOwner = await NurseryOwnerModel.find({
-      nurseries: { $in: [nursery._id] },
+    const nurseryOwner = await NurseryOwnerModel.findOne({
+      nurseries: {
+        $in: [nursery._id],
+      },
     });
+    if (!nurseryOwner) throw new Error("Nursery Owner not found");
+    console.log(nurseryOwner);
     nursery.nurseryOwnerID = nurseryOwner._id;
     return nursery;
   },
