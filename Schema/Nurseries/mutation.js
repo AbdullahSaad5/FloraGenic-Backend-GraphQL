@@ -49,6 +49,7 @@ export const NurseryMutation = {
     console.log(nurseryOwner);
 
     // Saving the owner and removing the nursery
+    await nurseryOwner.save();
     await nursery.remove();
     return "Nursery deleted successfully";
   },
