@@ -49,7 +49,7 @@ export const NurseryTypes = `
 
     extend type Mutation {
         nurseryCreate(data: NurseryCreateInput!): String!
-        nurseryUpdate(id: ID!, data: NurseryUpdateInput!): Nursery
+        nurseryUpdate(id: ID!, data: NurseryUpdateInput!): String!
         nurseryDelete(id: ID!): String!
     }
 `;

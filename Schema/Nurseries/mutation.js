@@ -13,16 +13,38 @@ export const NurseryMutation = {
   },
   nurseryUpdate: async (parent, args) => {
     const { id, data } = args;
-    const nursery = await NurseryModel.findByIdAndUpdate(
-      id,
-      {
-        $set: data,
+    const nursery = await NurseryModel.findById(id);
+    if (!nursery) throw new Error("Nursery not found");
+    const nurseryOwner = await NurseryOwnerModel.findOne({
+      nurseries: {
+        $in: [nursery._id],
       },
-      {
-        new: true,
-      }
-    );
-    return nursery;
+    });
+
+    // If nursery owner is not the same as the one in the data
+    if (nurseryOwner._id != data.nurseryOwnerID) {
+      nurseryOwner.nurseries.pull(nursery._id);
+      await nurseryOwner.save();
+      const newNurseryOwner = await NurseryOwnerModel.findById(
+        data.nurseryOwnerID
+      );
+      newNurseryOwner.nurseries.push(nursery._id);
+      await newNurseryOwner.save();
+    }
+
+    // Updating the nursery
+    await nursery.updateOne({ $set: data });
+
+    // const nursery = await NurseryModel.findByIdAndUpdate(
+    //   id,
+    //   {
+    //     $set: data,
+    //   },
+    //   {
+    //     new: true,
+    //   }
+    // );
+    return "Nursery Update Successful";
   },
   nurseryDelete: async (parent, args) => {
     const { id } = args;
