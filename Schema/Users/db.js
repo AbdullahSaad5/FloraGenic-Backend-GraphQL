@@ -53,7 +53,7 @@ userSchema.pre("save", function (next) {
   });
 });
 
-userSchema.pre("findOneAndUpdate", function (next) {
+userSchema.pre("updateOne", function (next) {
   const user = this;
 
   // only hash the password if it has been modified (or is new)
