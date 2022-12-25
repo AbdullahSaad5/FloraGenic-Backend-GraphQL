@@ -56,10 +56,8 @@ userSchema.pre("save", function (next) {
 userSchema.pre("updateOne", function (next) {
   const user = this;
 
-  // only hash the password if it has been modified (or is new)
-  if (!user.isModified("password")) return next();
-
   // generate a salt
+  if (!user.password) return next();
   bcrypt.genSalt(SALT_WORK_FACTOR, function (err, salt) {
     if (err) return next(err);
 
