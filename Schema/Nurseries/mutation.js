@@ -36,15 +36,19 @@ export const NurseryMutation = {
         $in: [nursery._id],
       },
     });
-    if (!nurseryOwner) throw new Error("Nursery Owner not found");
 
+    console.log(nursery._id);
+
+    if (!nurseryOwner) throw new Error("Nursery Owner not found");
+    console.log("Before");
+    console.log(nurseryOwner);
     // Removing the nursery from the owner's nurseries array
-    nurseryOwner.nurseries = nurseryOwner.nurseries.filter(
-      (nurseryID) => nurseryID != nursery._id
-    );
+
+    nurseryOwner.nurseries.pull(nursery._id);
+    console.log("After");
+    console.log(nurseryOwner);
 
     // Saving the owner and removing the nursery
-    await nurseryOwner.save();
     await nursery.remove();
     return "Nursery deleted successfully";
   },
