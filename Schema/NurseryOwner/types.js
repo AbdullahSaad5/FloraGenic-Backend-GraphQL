@@ -8,6 +8,7 @@ export const NurseryOwnerTypes = `
     phoneNumber: String!
     CNIC: String!
     image: String
+    nurseries: [ID!]
     createdAt: String!
     updatedAt: String!
     userDetails: User!
