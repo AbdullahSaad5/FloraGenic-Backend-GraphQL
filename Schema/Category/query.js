@@ -1,6 +1,6 @@
 import { CategoryModel } from "./db.js";
 
-export const CartItemQuery = {
+export const CategoryQuery = {
   categories: async () => {
     const categories = await CategoryModel.find();
     return categories;

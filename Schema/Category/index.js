@@ -1,6 +1,6 @@
 // CartItems/index.js
-export { CartItemModel } from "./db.js";
-export { CartItemTypes } from "./types.js";
-export { CartItemQuery } from "./query.js";
-export { CartItemMutation } from "./mutation.js";
-export { CartItemResolvers } from "./resolvers.js";
+export { CategoryModel } from "./db.js";
+export { CategoryTypes } from "./types.js";
+export { CategoryQuery } from "./query.js";
+export { CategoryMutation } from "./mutation.js";
+export { CategoryResolvers } from "./resolvers.js";

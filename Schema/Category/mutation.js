@@ -1,6 +1,6 @@
 import { CategoryModel } from "./db.js";
 
-export const CartItemMutation = {
+export const CategoryMutation = {
   categoryCreate: async (_, args) => {
     const { data } = args;
     const category = await CategoryModel.create(data);

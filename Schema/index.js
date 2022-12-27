@@ -116,6 +116,13 @@ import {
   NurseryOwnerResolvers,
 } from "./NurseryOwner/index.js";
 
+import {
+  CategoryTypes,
+  CategoryQuery,
+  CategoryMutation,
+  CategoryResolvers,
+} from "./Category/index.js";
+
 import { UnionResolvers } from "./UnionResolvers.js";
 
 // Remember, we only use gql in this file.
@@ -141,6 +148,7 @@ export const typeDefs = gql`
   ${PromoTypes}
   ${TagTypes}
   ${NurseryOwnerTypes}
+  ${CategoryTypes}
 `;
 export const resolvers = {
   Query: {
@@ -162,6 +170,7 @@ export const resolvers = {
     ...PromoQuery,
     ...TagQuery,
     ...NurseryOwnerQuery,
+    ...CategoryQuery,
   },
   Mutation: {
     ...CustomerMutation,
@@ -182,6 +191,7 @@ export const resolvers = {
     ...PromoMutation,
     ...TagMutation,
     ...NurseryOwnerMutation,
+    ...CategoryMutation,
   },
   Customer: CustomerResolvers,
   User: UserResolvers,
@@ -201,5 +211,6 @@ export const resolvers = {
   Promo: PromoResolvers,
   Tag: TagResolvers,
   NurseryOwner: NurseryOwnerResolvers,
+  Category: CategoryResolvers,
   ...UnionResolvers,
 };

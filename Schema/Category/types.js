@@ -10,8 +10,8 @@ export const CategoryTypes = `
     }
 
     extend type Query {
-        categories(): [Category!]!
-        category(id: ID!): category!
+        categories: [Category!]
+        category(id: ID!): Category!
     }
 
     input CategoryCreateInput {
@@ -28,7 +28,7 @@ export const CategoryTypes = `
 
     extend type Mutation {
         categoryCreate(data: CategoryCreateInput!): Category!
-        categoryUpdate(id: ID!, CategoryUpdateInput!): Category!
+        categoryUpdate(id: ID!, data: CategoryUpdateInput!): String!
         categoryDelete(id: ID!): String!
     }
     
