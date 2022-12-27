@@ -9,14 +9,10 @@ export const CategoryMutation = {
 
   categoryUpdate: async (_, args) => {
     const { id, data } = args;
-    const category = await CategoryModel.findByIdAndUpdate(
-      id,
-      {
-        $set: data,
-      },
-      { new: true }
-    );
-    return category;
+    await CategoryModel.findByIdAndUpdate(id, {
+      $set: data,
+    });
+    return "Category updated successfully";
   },
 
   categoryDelete: async (_, args) => {
