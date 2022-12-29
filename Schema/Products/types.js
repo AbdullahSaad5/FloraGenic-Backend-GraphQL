@@ -46,12 +46,12 @@ export const ProductTypes = `
     input ProductUpdateInput {
         name: String
         description: String
-        category: String
+        category: ID
         retailPrice: Float
         wholesalePrice: Float
         stock: Int
         images: [String]
-        tags: [ID!]
+        tags: [String!]
     }
 
     extend type Mutation {
