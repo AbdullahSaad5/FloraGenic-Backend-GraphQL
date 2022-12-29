@@ -2,6 +2,7 @@ export const ProductTypes = `
     type Product {
         id: ID!
         nurseryID: ID!
+        nursery: Nursery!
         name: String!
         description: String!
         category: String!
