@@ -67,7 +67,7 @@ const orderSchema = new Schema({
   },
 });
 
-orderSchema.pre("save", async function (next) {
+orderSchema.pre("validate", async function (next) {
   this.totalPrice = 0;
   for (let i = 0; i < this.products.length; i++) {
     const product = await ProductModel.findById(this.products[i].productID);
