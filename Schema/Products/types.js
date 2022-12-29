@@ -44,6 +44,7 @@ export const ProductTypes = `
     }
 
     input ProductUpdateInput {
+        nurseryID: ID
         name: String
         description: String
         category: ID
