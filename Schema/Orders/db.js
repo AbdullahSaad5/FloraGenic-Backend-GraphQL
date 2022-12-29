@@ -7,23 +7,17 @@ const orderSchema = new Schema({
     ref: "User",
     required: true,
   },
-  // products: [
-  //   {
-  //     productID: {
-  //       type: Schema.Types.ObjectId,
-  //       ref: "Product",
-  //       required: true,
-  //     },
-  //     quantity: {
-  //       type: Number,
-  //       required: true,
-  //     },
-  //   },
-  // ],
   products: [
     {
-      type: Schema.Types.ObjectId,
-      ref: "CartItem",
+      productID: {
+        type: Schema.Types.ObjectId,
+        ref: "Product",
+        required: true,
+      },
+      quantity: {
+        type: Number,
+        required: true,
+      },
     },
   ],
   totalPrice: {
@@ -65,11 +59,19 @@ const orderSchema = new Schema({
   paymentStatus: {
     type: String,
     required: true,
+    default: "Pending",
   },
   orderStatus: {
     type: String,
     required: true,
+    default: "Pending",
   },
+});
+
+orderSchema.pre("save", function (next) {
+  this.totalPriceAfterDiscount =
+    this.totalPrice - (this.totalPrice * this.discount) / 100;
+  next();
 });
 
 export const OrderModel = mongoose.model("Order", orderSchema);

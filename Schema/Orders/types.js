@@ -40,7 +40,6 @@ export const OrderTypes = `
         products: [ProductOrderCreateInput!]!
         totalPrice: Float!
         discount: Float!
-        totalPriceAfterDiscount: Float!
         shippingAddress: String!
         paymentID: ID!
         paymentStatus: String!
@@ -50,7 +49,6 @@ export const OrderTypes = `
     input OrderUpdateInput {
         totalPrice: Float
         discount: Float
-        totalPriceAfterDiscount: Float
         shipmentDate: String
         receivedDate: String
         paymentStatus: String
@@ -64,7 +62,7 @@ export const OrderTypes = `
 
     extend type Mutation {
         orderCreate(input: OrderCreateInput): Order!
-        orderUpdate(id: ID!, input: OrderUpdateInput): Order!
+        orderUpdate(id: ID!, input: OrderUpdateInput): String!
         orderDelete(id: ID!): Order!
     }
 `;
