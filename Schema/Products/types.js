@@ -5,7 +5,7 @@ export const ProductTypes = `
         nursery: Nursery!
         name: String!
         description: String!
-        category: String!
+        category: Category!
         hidden: Boolean!
         retailPrice: Float!
         wholesalePrice: Float!
