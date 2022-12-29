@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { ProductModel } from "../Products/db.js";
 const Schema = mongoose.Schema;
 
 const orderSchema = new Schema({
@@ -44,12 +45,10 @@ const orderSchema = new Schema({
   shipmentDate: {
     type: Date,
     default: null,
-    required: true,
   },
   receivedDate: {
     type: Date,
     default: null,
-    default: Date.now,
   },
   paymentID: {
     type: Schema.Types.ObjectId,
@@ -68,9 +67,16 @@ const orderSchema = new Schema({
   },
 });
 
-orderSchema.pre("save", function (next) {
+orderSchema.pre("save", async function (next) {
+  this.totalPrice = 0;
+  for (let i = 0; i < this.products.length; i++) {
+    const product = await ProductModel.findById(this.products[i].productID);
+    this.totalPrice += product.retailPrice * this.products[i].quantity;
+  }
+
   this.totalPriceAfterDiscount =
     this.totalPrice - (this.totalPrice * this.discount) / 100;
+
   next();
 });
 

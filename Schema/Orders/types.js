@@ -38,12 +38,11 @@ export const OrderTypes = `
     input OrderCreateInput {
         customerID: ID!
         products: [ProductOrderCreateInput!]!
-        totalPrice: Float!
         discount: Float!
         shippingAddress: String!
         paymentID: ID!
-        paymentStatus: String!
-        orderStatus: String!
+        paymentStatus: String
+        orderStatus: String
     }
 
     input OrderUpdateInput {
