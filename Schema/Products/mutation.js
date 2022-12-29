@@ -8,16 +8,10 @@ export const ProductMutation = {
   },
   productUpdate: async (parent, args) => {
     const { id, data } = args;
-    const product = await ProductModel.findByIdAndUpdate(
-      id,
-      {
-        $set: data,
-      },
-      {
-        new: true,
-      }
-    );
-    return product;
+    await ProductModel.findByIdAndUpdate(id, {
+      $set: data,
+    });
+    return "Product updated Successfully";
   },
   productDelete: async (parent, args) => {
     const { id } = args;

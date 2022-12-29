@@ -56,7 +56,7 @@ export const ProductTypes = `
 
     extend type Mutation {
         productCreate(data: ProductCreateInput!): Product!
-        productUpdate(id: ID!, data: ProductUpdateInput!): Product!
+        productUpdate(id: ID!, data: ProductUpdateInput!): String!
         productDelete(id: ID!): String!
         productHide(id: ID!): String!
     }
