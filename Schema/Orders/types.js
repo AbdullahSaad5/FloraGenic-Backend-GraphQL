@@ -30,7 +30,7 @@ export const OrderTypes = `
 
 
     extend type Query {
-        orders(input: ProductGetInput): [Order!]!
+        orders: [Order!]!
         order(id: ID!): Order!
     }
 

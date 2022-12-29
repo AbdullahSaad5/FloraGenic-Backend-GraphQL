@@ -2,19 +2,20 @@ import { OrderModel } from "./db.js";
 
 export const OrderQuery = {
   orders: async (_, args) => {
-    const { customerID, productID } = args.input || {};
-    const orders = await OrderModel.find({
-      $or: [
-        { customerID },
-        {
-          products: {
-            $elemMatch: {
-              productID,
-            },
-          },
-        },
-      ],
-    });
+    // const { customerID, productID } = args?.input;
+    // const orders = await OrderModel.find({
+    //   $or: [
+    //     { customerID },
+    //     {
+    //       products: {
+    //         $elemMatch: {
+    //           productID,
+    //         },
+    //       },
+    //     },
+    //   ],
+    // });
+    const orders = await OrderModel.find();
     return orders;
   },
   order: async (_, args) => {
