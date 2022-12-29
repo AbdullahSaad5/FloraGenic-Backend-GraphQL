@@ -8,8 +8,8 @@ export const OrderTypes = `
         totalPriceAfterDiscount: Float!
         shippingAddress: String!
         orderingDate: String!
-        shipmentDate: String!
-        receivedDate: String!
+        shipmentDate: String
+        receivedDate: String
         paymentID: Payment!
         paymentStatus: String!
         orderStatus: String!
