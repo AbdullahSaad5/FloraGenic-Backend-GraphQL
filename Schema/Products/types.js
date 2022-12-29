@@ -33,13 +33,13 @@ export const ProductTypes = `
         nurseryID: ID!
         name: String!
         description: String!
-        category: String!
+        category: ID!
         hidden: Boolean
         retailPrice: Float!
         wholesalePrice: Float!
         stock: Int!
-        images: [String!]!
-        tags: [ID!]!
+        images: [String!]
+        tags: [String!]!
     }
 
     input ProductUpdateInput {

@@ -16,7 +16,9 @@ const productSchema = new Schema({
     required: true,
   },
   category: {
-    type: String,
+    // type: String,
+    type: Schema.Types.ObjectId,
+    ref: "Category",
     required: true,
   },
   hidden: {
@@ -50,8 +52,9 @@ const productSchema = new Schema({
   },
   tags: [
     {
-      type: Schema.Types.ObjectId,
-      ref: "Tag",
+      // type: Schema.Types.ObjectId,
+      // ref: "Tag",
+      type: String,
       required: true,
     },
   ],
