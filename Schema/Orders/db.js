@@ -39,7 +39,7 @@ const orderSchema = new Schema({
   },
   orderingDate: {
     type: Date,
-    default: Date.now,
+    default: Date.now(),
     immutable: true,
   },
   shipmentDate: {

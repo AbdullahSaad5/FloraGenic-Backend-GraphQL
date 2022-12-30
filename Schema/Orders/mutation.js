@@ -15,7 +15,7 @@ export const OrderMutation = {
 
   orderDelete: async (_, args) => {
     const { id } = args;
-    const order = await OrderModel.findByIdAndDelete(id);
-    return order;
+    await OrderModel.findByIdAndDelete(id);
+    return "Order Deleted Successfully";
   },
 };

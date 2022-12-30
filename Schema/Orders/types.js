@@ -62,6 +62,6 @@ export const OrderTypes = `
     extend type Mutation {
         orderCreate(input: OrderCreateInput): Order!
         orderUpdate(id: ID!, input: OrderUpdateInput): String!
-        orderDelete(id: ID!): Order!
+        orderDelete(id: ID!): String!
     }
 `;
