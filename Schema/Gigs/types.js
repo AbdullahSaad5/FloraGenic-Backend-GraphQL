@@ -1,36 +1,9 @@
 export const GigTypes = `
     type Gig{
         id: ID!
-        gardenerID: ID!
         name: String!
         description: String!
-        type: String!
-        images: [String!]
-        packages: [Package!]!
-        overallRating: Float!
-        gardenerDetails: Gardener!
-        reviews: [Review!]!
-    }
-
-    type Package{
-        name: String!
-        description: String!
-        price: Float!
-        deliverWithinDays: Int!
-    }
-
-    input PackageCreateInput{
-        name: String!
-        description: String!
-        price: Float!
-        deliverWithinDays: Int!
-    }
-
-    input PackageUpdateInput{
-        name: String
-        description: String
-        price: Float
-        deliverWithinDays: Int
+        image: String!
     }
 
     extend type Query{
@@ -40,20 +13,15 @@ export const GigTypes = `
     }
 
     input GigCreateInput {
-        gardenerID: ID!
         name: String!
         description: String!
-        type: String!
-        images: [String!]!
-        packages: [PackageCreateInput!]!
+        image: String!
     }
 
     input GigUpdateInput {
         name: String
         description: String
-        type: String
-        images: [String!]
-        packages: [PackageUpdateInput!]
+        image: String
     }
 
     extend type Mutation {
