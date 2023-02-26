@@ -2,7 +2,9 @@ import { GigModel } from "./db.js";
 
 export const GigQuery = {
   gigs: async (_, args) => {
-    const gigs = await GigModel.find();
+    const gigs = await GigModel.find({
+      hidden: false,
+    });
     return gigs;
   },
   gig: async (_, args) => {
@@ -17,6 +19,7 @@ export const GigQuery = {
         { name: { $regex: search, $options: "i" } },
         { description: { $regex: search, $options: "i" } },
       ],
+      hidden: false,
     });
     return gigs;
   },

@@ -7,7 +7,7 @@ export const GigTypes = `
     }
 
     extend type Query{
-        gigs(gardenerID: ID): [Gig!]!
+        gigs: [Gig!]!
         gig(id: ID!): Gig!
         gigSearch(search: String!): [Gig!]!
     }

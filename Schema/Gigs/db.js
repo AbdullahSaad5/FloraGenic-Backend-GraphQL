@@ -14,6 +14,10 @@ const gigSchema = new Schema({
     type: String,
     required: true,
   },
+  hidden: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 export const GigModel = mongoose.model("Gig", gigSchema);
