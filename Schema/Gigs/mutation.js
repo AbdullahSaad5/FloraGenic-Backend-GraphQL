@@ -13,18 +13,18 @@ export const GigMutation = {
       { $set: input },
       { new: true }
     );
-    return gig;
+    return "Gig updated successfully";
   },
   gigDelete: async (_, args) => {
     const { id } = args;
     await GigModel.findByIdAndDelete(id);
-    return true;
+    return "Gig deleted successfully";
   },
   gigHide: async (_, args) => {
     const { id } = args;
     const gig = await GigModel.findById(id);
     gig.hidden = true;
     await gig.save();
-    return true;
+    return "Gig hidden successfully";
   },
 };

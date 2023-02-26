@@ -4,6 +4,7 @@ export const GigTypes = `
         name: String!
         description: String!
         image: String!
+        hidden: Boolean!
     }
 
     extend type Query{
@@ -26,8 +27,8 @@ export const GigTypes = `
 
     extend type Mutation {
         gigCreate(input: GigCreateInput!): Gig!
-        gigUpdate(id: ID!, input: GigUpdateInput!): Gig!
-        gigDelete(id: ID!): Boolean!
-        gigHide(id: ID!): Boolean!
+        gigUpdate(id: ID!, input: GigUpdateInput!): String!
+        gigDelete(id: ID!): String!
+        gigHide(id: ID!): String!
     }
 `;
