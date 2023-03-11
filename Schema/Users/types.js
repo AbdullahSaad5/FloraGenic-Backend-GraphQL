@@ -24,12 +24,8 @@ export const UserTypes = `
     }
 
     extend type Query{
-        loginCustomer(credentials: UserLoginInput!): User
-        loginAdmin(credentials: UserLoginInput!): User
-        loginGardener(credentials: UserLoginInput!): User
         users: [User!]
         user(id: ID!): User
-        sendResetEmail(email: String!): String!
     }
 
     input UserRegisterInput {
@@ -43,7 +39,6 @@ export const UserTypes = `
         password: String
         userType: String
     }
-
 
     extend type Mutation{
         login(credentials: UserLoginInput!): User
@@ -67,9 +62,3 @@ export const UserTypes = `
         blockUser(id: ID!): String!
     }
 `;
-
-// TODO Add this after
-// registerNursery(credentials: UserRegisterInput!, details: NurseryData): String!
-// loginNursery(credentials: UserLoginInput!):User
-// loginAdmin(credentials: UserLoginInput!):User
-// loginGardener(credentials: UserLoginInput!):User

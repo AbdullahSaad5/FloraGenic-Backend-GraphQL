@@ -254,75 +254,36 @@ export const UserMutation = {
 
   updateGardener: async (_, args) => {
     const { id, details } = args;
-    const session = await db.startSession();
-    try {
-      session.startTransaction();
-      const user = await UserModel.findById(id, null, { session });
-      if (!user) {
-        throw new ApolloError("User not found");
-      }
-      await GardenerModel.findOneAndUpdate(
-        { userID: id },
-        { $set: details },
-        { session }
-      );
-      await session.commitTransaction();
-      return "Gardener details updated successfully";
-    } catch (err) {
-      await session.abortTransaction();
-      throw new ApolloError(err);
-    } finally {
-      session.endSession();
+
+    const user = await UserModel.findById(id, null, { session });
+    if (!user) {
+      throw new ApolloError("Error: User not found on the provided ID");
     }
+    await GardenerModel.findOneAndUpdate({ userID: id }, { $set: details });
+    return "Gardener details updated successfully";
   },
 
   updateNurseryOwner: async (_, args) => {
     const { id, details } = args;
-    const session = await db.startSession();
-    try {
-      session.startTransaction();
-      const user = await UserModel.findById(id, null, { session });
-      if (!user) {
-        throw new ApolloError("User not found");
-      }
-      await NurseryOwnerModel.findOneAndUpdate(
-        { userID: id },
-        { $set: details },
-        { session }
-      );
-      await session.commitTransaction();
-      return "User updated successfully";
-    } catch (err) {
-      await session.abortTransaction();
-      throw new ApolloError(err);
-    } finally {
-      session.endSession();
+
+    const user = await UserModel.findById(id, null);
+    if (!user) {
+      throw new ApolloError("Error: User not found on the provided ID");
     }
+    await NurseryOwnerModel.findOneAndUpdate({ userID: id }, { $set: details });
+    return "Nursery owner details updated successfully";
   },
 
   updateCustomer: async (_, args) => {
     const { id, details } = args;
-    const session = await db.startSession();
-    try {
-      session.startTransaction();
-      const user = await UserModel.findById(id, null, { session });
-      if (!user) {
-        throw new ApolloError("User not found");
-      }
 
-      await CustomerModel.findOneAndUpdate(
-        { userID: id },
-        { $set: details },
-        { session }
-      );
-      await session.commitTransaction();
-      return "User updated successfully";
-    } catch (err) {
-      await session.abortTransaction();
-      throw new ApolloError(err);
-    } finally {
-      session.endSession();
+    const user = await UserModel.findById(id, null);
+    if (!user) {
+      throw new ApolloError("Error: User not found on the provided ID");
     }
+
+    await CustomerModel.findOneAndUpdate({ userID: id }, { $set: details });
+    return "Customer details updated successfully";
   },
 
   addCustomer: async (_, args) => {
@@ -330,7 +291,7 @@ export const UserMutation = {
       userID: args.userID,
       ...args.details,
     });
-    return "User created successfully";
+    return "Customer added successfully";
   },
 
   requestPasswordReset: async (_, args) => {
@@ -372,28 +333,46 @@ export const UserMutation = {
 
   deleteUser: async (_, args) => {
     const { id } = args;
-    const user = await UserModel.findById(id);
-    if (!user) {
-      throw new Error("User not found");
+    const session = await db.startSession();
+    try {
+      session.startTransaction();
+      const user = await UserModel.findById(id);
+      if (!user) {
+        throw new Error("Error: User not found on the provided ID");
+      }
+      await user.remove({ session });
+      switch (user.userType) {
+        case "Customer":
+          await CustomerModel.findOneAndDelete(
+            { userID: user._id },
+            { session }
+          );
+          break;
+        case "Admin":
+          await AdminModel.findOneAndDelete({ userID: user._id }, { session });
+          break;
+        case "Gardener":
+          await GardenerModel.findOneAndDelete(
+            { userID: user._id },
+            { session }
+          );
+          break;
+        case "NurseryOwner":
+          await NurseryOwnerModel.findOneAndDelete(
+            { userID: user._id },
+            { session }
+          );
+          break;
+        default:
+          throw new ApolloError("Error: Invalid user type");
+      }
+      return "User deleted successfully";
+    } catch (err) {
+      await session.abortTransaction();
+      throw new ApolloError(err);
+    } finally {
+      session.endSession();
     }
-    await user.remove();
-    switch (user.userType) {
-      case "Customer":
-        await CustomerModel.findOneAndDelete({ userID: user._id });
-        break;
-      case "Admin":
-        await AdminModel.findOneAndDelete({ userID: user._id });
-        break;
-      case "Gardener":
-        await GardenerModel.findOneAndDelete({ userID: user._id });
-        break;
-      case "NurseryOwner":
-        await NurseryOwnerModel.findOneAndDelete({ userID: user._id });
-        break;
-      default:
-        throw new ApolloError("User type not found");
-    }
-    return "User deleted successfully";
   },
 
   blockUser: async (_, args) => {
