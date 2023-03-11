@@ -1,15 +1,15 @@
-import { ApolloServer } from "apollo-server-express";
 import {
   ApolloServerPluginDrainHttpServer,
   ApolloServerPluginLandingPageLocalDefault,
 } from "apollo-server-core";
+import { ApolloServer } from "apollo-server-express";
+import cors from "cors";
+import dotenv from "dotenv";
 import express from "express";
 import http from "http";
-import mongoose from "mongoose";
 import morgan from "morgan";
+import db from "./connection.js";
 import { resolvers, typeDefs } from "./Schema/index.js";
-import dotenv from "dotenv";
-import cors from "cors";
 dotenv.config();
 
 async function startApolloServer(typeDefs, resolvers) {
@@ -30,9 +30,9 @@ async function startApolloServer(typeDefs, resolvers) {
     ],
   });
 
-  //   starting mongoose connection
-  await mongoose.connect(process.env.MONGO_DB_URI);
-  console.log("mongoose connected");
+  // Connect to MongoDB
+  db.on("error", (error) => console.error(error));
+  db.once("open", () => console.log("Connected to Mongoose"));
 
   // Staring server
   await server.start();

@@ -1,3 +1,5 @@
+import { ApolloError } from "apollo-server-core";
+import { ProductModel } from "../Products/db.js";
 import { TagModel } from "./db.js";
 
 export const TagMutation = {
@@ -11,6 +13,14 @@ export const TagMutation = {
     return tag;
   },
   tagDelete: async (_, { id }) => {
+    const products = await ProductModel.find({
+      tags: { $in: [id] },
+    });
+    if (products.length > 0) {
+      throw new ApolloError(
+        "Tag is in use. Please remove it from products first."
+      );
+    }
     const tag = await TagModel.findByIdAndDelete(id);
     return tag;
   },

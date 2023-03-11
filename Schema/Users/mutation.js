@@ -1,5 +1,6 @@
 import { ApolloError } from "apollo-server-core";
 import jwt from "jsonwebtoken";
+import db from "../../connection.js";
 import { AdminModel } from "../Admins/db.js";
 import { CustomerModel } from "../Customers/db.js";
 import { GardenerModel } from "../Gardeners/db.js";
@@ -7,20 +8,20 @@ import { NurseryOwnerModel } from "../NurseryOwner/db.js";
 import { UserModel } from "./db.js";
 
 export const UserMutation = {
-  loginCustomer: async (_, args) => {
+  login: async (_, args) => {
     const { email, password, userType } = args.credentials;
     const user = await UserModel.findOne({ email, userType });
     if (!user) {
-      throw new ApolloError("Invalid Credentials. User not found");
+      throw new ApolloError("Error: Invalid Credentials. Please try again");
     }
     const isMatch = await user.comparePassword(password);
     console.log(!isMatch);
     if (!isMatch) {
-      throw new ApolloError("Incorrect Password. Please try again");
+      throw new ApolloError("Error: Incorrect Password. Please try again");
     }
     if (user.bannedStatus) {
       throw new ApolloError(
-        "User is banned by the admin. Please contact admin"
+        "Error: Your account has been banned. Please contact the admin"
       );
     }
     let userDetails;
@@ -38,7 +39,7 @@ export const UserMutation = {
         userDetails = await NurseryOwnerModel.findOne({ userID: user._id });
         break;
       default:
-        throw new ApolloError("User type not found");
+        throw new ApolloError("Error: Invalid User Type. Please try again");
     }
 
     const token = jwt.sign(
@@ -49,7 +50,7 @@ export const UserMutation = {
       },
       process.env.JWT_SECRET_KEY,
       {
-        expiresIn: "1d",
+        expiresIn: "30d",
       }
     );
 
@@ -61,126 +62,267 @@ export const UserMutation = {
       details: userDetails,
       token,
     };
-    console.log(data);
     return data;
   },
 
   register: async (_, args) => {
-    const { email, password, userType } = args.credentials;
-    const alreadyExists = await UserModel.findOne({
-      email,
-      userType,
-    });
-    if (alreadyExists) {
-      throw new ApolloError("User already exists");
+    const { email, userType } = args.credentials;
+    const session = await db.startSession();
+    try {
+      session.startTransaction();
+      const alreadyExists = await UserModel.findOne({ email, userType }, null, {
+        session,
+      });
+
+      if (alreadyExists) {
+        throw new ApolloError("Error: User already exists with this email");
+      }
+
+      await UserModel.create([args.credentials], { session });
+      await session.commitTransaction();
+      return "Congratulations! You have successfully registered";
+    } catch (err) {
+      console.log(err);
+      await session.abortTransaction();
+      throw new ApolloError(err);
+    } finally {
+      session.endSession();
     }
-    await UserModel.create(args.credentials);
-    return "User created successfully";
   },
 
   registerCustomer: async (_, args) => {
-    const user = await UserModel.create(args.credentials);
-    await CustomerModel.create({
-      userID: user.id,
-      ...args.details,
-    });
-    return "User created successfully";
+    const { email, userType } = args.credentials;
+    const session = await db.startSession();
+    try {
+      session.startTransaction();
+      const alreadyExists = UserModel.findOne({ email, userType }, null, {
+        session,
+      });
+
+      if (alreadyExists) {
+        throw new ApolloError("Error: User already exists with this email");
+      }
+
+      const user = await UserModel.create([args.credentials], { session });
+      await CustomerModel.create(
+        [
+          {
+            userID: user[0]._id,
+            ...args.details,
+          },
+        ],
+        { session }
+      );
+      await session.commitTransaction();
+      return "The customer has been registered successfully";
+    } catch (err) {
+      console.log(err);
+      await session.abortTransaction();
+      throw new ApolloError(err);
+    } finally {
+      session.endSession();
+    }
   },
 
   registerAdmin: async (_, args) => {
-    const user = await UserModel.create(args.credentials);
-    await AdminModel.create({
-      userID: user.id,
-      ...args.details,
-    });
-    return "User created successfully";
+    const { email, userType } = args.credentials;
+    const session = await db.startSession();
+    try {
+      session.startTransaction();
+
+      const alreadyExists = await UserModel.findOne({ email, userType }, null, {
+        session,
+      });
+
+      if (alreadyExists) {
+        throw new ApolloError("Error: User already exists with this email");
+      }
+
+      const user = await UserModel.create([args.credentials], { session });
+      await AdminModel.create(
+        [
+          {
+            userID: user[0]._id,
+            ...args.details,
+          },
+        ],
+        { session }
+      );
+      return "The admin has been registered successfully";
+    } catch (err) {
+      console.log(err);
+      await session.abortTransaction();
+      throw new ApolloError(err);
+    } finally {
+      session.endSession();
+    }
   },
 
   registerGardener: async (_, args) => {
-    const user = await UserModel.create(args.credentials);
-    await GardenerModel.create({
-      userID: user.id,
-      ...args.details,
-    });
-    return "User created successfully";
+    const { email, userType } = args.credentials;
+    const session = await db.startSession();
+    try {
+      session.startTransaction();
+      const alreadyExists = await UserModel.findOne({ email, userType }, null, {
+        session,
+      });
+
+      if (alreadyExists) {
+        throw new ApolloError("Error: User already exists with this email");
+      }
+
+      const user = await UserModel.create([args.credentials], { session });
+      await GardenerModel.create(
+        [
+          {
+            userID: user.id,
+            ...args.details,
+          },
+        ],
+        { session }
+      );
+      await session.commitTransaction();
+      return "The gardener has been registered successfully";
+    } catch (err) {
+      console.log(err);
+      await session.abortTransaction();
+      throw new ApolloError(err);
+    } finally {
+      session.endSession();
+    }
   },
 
   registerNurseryOwner: async (_, args) => {
-    const user = await UserModel.create(args.credentials);
-    await NurseryOwnerModel.create({
-      userID: user.id,
-      ...args.details,
-    });
-    return "User created successfully";
+    const session = await db.startSession();
+    try {
+      session.startTransaction();
+      const alreadyExists = await UserModel.findOne(
+        {
+          email: args.credentials.email,
+          userType: args.credentials.userType,
+        },
+        null,
+        { session }
+      );
+      if (alreadyExists) {
+        throw new ApolloError("Error: User with this email already exists");
+      }
+      const user = await UserModel.create([args.credentials], { session });
+      await NurseryOwnerModel.create(
+        [
+          {
+            userID: user[0]._id,
+            ...args.details,
+          },
+        ],
+        { session }
+      );
+      await session.commitTransaction();
+      return "The nursery owner has been registered successfully";
+    } catch (err) {
+      await session.abortTransaction();
+      // Throw an informative error message to the client
+      throw new ApolloError(err);
+    } finally {
+      session.endSession();
+    }
   },
 
   updateAdmin: async (_, args) => {
-    const { id, credentials, details } = args;
-    const user = await UserModel.findById(id);
-    if (!user) {
-      throw new ApolloError("User not found");
+    const { id, details } = args;
+    const session = await db.startSession();
+    try {
+      session.startTransaction();
+      const user = await UserModel.findById(id, null, { session });
+      if (!user) {
+        throw new ApolloError("Error: User not found on the provided ID");
+      }
+      await AdminModel.findOneAndUpdate(
+        { userID: id },
+        { $set: details },
+        { session }
+      );
+      await session.commitTransaction();
+      return "Admin details updated successfully";
+    } catch (err) {
+      await session.abortTransaction();
+      throw new ApolloError(err);
+    } finally {
+      session.endSession();
     }
-    user.userType = credentials.userType;
-    if (credentials.password) {
-      user.password = credentials.password;
-    }
-    await user.save();
-    await AdminModel.findOneAndUpdate({ userID: id }, { $set: { ...details } });
-    return "User updated successfully";
   },
 
   updateGardener: async (_, args) => {
-    const { id, credentials, details } = args;
-    const user = await UserModel.findById(id);
-    if (!user) {
-      throw new ApolloError("User not found");
+    const { id, details } = args;
+    const session = await db.startSession();
+    try {
+      session.startTransaction();
+      const user = await UserModel.findById(id, null, { session });
+      if (!user) {
+        throw new ApolloError("User not found");
+      }
+      await GardenerModel.findOneAndUpdate(
+        { userID: id },
+        { $set: details },
+        { session }
+      );
+      await session.commitTransaction();
+      return "Gardener details updated successfully";
+    } catch (err) {
+      await session.abortTransaction();
+      throw new ApolloError(err);
+    } finally {
+      session.endSession();
     }
-    user.userType = credentials.userType;
-    if (credentials.password) {
-      user.password = credentials.password;
-    }
-    await user.save();
-    await GardenerModel.findOneAndUpdate(
-      { userID: id },
-      { $set: { ...details } }
-    );
-    return "User updated successfully";
   },
 
   updateNurseryOwner: async (_, args) => {
-    const { id, credentials, details } = args;
-    const user = await UserModel.findById(id);
-    if (!user) {
-      throw new ApolloError("User not found");
+    const { id, details } = args;
+    const session = await db.startSession();
+    try {
+      session.startTransaction();
+      const user = await UserModel.findById(id, null, { session });
+      if (!user) {
+        throw new ApolloError("User not found");
+      }
+      await NurseryOwnerModel.findOneAndUpdate(
+        { userID: id },
+        { $set: details },
+        { session }
+      );
+      await session.commitTransaction();
+      return "User updated successfully";
+    } catch (err) {
+      await session.abortTransaction();
+      throw new ApolloError(err);
+    } finally {
+      session.endSession();
     }
-    user.userType = credentials.userType;
-    if (credentials.password) {
-      user.password = credentials.password;
-    }
-    await user.save();
-    await NurseryOwnerModel.findOneAndUpdate(
-      { userID: id },
-      { $set: { ...details } }
-    );
-    return "User updated successfully";
   },
 
   updateCustomer: async (_, args) => {
-    const { id, credentials, details } = args;
-    const user = await UserModel.findById(id);
-    if (!user) {
-      throw new ApolloError("User not found");
+    const { id, details } = args;
+    const session = await db.startSession();
+    try {
+      session.startTransaction();
+      const user = await UserModel.findById(id, null, { session });
+      if (!user) {
+        throw new ApolloError("User not found");
+      }
+
+      await CustomerModel.findOneAndUpdate(
+        { userID: id },
+        { $set: details },
+        { session }
+      );
+      await session.commitTransaction();
+      return "User updated successfully";
+    } catch (err) {
+      await session.abortTransaction();
+      throw new ApolloError(err);
+    } finally {
+      session.endSession();
     }
-    user.userType = credentials.userType;
-    if (credentials.password) {
-      user.password = credentials.password;
-    }
-    await user.save();
-    await CustomerModel.findOneAndUpdate(
-      { userID: id },
-      { $set: { ...details } }
-    );
-    return "User updated successfully";
   },
 
   addCustomer: async (_, args) => {
@@ -191,17 +333,43 @@ export const UserMutation = {
     return "User created successfully";
   },
 
-  resetPassword: async (_, args) => {
-    const { password } = args;
-    const user = await UserModel.findOne({ passwordResetToken: args.token });
+  requestPasswordReset: async (_, args) => {
+    const { email } = args;
+    const user = UserModel.findOne({ email });
     if (!user) {
-      throw new Error("User not found");
+      throw new Error("Error: You are not registered with us");
     }
-    user.password = hash;
-    user.passwordResetToken = null;
+    const token = crypto.randomBytes(20).toString("hex");
+    user.passwordResetToken = token;
+    user.passwordResetExpires = Date.now() + 3600000;
     await user.save();
-    return "Password reset successfully";
+    // Sendgrid email here
+
+    return "Password reset token has been sent to your email";
   },
+
+  resetPassword: async (_, args) => {
+    const { password, token } = args;
+    try {
+      const user = await UserModel.findOne({
+        passwordResetToken: token,
+        passwordResetExpires: { $gt: Date.now() },
+      });
+      if (!user) {
+        throw new Error(
+          "Error: Password reset token is invalid or has expired"
+        );
+      }
+      user.password = password;
+      user.passwordResetToken = undefined;
+      user.passwordResetExpires = undefined;
+      await user.save();
+      return "Password has been reset successfully";
+    } catch (err) {
+      throw new ApolloError(err);
+    }
+  },
+
   deleteUser: async (_, args) => {
     const { id } = args;
     const user = await UserModel.findById(id);
@@ -227,6 +395,7 @@ export const UserMutation = {
     }
     return "User deleted successfully";
   },
+
   blockUser: async (_, args) => {
     const { id } = args;
     const user = await UserModel.findById(id);

@@ -46,19 +46,24 @@ export const UserTypes = `
 
 
     extend type Mutation{
-        loginCustomer(credentials: UserLoginInput!): User
+        login(credentials: UserLoginInput!): User
         register(credentials: UserRegisterInput!): String!
+
         registerCustomer(credentials: UserRegisterInput!, details: CustomerCreateInput!): String!
         registerAdmin(credentials: UserRegisterInput!, details: AdminCreateInput!): String!
         registerGardener(credentials: UserRegisterInput!, details: GardenerCreateInput!): String!
         registerNurseryOwner(credentials: UserRegisterInput!, details: NurseryOwnerCreateInput!): String!
-        updateAdmin(id: ID!, credentials: UserUpdateInput!, details: AdminUpdateInput!): String!
-        updateGardener(id: ID!, credentials: UserUpdateInput!, details: GardenerUpdateInput!): String!
-        updateNurseryOwner(id: ID!, credentials: UserUpdateInput!, details: NurseryOwnerUpdateInput!): String!
-        updateCustomer(id: ID!, credentials: UserUpdateInput!, details: CustomerUpdateInput!): String!
+        
+        updateAdmin(id: ID!, details: AdminUpdateInput!): String!
+        updateGardener(id: ID!, details: GardenerUpdateInput!): String!
+        updateNurseryOwner(id: ID!, details: NurseryOwnerUpdateInput!): String!
+        updateCustomer(id: ID!, details: CustomerUpdateInput!): String!
+        
         addCustomer(userID: ID!, details: CustomerCreateInput!): String!
-        resetPassword(password: String!): String!
         deleteUser(id: ID!): String!
+        
+        requestPasswordReset(email: String!): String!
+        resetPassword(token: String!, password: String!): String!
         blockUser(id: ID!): String!
     }
 `;

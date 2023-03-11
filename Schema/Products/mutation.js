@@ -15,6 +15,10 @@ export const ProductMutation = {
   },
   productDelete: async (parent, args) => {
     const { id } = args;
+    const reviews = await ReviewModel.find({
+      productID: id,
+    });
+
     const product = await ProductModel.findByIdAndDelete(id);
     return "Product deleted";
   },
