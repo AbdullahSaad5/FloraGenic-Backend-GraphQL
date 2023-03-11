@@ -75,4 +75,13 @@ export const NurseryMutation = {
     await nursery.remove();
     return "Nursery deleted successfully";
   },
+
+  nurseryBlock: async (parent, args) => {
+    const { id } = args;
+    const nursery = await NurseryModel.findById(id);
+    if (!nursery) throw new Error("Nursery not found");
+    nursery.blockedStatus = !nursery.blockedStatus;
+    await nursery.save();
+    return "Nursery blocked successfully";
+  },
 };

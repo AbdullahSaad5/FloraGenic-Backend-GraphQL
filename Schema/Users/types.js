@@ -59,6 +59,7 @@ export const UserTypes = `
         addCustomer(userID: ID!, details: CustomerCreateInput!): String!
         resetPassword(password: String!): String!
         deleteUser(id: ID!): String!
+        blockUser(id: ID!): String!
     }
 `;
 

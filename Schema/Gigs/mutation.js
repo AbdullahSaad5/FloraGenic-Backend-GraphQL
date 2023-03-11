@@ -13,6 +13,7 @@ export const GigMutation = {
       { $set: input },
       { new: true }
     );
+    console.log(gig);
     return "Gig updated successfully";
   },
   gigDelete: async (_, args) => {

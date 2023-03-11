@@ -1,10 +1,10 @@
-import { UserModel } from "./db.js";
-import { CustomerModel } from "../Customers/db.js";
-import { AdminModel } from "../Admins/db.js";
-import { NurseryOwnerModel } from "../NurseryOwner/db.js";
 import { ApolloError } from "apollo-server-core";
 import jwt from "jsonwebtoken";
+import { AdminModel } from "../Admins/db.js";
+import { CustomerModel } from "../Customers/db.js";
 import { GardenerModel } from "../Gardeners/db.js";
+import { NurseryOwnerModel } from "../NurseryOwner/db.js";
+import { UserModel } from "./db.js";
 
 export const UserMutation = {
   loginCustomer: async (_, args) => {
@@ -226,5 +226,12 @@ export const UserMutation = {
         throw new ApolloError("User type not found");
     }
     return "User deleted successfully";
+  },
+  blockUser: async (_, args) => {
+    const { id } = args;
+    const user = await UserModel.findById(id);
+    user.bannedStatus = !user.bannedStatus;
+    await user.save();
+    return "User blocked successfully";
   },
 };

@@ -14,6 +14,10 @@ const nurserySchema = new Schema({
     type: String,
     required: true,
   },
+  blockedStatus: {
+    type: Boolean,
+    default: false,
+  },
   openingHours: {
     type: String,
     required: true,

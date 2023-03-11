@@ -4,6 +4,7 @@ export const NurseryTypes = `
         nurseryOwnerID: ID!
         name: String!
         details: String!
+        blockedStatus: Boolean!
         openingHours: String!
         closingHours: String!
         rating: Float!
@@ -20,6 +21,7 @@ export const NurseryTypes = `
         nurseries: [Nursery!]!
         nursery(id: ID!): Nursery
         nurserySearch(search: String!): [Nursery!]!
+        
     }
     input NurseryCreateInput {
         nurseryOwnerID: ID!
@@ -51,5 +53,6 @@ export const NurseryTypes = `
         nurseryCreate(data: NurseryCreateInput!): String!
         nurseryUpdate(id: ID!, data: NurseryUpdateInput!): String!
         nurseryDelete(id: ID!): String!
+        nurseryBlock(id: ID!): String!
     }
 `;
