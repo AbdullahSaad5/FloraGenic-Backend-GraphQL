@@ -14,6 +14,7 @@ export const ProductTypes = `
         images: [String!]!
         overallRating: Float!
         tags: [ID!]!
+        reviews: [Review!]
         createdAt: String!
         updatedAt: String!
     }
