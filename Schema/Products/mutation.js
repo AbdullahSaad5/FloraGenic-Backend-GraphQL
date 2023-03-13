@@ -1,3 +1,5 @@
+import { ApolloError } from "apollo-server-core";
+import db from "../../connection.js";
 import { ProductModel } from "./db.js";
 
 export const ProductMutation = {
@@ -15,24 +17,37 @@ export const ProductMutation = {
   },
   productDelete: async (parent, args) => {
     const { id } = args;
-    const reviews = await ReviewModel.find({
-      productID: id,
-    });
-
-    const product = await ProductModel.findByIdAndDelete(id);
-    return "Product deleted";
+    const session = await db.startSession();
+    try {
+      session.startTransaction();
+      const product = await ProductModel.findById(id, { session });
+      if (!product) {
+        throw new ApolloError("Error: Product not found on the provided ID");
+      }
+      await ReviewModel.deleteMany({ productID: id }, { session });
+      await ProductModel.findByIdAndDelete(id, { session });
+      await session.commitTransaction();
+      return "Product deleted";
+    } catch (err) {
+      await session.abortTransaction();
+      throw new ApolloError(err);
+    } finally {
+      session.endSession();
+    }
   },
   productHide: async (parent, args) => {
     const { id } = args;
-    const product = await ProductModel.findByIdAndUpdate(
-      id,
-      {
-        $set: { hidden: true },
-      },
-      {
-        new: true,
-      }
-    );
-    return "Product hidden";
+
+    const product = await ProductModel.findById(id);
+    if (!product) {
+      throw new ApolloError("Error: Product not found on the provided ID");
+    }
+    await ProductModel.findByIdAndUpdate(id, {
+      $set: { hidden: !product.hidden },
+    });
+
+    const status = product.hidden ? "unhidden" : "hidden";
+
+    return `Product ${status} from the products list on the store`;
   },
 };

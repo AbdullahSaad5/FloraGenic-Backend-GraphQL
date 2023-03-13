@@ -2,9 +2,13 @@ import { ApolloError } from "apollo-server-core";
 import jwt from "jsonwebtoken";
 import db from "../../connection.js";
 import { AdminModel } from "../Admins/db.js";
+import { CartItemModel } from "../CartItems/db.js";
 import { CustomerModel } from "../Customers/db.js";
+import { FavoriteItemModel } from "../FavoriteItems/db.js";
 import { GardenerModel } from "../Gardeners/db.js";
+import { NurseryModel } from "../Nurseries/db.js";
 import { NurseryOwnerModel } from "../NurseryOwner/db.js";
+import { ProductModel } from "../Products/db.js";
 import { UserModel } from "./db.js";
 
 export const UserMutation = {
@@ -343,10 +347,23 @@ export const UserMutation = {
       await user.remove({ session });
       switch (user.userType) {
         case "Customer":
+          await CartItemModel.deleteMany(
+            {
+              userID: user._id,
+            },
+            { session }
+          );
+          await FavoriteItemModel.deleteMany(
+            {
+              userID: user._id,
+            },
+            { session }
+          );
           await CustomerModel.findOneAndDelete(
             { userID: user._id },
             { session }
           );
+
           break;
         case "Admin":
           await AdminModel.findOneAndDelete({ userID: user._id }, { session });
@@ -358,6 +375,43 @@ export const UserMutation = {
           );
           break;
         case "NurseryOwner":
+          // Delete all nurseries, products and reviews of the nursery owner
+          const nurseryOwner = await NurseryOwnerModel
+          .findOne(
+            { userID: user._id },
+            null,
+            { session }
+          );
+          // Delete all nurseries of the nursery owner
+          await NurseryModel.deleteMany(
+            {
+              id: { $in: nurseryOwner.nurseries },
+            },
+            { session }
+          );
+          // Get all products of the nursery owner
+          const products = await ProductModel.find(
+            {
+              nurseryID: { $in: nurseryOwner.nurseries },
+            },
+            null,
+            { session }
+          );
+          // Delete all products of the nursery owner
+          await ProductModel.deleteMany(
+            {
+              nurseryID: { $in: nurseryOwner.nurseries },
+            },
+            { session }
+          );
+          // Delete all reviews of the products
+          await ReviewModel.deleteMany(
+            {
+              productID: { $in: products.map((product) => product._id) },
+            },
+            { session }
+          );
+          // Delete the nursery owner
           await NurseryOwnerModel.findOneAndDelete(
             { userID: user._id },
             { session }
@@ -366,6 +420,7 @@ export const UserMutation = {
         default:
           throw new ApolloError("Error: Invalid user type");
       }
+      await session.commitTransaction();
       return "User deleted successfully";
     } catch (err) {
       await session.abortTransaction();
