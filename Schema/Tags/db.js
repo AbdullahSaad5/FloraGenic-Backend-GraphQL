@@ -16,16 +16,16 @@ const tagSchema = new Schema({
   },
   createdAt: {
     type: Date,
-    default: Date.now,
+    default: new Date(),
   },
   updatedAt: {
     type: Date,
-    default: Date.now,
+    default: new Date(),
   },
 });
 
 tagSchema.pre("findOneAndUpdate", function () {
-  this.update({}, { $set: { updatedAt: Date.now() } });
+  this.update({}, { $set: { updatedAt: new Date()() } });
 });
 
 export const TagModel = mongoose.model("Tag", tagSchema);

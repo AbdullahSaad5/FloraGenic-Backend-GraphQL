@@ -17,12 +17,12 @@ const promoSchema = new Schema({
   startDate: {
     type: Date,
     required: true,
-    default: Date.now,
+    default: new Date(),
   },
   endDate: {
     type: Date,
     required: true,
-    default: Date.now,
+    default: new Date(),
   },
 });
 

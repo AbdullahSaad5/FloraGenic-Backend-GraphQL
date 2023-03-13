@@ -24,12 +24,12 @@ const reviewSchema = new Schema({
   },
   createdAt: {
     type: Date,
-    default: Date.now,
+    default: new Date(),
     immutable: true,
   },
   updatedAt: {
     type: Date,
-    default: Date.now,
+    default: new Date(),
   },
 });
 

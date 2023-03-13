@@ -34,17 +34,17 @@ const customerSchema = new Schema({
   },
   createdAt: {
     type: Date,
-    default: Date.now,
+    default: new Date(),
     immutable: true,
   },
   updatedAt: {
     type: Date,
-    default: Date.now,
+    default: new Date(),
   },
 });
 
 customerSchema.pre("findOneAndUpdate", function (next) {
-  this.update({}, { $set: { updatedAt: Date.now() } });
+  this.update({}, { $set: { updatedAt: new Date()() } });
   next();
 });
 

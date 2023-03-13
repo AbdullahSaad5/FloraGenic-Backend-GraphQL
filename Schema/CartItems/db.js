@@ -18,11 +18,11 @@ const cartItemSchema = new Schema({
   },
   createdAt: {
     type: Date,
-    default: Date.now,
+    default: new Date(),
   },
   updatedAt: {
     type: Date,
-    default: Date.now,
+    default: new Date(),
   },
 });
 

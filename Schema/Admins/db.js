@@ -40,16 +40,16 @@ const adminSchema = new Schema({
   },
   createdAt: {
     type: Date,
-    default: Date.now,
+    default: new Date(),
   },
   updatedAt: {
     type: Date,
-    default: Date.now,
+    default: new Date(),
   },
 });
 
 adminSchema.pre("findOneAndUpdate", function (next) {
-  this.update({}, { $set: { updatedAt: Date.now() } });
+  this.update({}, { $set: { updatedAt: new Date()() } });
   next();
 });
 

@@ -306,7 +306,7 @@ export const UserMutation = {
     }
     const token = crypto.randomBytes(20).toString("hex");
     user.passwordResetToken = token;
-    user.passwordResetExpires = Date.now() + 3600000;
+    user.passwordResetExpires = new Date()() + 3600000;
     await user.save();
     // Sendgrid email here
 
@@ -318,7 +318,7 @@ export const UserMutation = {
     try {
       const user = await UserModel.findOne({
         passwordResetToken: token,
-        passwordResetExpires: { $gt: Date.now() },
+        passwordResetExpires: { $gt: new Date()() },
       });
       if (!user) {
         throw new Error(
@@ -376,8 +376,7 @@ export const UserMutation = {
           break;
         case "NurseryOwner":
           // Delete all nurseries, products and reviews of the nursery owner
-          const nurseryOwner = await NurseryOwnerModel
-          .findOne(
+          const nurseryOwner = await NurseryOwnerModel.findOne(
             { userID: user._id },
             null,
             { session }
