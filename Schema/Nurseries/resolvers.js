@@ -16,4 +16,12 @@ export const NurseryResolvers = {
 
     return products;
   },
+  nurseryOwner: async (parent) => {
+    const nurseryOwner = await NurseryOwnerModel.findOne({
+      nurseries: {
+        $in: [parent._id],
+      },
+    });
+    return nurseryOwner;
+  },
 };

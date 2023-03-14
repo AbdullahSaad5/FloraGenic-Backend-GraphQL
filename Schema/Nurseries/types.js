@@ -16,6 +16,7 @@ export const NurseryTypes = `
         createdAt: String!
         updatedAt: String!
         products: [Product!]!
+        nurseryOwner: NurseryOwner!
     }
 
     extend type Query {
