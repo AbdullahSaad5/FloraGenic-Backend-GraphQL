@@ -23,6 +23,11 @@ const paymentSchema = new Schema({
     type: String,
     required: true,
   },
+  customer: {
+    type: Schema.Types.ObjectId,
+    ref: "Customer",
+    required: true,
+  },
 });
 
 export const PaymentModel = mongoose.model("Payment", paymentSchema);

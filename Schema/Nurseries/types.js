@@ -15,6 +15,7 @@ export const NurseryTypes = `
         images: [String!]
         createdAt: String!
         updatedAt: String!
+        products: [Product!]!
     }
 
     extend type Query {

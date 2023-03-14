@@ -9,4 +9,11 @@ export const NurseryResolvers = {
     if (!nurseryOwner) throw new Error("Nursery Owner not found");
     return nurseryOwner._id;
   },
+  products: async (parent) => {
+    const products = await ProductModel.find({
+      nurseryID: parent._id,
+    });
+
+    return products;
+  },
 };

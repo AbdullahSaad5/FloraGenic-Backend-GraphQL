@@ -1,7 +1,7 @@
-import { CustomerModel } from "../Customers/db.js";
+import { UserModel } from "../Users/db.js";
 
 export const PaymentResolvers = {
-  customerDetails : async (parent) => {
+  customerDetails: async (parent) => {
     return await UserModel.findById(parent.userID);
   },
 };

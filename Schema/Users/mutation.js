@@ -340,7 +340,7 @@ export const UserMutation = {
     const session = await db.startSession();
     try {
       session.startTransaction();
-      const user = await UserModel.findById(id);
+      const user = await UserModel.findById(id, null, { session });
       if (!user) {
         throw new Error("Error: User not found on the provided ID");
       }
@@ -363,8 +363,8 @@ export const UserMutation = {
             { userID: user._id },
             { session }
           );
-
           break;
+
         case "Admin":
           await AdminModel.findOneAndDelete({ userID: user._id }, { session });
           break;
@@ -374,6 +374,7 @@ export const UserMutation = {
             { session }
           );
           break;
+
         case "NurseryOwner":
           // Delete all nurseries, products and reviews of the nursery owner
           const nurseryOwner = await NurseryOwnerModel.findOne(
@@ -416,6 +417,7 @@ export const UserMutation = {
             { session }
           );
           break;
+
         default:
           throw new ApolloError("Error: Invalid user type");
       }
