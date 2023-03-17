@@ -12,7 +12,7 @@ const skillSchema = new Schema({
   },
   hiddenStatus: {
     type: Boolean,
-    required: true,
+    default: false,
   },
 });
 

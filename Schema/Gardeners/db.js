@@ -38,11 +38,17 @@ const gardenerSchema = new Schema({
     required: true,
     default: "https://i.imgur.com/QQHJY9A.png",
   },
-  services: [
+  skills: [
     {
-      type: Schema.Types.ObjectId,
-      ref: "Skill",
-      required: true,
+      skill: {
+        type: Schema.Types.ObjectId,
+        ref: "Skill",
+        required: true,
+      },
+      endorsements: {
+        type: Number,
+        default: 0,
+      },
     },
   ],
   createdAt: {

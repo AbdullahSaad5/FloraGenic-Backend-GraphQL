@@ -33,4 +33,12 @@ export const GardenerMutation = {
 
     return "Gardener blocked successfully";
   },
+  endorseSkill: async (_, args) => {
+    const { gardenerID, skillID } = args;
+    const gardener = await GardenerModel.findById(gardenerID);
+    const skill = gardener.skills.find((skill) => skill.skill == skillID);
+    skill.endorsements += 1;
+    await gardener.save();
+    return "Skill endorsed successfully";
+  },
 };

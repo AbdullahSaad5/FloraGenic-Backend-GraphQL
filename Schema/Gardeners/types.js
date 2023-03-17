@@ -14,6 +14,13 @@ export const GardenerTypes = `
         createdAt: String!
         updatedAt: String!
         userDetails: User!
+        skills: [SkillWithEndorsements!]
+        gigs: [Gig!]
+    }
+
+    type SkillWithEndorsements{
+        skill: Skill!
+        endorsements: Int!
     }
 
     extend type Query{
@@ -30,6 +37,7 @@ export const GardenerTypes = `
         phoneNumber: String!
         CNIC: String!
         image: String
+        skills: [ID!]
     }
 
     input GardenerUpdateInput{
@@ -40,6 +48,7 @@ export const GardenerTypes = `
         phoneNumber: String
         CNIC: String
         image: String
+        skills: [ID!]
     }
     
     extend type Mutation{
@@ -47,5 +56,6 @@ export const GardenerTypes = `
         gardenerUpdate(id: ID!, data: GardenerUpdateInput!): Gardener!
         gardenerDelete(data: ID!): String!
         gardenerBlock(data:ID!): String!
+        endorseSkill(gardenerID: ID!, skillID: ID!): String!
     }
 `;
