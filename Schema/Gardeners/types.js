@@ -8,7 +8,7 @@ export const GardenerTypes = `
         lastName: String!
         gender: String!
         nationality: String!
-        city: String!
+        city: String
         CNIC: String!
         image: String
         createdAt: String!
