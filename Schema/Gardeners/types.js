@@ -8,7 +8,7 @@ export const GardenerTypes = `
         lastName: String!
         gender: String!
         nationality: String!
-        phoneNumber: String!
+        city: String!
         CNIC: String!
         image: String
         createdAt: String!
@@ -33,7 +33,7 @@ export const GardenerTypes = `
         firstName: String!
         lastName: String!
         gender: String!
-        nationality: String!
+        city: String!
         phoneNumber: String!
         CNIC: String!
         image: String
@@ -44,7 +44,7 @@ export const GardenerTypes = `
         firstName: String
         lastName: String
         gender: String
-        nationality: String
+        city: String
         phoneNumber: String
         CNIC: String
         image: String

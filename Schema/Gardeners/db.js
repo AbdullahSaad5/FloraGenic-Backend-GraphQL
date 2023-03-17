@@ -19,7 +19,7 @@ const gardenerSchema = new Schema({
     type: String,
     required: true,
   },
-  nationality: {
+  city: {
     type: String,
     required: true,
   },
