@@ -7,7 +7,7 @@ export const GardenerTypes = `
         firstName: String!
         lastName: String!
         gender: String!
-        phoneNumber: String
+        phoneNumber: String!
         city: String!
         CNIC: String!
         price: Int!
