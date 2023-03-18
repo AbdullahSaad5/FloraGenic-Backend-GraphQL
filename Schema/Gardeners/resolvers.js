@@ -13,7 +13,4 @@ export const GardenerResolvers = {
       };
     });
   },
-  gigs: async (parent) => {
-    return await GigModel.find();
-  },
 };

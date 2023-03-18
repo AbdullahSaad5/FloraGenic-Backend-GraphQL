@@ -7,15 +7,17 @@ export const GardenerTypes = `
         firstName: String!
         lastName: String!
         gender: String!
-        nationality: String!
-        city: String
+        phoneNumber: String
+        city: String!
         CNIC: String!
+        price: Int!
+        rating: Float!
+        experience: Int!
         image: String
         createdAt: String!
         updatedAt: String!
         userDetails: User!
         skills: [SkillWithEndorsements!]
-        gigs: [Gig!]
     }
 
     type SkillWithEndorsements{
@@ -35,6 +37,8 @@ export const GardenerTypes = `
         gender: String!
         city: String!
         phoneNumber: String!
+        price: Int!
+        experience: Int!
         CNIC: String!
         image: String
         skills: [ID!]
@@ -47,6 +51,8 @@ export const GardenerTypes = `
         city: String
         phoneNumber: String
         CNIC: String
+        price: Int
+        experience: Int
         image: String
         skills: [ID!]
     }

@@ -33,11 +33,6 @@ const gardenerSchema = new Schema({
     required: true,
     unique: true,
   },
-  image: {
-    type: String,
-    required: true,
-    default: "https://i.imgur.com/QQHJY9A.png",
-  },
   skills: [
     {
       skill: {
@@ -51,6 +46,28 @@ const gardenerSchema = new Schema({
       },
     },
   ],
+  price: {
+    type: Number,
+    required: true,
+  },
+  duration: {
+    type: String,
+    required: true,
+    enum: ["Hourly", "Daily", "Weekly", "Monthly"],
+  },
+  rating: {
+    type: Number,
+    default: 0,
+  },
+  experience: {
+    type: Number,
+    required: true,
+  },
+  image: {
+    type: String,
+    required: true,
+    default: "https://i.imgur.com/QQHJY9A.png",
+  },
   createdAt: {
     type: Date,
     default: new Date(),
