@@ -27,7 +27,7 @@ export const CategoryMutation = {
     category.hiddenStatus = !category.hiddenStatus;
     await category.save();
     return `Category ${
-      category.hiddenStatus ? "blocked" : "unblocked"
+      category.hiddenStatus ? "hidden" : "unhidden"
     } successfully`;
   },
 };
