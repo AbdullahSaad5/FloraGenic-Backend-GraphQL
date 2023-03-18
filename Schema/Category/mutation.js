@@ -20,4 +20,14 @@ export const CategoryMutation = {
     await CategoryModel.findByIdAndDelete(id);
     return "Category deleted successfully";
   },
+  categoryHide: async (_, args) => {
+    const { id } = args;
+    const category = await CategoryModel.findById(id);
+    if (!category) throw new Error("Category not found");
+    category.hiddenStatus = !category.hiddenStatus;
+    await category.save();
+    return `Category ${
+      category.hiddenStatus ? "blocked" : "unblocked"
+    } successfully`;
+  },
 };

@@ -30,6 +30,7 @@ export const CategoryTypes = `
         categoryCreate(data: CategoryCreateInput!): Category!
         categoryUpdate(id: ID!, data: CategoryUpdateInput!): String!
         categoryDelete(id: ID!): String!
+        categoryHide(id: ID!): String!
     }
     
 `;
