@@ -1,4 +1,5 @@
 import { ApolloError } from "apollo-server-core";
+import { GraphQLError } from "graphql";
 import jwt from "jsonwebtoken";
 import db from "../../connection.js";
 import { AdminModel } from "../Admins/db.js";
@@ -325,7 +326,7 @@ export const UserMutation = {
     }
     const token = crypto.randomBytes(20).toString("hex");
     user.passwordResetToken = token;
-    user.passwordResetExpires = new Date()() + 3600000;
+    user.passwordResetExpires = new Date() + 3600000;
     await user.save();
     // Sendgrid email here
 
@@ -337,7 +338,7 @@ export const UserMutation = {
     try {
       const user = await UserModel.findOne({
         passwordResetToken: token,
-        passwordResetExpires: { $gt: new Date()() },
+        passwordResetExpires: { $gt: new Date() },
       });
       if (!user) {
         throw new Error(

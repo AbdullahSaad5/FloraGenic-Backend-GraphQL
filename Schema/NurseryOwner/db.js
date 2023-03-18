@@ -53,7 +53,7 @@ const nurseryOwnerSchema = new Schema({
 });
 
 nurseryOwnerSchema.pre("findOneAndUpdate", function (next) {
-  this.update({}, { $set: { updatedAt: new Date()() } });
+  this.update({}, { $set: { updatedAt: new Date() } });
   next();
 });
 

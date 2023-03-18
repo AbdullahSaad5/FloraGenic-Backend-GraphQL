@@ -49,7 +49,7 @@ const adminSchema = new Schema({
 });
 
 adminSchema.pre("findOneAndUpdate", function (next) {
-  this.update({}, { $set: { updatedAt: new Date()() } });
+  this.update({}, { $set: { updatedAt: new Date() } });
   next();
 });
 

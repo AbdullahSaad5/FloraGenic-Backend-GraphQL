@@ -25,7 +25,7 @@ const tagSchema = new Schema({
 });
 
 tagSchema.pre("findOneAndUpdate", function () {
-  this.update({}, { $set: { updatedAt: new Date()() } });
+  this.update({}, { $set: { updatedAt: new Date() } });
 });
 
 export const TagModel = mongoose.model("Tag", tagSchema);
