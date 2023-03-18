@@ -8,6 +8,7 @@ const userSchema = new Schema({
     type: String,
     required: true,
     immutable: true,
+    lowercase: true,
   },
   password: {
     type: String,

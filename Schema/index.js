@@ -123,6 +123,8 @@ import {
   CategoryResolvers,
 } from "./Category/index.js";
 
+import { DashboardQuery, DashboardTypes } from "./Dashboard/index.js";
+
 import { UnionResolvers } from "./UnionResolvers.js";
 
 // Remember, we only use gql in this file.
@@ -149,6 +151,7 @@ export const typeDefs = gql`
   ${TagTypes}
   ${NurseryOwnerTypes}
   ${CategoryTypes}
+  ${DashboardTypes}
 `;
 export const resolvers = {
   Query: {
@@ -171,6 +174,7 @@ export const resolvers = {
     ...TagQuery,
     ...NurseryOwnerQuery,
     ...CategoryQuery,
+    ...DashboardQuery,
   },
   Mutation: {
     ...CustomerMutation,

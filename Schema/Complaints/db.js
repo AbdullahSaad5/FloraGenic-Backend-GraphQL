@@ -9,6 +9,7 @@ const complaintSchema = new Schema({
   type: {
     type: String,
     required: true,
+    enum: ["Feedback", "Complaint", "Suggestion", "Bug"],
   },
   title: {
     type: String,
