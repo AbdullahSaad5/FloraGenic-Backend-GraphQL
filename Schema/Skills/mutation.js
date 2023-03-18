@@ -8,14 +8,14 @@ export const SkillMutation = {
   },
   skillUpdate: async (_, args) => {
     const { id, data } = args;
-    const skill = await SkillModel.findByIdAndUpdate(
+    await SkillModel.findByIdAndUpdate(
       id,
       {
         $set: data,
       },
       { new: true }
     );
-    return skill;
+    return "Skill updated successfully";
   },
   skillDelete: async (_, args) => {
     const { id } = args;

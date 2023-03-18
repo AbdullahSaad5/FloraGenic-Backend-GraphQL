@@ -26,7 +26,7 @@ export const SkillTypes = `
 
     extend type Mutation{
         skillCreate(data: SkillCreateInput!): Skill!
-        skillUpdate(id: ID!, data: SkillUpdateInput!): Skill!
+        skillUpdate(id: ID!, data: SkillUpdateInput!): String!
         skillDelete(id: ID!): String!
         skillHide(id: ID!): String!
     }
