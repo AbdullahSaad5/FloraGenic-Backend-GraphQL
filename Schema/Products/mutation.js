@@ -20,7 +20,7 @@ export const ProductMutation = {
     const session = await db.startSession();
     try {
       session.startTransaction();
-      const product = await ProductModel.findById(id, { session });
+      const product = await ProductModel.findById(id, null, { session });
       if (!product) {
         throw new ApolloError("Error: Product not found on the provided ID");
       }
