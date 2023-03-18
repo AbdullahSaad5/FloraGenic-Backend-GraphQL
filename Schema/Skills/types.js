@@ -3,6 +3,7 @@ export const SkillTypes = `
         id: ID!
         name: String!
         description: String!
+        image: String!
     }
 
     extend type Query{
@@ -14,17 +15,20 @@ export const SkillTypes = `
     input SkillCreateInput{
         name: String!
         description: String!
+        image: String!
     }
 
     input SkillUpdateInput{
         name: String
         description: String
+        image: String
     }
 
     extend type Mutation{
         skillCreate(data: SkillCreateInput!): Skill!
         skillUpdate(id: ID!, data: SkillUpdateInput!): Skill!
         skillDelete(id: ID!): String!
+        skillHide(id: ID!): String!
     }
 
 `;

@@ -22,4 +22,12 @@ export const SkillMutation = {
     await SkillModel.findByIdAndDelete(id);
     return "Skill deleted successfully";
   },
+  skillHide: async (_, args) => {
+    const { id } = args;
+    const skill = await SkillModel.findById(id);
+    if (!skill) throw new Error("Skill not found");
+    skill.hiddenStatus = !skill.hiddenStatus;
+    await skill.save();
+    return `Skill ${skill.hiddenStatus ? "hidden" : "unhidden"} successfully`;
+  },
 };
