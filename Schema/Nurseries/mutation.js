@@ -82,6 +82,8 @@ export const NurseryMutation = {
     if (!nursery) throw new Error("Nursery not found");
     nursery.blockedStatus = !nursery.blockedStatus;
     await nursery.save();
-    return "Nursery blocked successfully";
+    return `Nursery ${
+      nursery.blockedStatus ? "blocked" : "unblocked"
+    } successfully`;
   },
 };
