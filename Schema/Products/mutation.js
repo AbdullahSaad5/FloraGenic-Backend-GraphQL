@@ -1,6 +1,7 @@
 import { ApolloError } from "apollo-server-core";
 import db from "../../connection.js";
 import { ProductModel } from "./db.js";
+import { ReviewModel } from "../Reviews/db.js";
 
 export const ProductMutation = {
   productCreate: async (parent, args) => {
