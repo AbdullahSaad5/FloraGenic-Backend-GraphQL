@@ -233,7 +233,7 @@ export const UserMutation = {
   },
 
   updateAdmin: async (_, args) => {
-    const { id, details } = args;
+    const { id, credentials, details } = args;
     const session = await db.startSession();
     try {
       session.startTransaction();
@@ -241,6 +241,11 @@ export const UserMutation = {
       if (!user) {
         throw new ApolloError("Error: User not found on the provided ID");
       }
+      user.userType = credentials.userType;
+      if (credentials.password) {
+        user.password = credentials.password;
+      }
+      await user.save({ session });
       await AdminModel.findOneAndUpdate(
         { userID: id },
         { $set: details },
@@ -257,35 +262,49 @@ export const UserMutation = {
   },
 
   updateGardener: async (_, args) => {
-    const { id, details } = args;
+    const { id, credentials, details } = args;
 
     const user = await UserModel.findById(id, null, { session });
     if (!user) {
       throw new ApolloError("Error: User not found on the provided ID");
     }
+    user.userType = credentials.userType;
+    if (credentials.password) {
+      user.password = credentials.password;
+    }
+    await user.save({ session });
     await GardenerModel.findOneAndUpdate({ userID: id }, { $set: details });
     return "Gardener details updated successfully";
   },
 
   updateNurseryOwner: async (_, args) => {
-    const { id, details } = args;
+    const { id, credentials, details } = args;
 
     const user = await UserModel.findById(id, null);
     if (!user) {
       throw new ApolloError("Error: User not found on the provided ID");
     }
+    user.userType = credentials.userType;
+    if (credentials.password) {
+      user.password = credentials.password;
+    }
+    await user.save({ session });
     await NurseryOwnerModel.findOneAndUpdate({ userID: id }, { $set: details });
     return "Nursery owner details updated successfully";
   },
 
   updateCustomer: async (_, args) => {
-    const { id, details } = args;
+    const { id, credentials, details } = args;
 
     const user = await UserModel.findById(id, null);
     if (!user) {
       throw new ApolloError("Error: User not found on the provided ID");
     }
-
+    user.userType = credentials.userType;
+    if (credentials.password) {
+      user.password = credentials.password;
+    }
+    await user.save({ session });
     await CustomerModel.findOneAndUpdate({ userID: id }, { $set: details });
     return "Customer details updated successfully";
   },
