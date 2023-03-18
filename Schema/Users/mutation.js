@@ -436,6 +436,7 @@ export const UserMutation = {
     const user = await UserModel.findById(id);
     user.bannedStatus = !user.bannedStatus;
     await user.save();
-    return "User blocked successfully";
+
+    return `User ${user.bannedStatus ? "blocked" : "unblocked"} successfully`;
   },
 };
