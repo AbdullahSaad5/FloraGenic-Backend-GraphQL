@@ -90,7 +90,7 @@ export const UserMutation = {
       await session.abortTransaction();
       throw new ApolloError(err);
     } finally {
-      session.endSession();
+      await session.endSession();
     }
   },
 
@@ -124,7 +124,7 @@ export const UserMutation = {
       await session.abortTransaction();
       throw new ApolloError(err);
     } finally {
-      session.endSession();
+      await session.endSession();
     }
   },
 
@@ -158,7 +158,7 @@ export const UserMutation = {
       await session.abortTransaction();
       throw new ApolloError(err);
     } finally {
-      session.endSession();
+      await session.endSession();
     }
   },
 
@@ -192,7 +192,7 @@ export const UserMutation = {
       await session.abortTransaction();
       throw new ApolloError(err);
     } finally {
-      session.endSession();
+      await session.endSession();
     }
   },
 
@@ -228,7 +228,7 @@ export const UserMutation = {
       // Throw an informative error message to the client
       throw new ApolloError(err);
     } finally {
-      session.endSession();
+      await session.endSession();
     }
   },
 
@@ -252,7 +252,7 @@ export const UserMutation = {
       await session.abortTransaction();
       throw new ApolloError(err);
     } finally {
-      session.endSession();
+      await session.endSession();
     }
   },
 
@@ -427,7 +427,7 @@ export const UserMutation = {
       await session.abortTransaction();
       throw new ApolloError(err);
     } finally {
-      session.endSession();
+      await session.endSession();
     }
   },
 

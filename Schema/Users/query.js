@@ -54,13 +54,13 @@ export const UserQuery = {
           user.details = userDetails;
         })
       );
-      session.commitTransaction();
+      await session.commitTransaction();
       return users;
     } catch (err) {
-      session.abortTransaction();
+      await session.abortTransaction();
       throw new ApolloError(err);
     } finally {
-      session.endSession();
+      await session.endSession();
     }
   },
 

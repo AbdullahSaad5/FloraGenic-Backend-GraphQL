@@ -32,7 +32,7 @@ export const ProductMutation = {
       await session.abortTransaction();
       throw new ApolloError(err);
     } finally {
-      session.endSession();
+      await session.endSession();
     }
   },
   productHide: async (parent, args) => {
