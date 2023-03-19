@@ -11,6 +11,7 @@ export const GardenerTypes = `
         city: String!
         CNIC: String!
         price: Int!
+        duration: String!
         rating: Float!
         experience: Int!
         image: String
@@ -38,6 +39,7 @@ export const GardenerTypes = `
         city: String!
         phoneNumber: String!
         price: Int!
+        duration: String!
         experience: Int!
         CNIC: String!
         image: String
@@ -52,6 +54,7 @@ export const GardenerTypes = `
         phoneNumber: String
         CNIC: String
         price: Int
+        duration: String
         experience: Int
         image: String
         skills: [ID!]
