@@ -11,6 +11,7 @@ import { NurseryModel } from "../Nurseries/db.js";
 import { NurseryOwnerModel } from "../NurseryOwner/db.js";
 import { ProductModel } from "../Products/db.js";
 import { UserModel } from "./db.js";
+import jwtDecode from "jwt-decode";
 
 export const UserMutation = {
   login: async (_, args) => {
@@ -31,6 +32,66 @@ export const UserMutation = {
     }
     let userDetails;
     switch (userType) {
+      case "Customer":
+        userDetails = await CustomerModel.findOne({ userID: user._id });
+        break;
+      case "Admin":
+        userDetails = await AdminModel.findOne({ userID: user._id });
+        break;
+      case "Gardener":
+        userDetails = await GardenerModel.findOne({ userID: user._id });
+        break;
+      case "NurseryOwner":
+        userDetails = await NurseryOwnerModel.findOne({ userID: user._id });
+        break;
+      default:
+        throw new ApolloError("Error: Invalid User Type. Please try again");
+    }
+
+    const token = jwt.sign(
+      {
+        id: user._id,
+        userType: user.userType,
+        email: user.email,
+      },
+      process.env.JWT_SECRET_KEY,
+      {
+        expiresIn: "30d",
+      }
+    );
+
+    const data = {
+      id: user._id,
+      email: user.email,
+      userType: user.userType,
+      bannedStatus: user.bannedStatus,
+      details: userDetails,
+      token,
+    };
+    return data;
+  },
+
+  loginWithToken: async (_, args) => {
+    const details = jwtDecode(args.token);
+
+    const email = details.email;
+
+    const user = await UserModel.findOne({ email });
+
+    if (!user) {
+      throw new ApolloError(
+        "Error: You are not registered. Please register to continue!"
+      );
+    }
+
+    if (user.bannedStatus) {
+      throw new ApolloError(
+        "Error: Your account has been banned. Please contact the admin"
+      );
+    }
+
+    let userDetails;
+    switch (user.userType) {
       case "Customer":
         userDetails = await CustomerModel.findOne({ userID: user._id });
         break;

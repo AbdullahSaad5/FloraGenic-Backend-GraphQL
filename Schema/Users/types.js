@@ -41,7 +41,11 @@ export const UserTypes = `
 
     extend type Mutation{
         login(credentials: UserLoginInput!): User
+        loginWithToken(token: String!): User
+
+
         register(credentials: UserRegisterInput!): String!
+        registerWithToken(token: String!): String!
 
         registerCustomer(credentials: UserRegisterInput!, details: CustomerCreateInput!): String!
         registerAdmin(credentials: UserRegisterInput!, details: AdminCreateInput!): String!
