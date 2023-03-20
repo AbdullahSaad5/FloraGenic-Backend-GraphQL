@@ -125,6 +125,8 @@ import {
 
 import { DashboardQuery, DashboardTypes } from "./Dashboard/index.js";
 
+import { StripeTypes, StripeMutation } from "./Stripe/index.js";
+
 import { UnionResolvers } from "./UnionResolvers.js";
 
 // Remember, we only use gql in this file.
@@ -152,6 +154,7 @@ export const typeDefs = gql`
   ${NurseryOwnerTypes}
   ${CategoryTypes}
   ${DashboardTypes}
+  ${StripeTypes}
 `;
 export const resolvers = {
   Query: {
@@ -196,6 +199,7 @@ export const resolvers = {
     ...TagMutation,
     ...NurseryOwnerMutation,
     ...CategoryMutation,
+    ...StripeMutation,
   },
   Customer: CustomerResolvers,
   User: UserResolvers,
