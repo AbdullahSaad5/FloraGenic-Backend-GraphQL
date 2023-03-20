@@ -284,7 +284,7 @@ export const UserMutation = {
       await GardenerModel.create(
         [
           {
-            userID: user.id,
+            userID: user[0]._id,
             ...args.details,
           },
         ],
