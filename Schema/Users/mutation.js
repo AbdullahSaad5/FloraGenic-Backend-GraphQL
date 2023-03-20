@@ -157,7 +157,7 @@ export const UserMutation = {
   },
 
   registerWithToken: async (_, args) => {
-    const { token, userType } = args.credentials;
+    const { token, userType } = args;
     const details = jwtDecode(token);
 
     const session = await db.startSession();
