@@ -156,6 +156,49 @@ export const UserMutation = {
     }
   },
 
+  registerWithToken: async (_, args) => {
+    const { token, userType } = args.credentials;
+    const details = jwtDecode(token);
+
+    const session = await db.startSession();
+    try {
+      session.startTransaction();
+      const alreadyExists = await UserModel.findOne(
+        { email: details.email, userType },
+        null,
+        {
+          session,
+        }
+      );
+
+      if (alreadyExists) {
+        throw new ApolloError("Error: User already exists with this email");
+      }
+
+      await UserModel.create(
+        [
+          {
+            email: details.email,
+            userType,
+          },
+        ],
+        {
+          session,
+          validateBeforeSave: false,
+        }
+      );
+
+      await session.commitTransaction();
+      return "Congratulations! You have successfully registered";
+    } catch (err) {
+      console.log(err);
+      await session.abortTransaction();
+      throw new ApolloError(err);
+    } finally {
+      await session.endSession();
+    }
+  },
+
   registerCustomer: async (_, args) => {
     const { email, userType } = args.credentials;
     const session = await db.startSession();

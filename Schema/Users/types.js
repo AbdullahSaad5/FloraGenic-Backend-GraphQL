@@ -45,7 +45,7 @@ export const UserTypes = `
 
 
         register(credentials: UserRegisterInput!): String!
-        registerWithToken(token: String!): String!
+        registerWithToken(token: String!, userType: String!): String!
 
         registerCustomer(credentials: UserRegisterInput!, details: CustomerCreateInput!): String!
         registerAdmin(credentials: UserRegisterInput!, details: AdminCreateInput!): String!
