@@ -18,7 +18,7 @@ export const GardenerTypes = `
         createdAt: String!
         updatedAt: String!
         userDetails: User!
-        skills: [SkillWithEndorsements!]
+        skills: [Skill]
     }
 
     type SkillWithEndorsements{

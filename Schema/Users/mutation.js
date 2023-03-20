@@ -381,41 +381,9 @@ export const UserMutation = {
 
     const gardener = GardenerModel.findOne({ userID: id });
 
-    const newSkills = details.skills;
-    console.log("newSkills: ", newSkills);
-
-    gardener.skills = gardener.skills || [];
-
-    const exisingSkills = gardener.skills.map((skill) => skill.id);
-    console.log("exisingSkills: ", exisingSkills);
-
-    let newSkillsToAdd = newSkills.filter(
-      (skill) => !exisingSkills.includes(skill.id)
-    );
-    console.log("newSkillsToAdd: ", newSkillsToAdd);
-
-    newSkillsToAdd = newSkillsToAdd.map((skill) => ({
-      id: skill,
-      endorsements: 0,
-    }));
-    console.log("newSkillsToAdd: ", newSkillsToAdd);
-
-    const skillsToRemove = exisingSkills.filter(
-      (skill) => !newSkills.includes(skill.id)
-    );
-    console.log("skillsToRemove: ", skillsToRemove);
-
-    const skills = gardener.skills.filter(
-      (skill) => !skillsToRemove.includes(skill.id)
-    );
-    console.log("skills: ", skills);
-
-    skills.push(...newSkillsToAdd);
-    console.log("skills: ", skills);
-
     await GardenerModel.findOneAndUpdate(
       { userID: id },
-      { $set: { ...details, skills } }
+      { $set: { ...details } }
     );
     return "Gardener details updated successfully";
   },

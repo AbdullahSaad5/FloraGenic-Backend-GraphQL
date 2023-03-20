@@ -7,18 +7,11 @@ export const GardenerResolvers = {
     return await UserModel.findById(parent.userID);
   },
   skills: async (parent) => {
-    const skillsWithEndorsements = await Promise.all(
+    const skills = await Promise.all(
       parent.skills.map(async (skill) => {
-        console.log(skill);
-        const skillPopulated = await SkillModel.findById(skill._id);
-        console.log(skillPopulated);
-        return {
-          skill: skillPopulated,
-          endorsements: skill.endorsements,
-        };
+        return await SkillModel.findById(skill);
       })
     );
-    console.log(skillsWithEndorsements);
-    return skillsWithEndorsements;
+    return skills;
   },
 };

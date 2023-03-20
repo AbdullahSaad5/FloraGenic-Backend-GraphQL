@@ -35,15 +35,9 @@ const gardenerSchema = new Schema({
   },
   skills: [
     {
-      skill: {
-        type: Schema.Types.ObjectId,
-        ref: "Skill",
-        required: true,
-      },
-      endorsements: {
-        type: Number,
-        default: 0,
-      },
+      type: Schema.Types.ObjectId,
+      ref: "Skill",
+      required: true,
     },
   ],
   price: {
