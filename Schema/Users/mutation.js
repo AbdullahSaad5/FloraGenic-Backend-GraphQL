@@ -369,7 +369,7 @@ export const UserMutation = {
   updateGardener: async (_, args) => {
     const { id, credentials, details } = args;
 
-    const user = await UserModel.findById(id, null, { session });
+    const user = await UserModel.findById(id);
     if (!user) {
       throw new ApolloError("Error: User not found on the provided ID");
     }
@@ -377,7 +377,7 @@ export const UserMutation = {
     if (credentials.password) {
       user.password = credentials.password;
     }
-    await user.save({ session });
+    await user.save();
     await GardenerModel.findOneAndUpdate({ userID: id }, { $set: details });
     return "Gardener details updated successfully";
   },
@@ -385,7 +385,7 @@ export const UserMutation = {
   updateNurseryOwner: async (_, args) => {
     const { id, credentials, details } = args;
 
-    const user = await UserModel.findById(id, null);
+    const user = await UserModel.findById(id);
     if (!user) {
       throw new ApolloError("Error: User not found on the provided ID");
     }
@@ -393,7 +393,7 @@ export const UserMutation = {
     if (credentials.password) {
       user.password = credentials.password;
     }
-    await user.save({ session });
+    await user.save();
     await NurseryOwnerModel.findOneAndUpdate({ userID: id }, { $set: details });
     return "Nursery owner details updated successfully";
   },
@@ -401,7 +401,7 @@ export const UserMutation = {
   updateCustomer: async (_, args) => {
     const { id, credentials, details } = args;
 
-    const user = await UserModel.findById(id, null);
+    const user = await UserModel.findById(id);
     if (!user) {
       throw new ApolloError("Error: User not found on the provided ID");
     }
@@ -409,7 +409,7 @@ export const UserMutation = {
     if (credentials.password) {
       user.password = credentials.password;
     }
-    await user.save({ session });
+    await user.save();
     await CustomerModel.findOneAndUpdate({ userID: id }, { $set: details });
     return "Customer details updated successfully";
   },
