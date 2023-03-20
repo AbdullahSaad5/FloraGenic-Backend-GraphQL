@@ -378,7 +378,35 @@ export const UserMutation = {
       user.password = credentials.password;
     }
     await user.save();
-    await GardenerModel.findOneAndUpdate({ userID: id }, { $set: details });
+
+    const gardener = GardenerModel.findOne({ userID: id });
+
+    const newSkills = details.skills;
+
+    const exisingSkills = gardener.skills.map((skill) => skill.id);
+
+    let newSkillsToAdd = newSkills.filter(
+      (skill) => !exisingSkills.includes(skill.id)
+    );
+
+    newSkillsToAdd = newSkillsToAdd.map(
+      (skill) => ({ id: skill }, { endorsements: 0 })
+    );
+
+    const skillsToRemove = exisingSkills.filter(
+      (skill) => !newSkills.includes(skill.id)
+    );
+
+    const skills = gardener.skills.filter(
+      (skill) => !skillsToRemove.includes(skill.id)
+    );
+
+    skills.push(...newSkillsToAdd);
+
+    await GardenerModel.findOneAndUpdate(
+      { userID: id },
+      { $set: { ...details, skills } }
+    );
     return "Gardener details updated successfully";
   },
 
