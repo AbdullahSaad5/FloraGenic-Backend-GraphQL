@@ -1,13 +1,13 @@
 export const ComplaintTypes = `
     type Complaint {
         id: ID!
-        userId: ID
+        name: String!
+        email: String!
         type: String!
         title: String!
         description: String!
         date: String!
         read: Boolean!
-        userDetails: User
     }
 
     extend type Query {
@@ -16,8 +16,9 @@ export const ComplaintTypes = `
         complaintSearch(search: String!): [Complaint!]!
     }
 
-    input ComplaintCreateInput {
-        userId: ID
+    input ComplaintCreateInput {  
+        name: String!
+        email: String!
         type: String!
         title: String!
         description: String!

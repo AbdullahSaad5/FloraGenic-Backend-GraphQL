@@ -2,9 +2,13 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const complaintSchema = new Schema({
-  userId: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
+  name: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
   },
   type: {
     type: String,
