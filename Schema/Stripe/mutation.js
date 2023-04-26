@@ -11,6 +11,7 @@ export const StripeMutation = {
       amount: amount,
       description: "FloraGenic Plant Store",
       automatic_payment_methods: { enabled: true },
+      payment_method_types: ["card"],
     });
 
     return paymentIntent.client_secret;
