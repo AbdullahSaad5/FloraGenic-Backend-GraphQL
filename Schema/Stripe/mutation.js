@@ -10,7 +10,7 @@ export const StripeMutation = {
       currency: "USD",
       amount: amount,
       description: "FloraGenic Plant Store",
-      automatic_payment_methods: { enabled: true },
+      // automatic_payment_methods: { enabled: true },
       payment_method_types: ["card"],
     });
 
