@@ -73,17 +73,17 @@ export const UserQuery = {
     let userDetails;
     switch (user.userType) {
       case "Customer":
-        userDetails = await CustomerModel.findOne({ userID: user._id });
+        userDetails = await CustomerModel.findOne({ userID: user.id });
         console.log(userDetails);
         break;
       case "Admin":
-        userDetails = await AdminModel.findOne({ userID: user._id });
+        userDetails = await AdminModel.findOne({ userID: user.id });
         break;
       case "Gardener":
-        userDetails = await GardenerModel.findOne({ userID: user._id });
+        userDetails = await GardenerModel.findOne({ userID: user.id });
         break;
       case "NurseryOwner":
-        userDetails = await NurseryOwnerModel.findOne({ userID: user._id });
+        userDetails = await NurseryOwnerModel.findOne({ userID: user.id });
         break;
       default:
         throw new ApolloError("User type not found");
