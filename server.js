@@ -1,6 +1,7 @@
 import {
   ApolloServerPluginDrainHttpServer,
   ApolloServerPluginLandingPageLocalDefault,
+  AuthenticationError,
 } from "apollo-server-core";
 import { ApolloServer } from "apollo-server-express";
 import cors from "cors";
@@ -11,16 +12,36 @@ import morgan from "morgan";
 import db from "./connection.js";
 import { resolvers, typeDefs } from "./Schema/index.js";
 dotenv.config();
+import jwt from "jsonwebtoken";
+
+function authMiddleware(req, res, next) {
+  const authHeader = req.headers.authorization;
+  if (authHeader) {
+    const token = authHeader;
+    console.log(token);
+    try {
+      const user = jwt.verify(token, process.env.JWT_SECRET_KEY);
+      req.user = user;
+    } catch (error) {
+      // console.error(error);
+    }
+  }
+  next();
+}
 
 async function startApolloServer(typeDefs, resolvers) {
   const app = express();
-  app.use(morgan("dev"));
   app.use(cors());
+  app.use(authMiddleware);
   const httpServer = http.createServer(app);
   const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: ({ req, res }) => ({ req, res }),
+    context: ({ req }) => {
+      const user = req.user || null;
+      console.log(user);
+      return { user };
+    },
     csrfPrevention: true,
     logger: console,
     cache: "bounded",

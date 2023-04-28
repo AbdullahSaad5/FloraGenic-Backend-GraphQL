@@ -7,7 +7,7 @@ import { NurseryOwnerModel } from "../NurseryOwner/db.js";
 import { UserModel } from "./db.js";
 
 export const UserQuery = {
-  users: async () => {
+  users: async (parent, args, ctx) => {
     const session = await db.startSession();
     try {
       session.startTransaction();
