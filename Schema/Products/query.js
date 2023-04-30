@@ -38,9 +38,12 @@ export const ProductQuery = {
 
     return products;
   },
-  product: async (parent, args) => {
+  product: async (parent, args, context) => {
     const { id } = args;
     let product;
+
+    const userType = context?.user?.userType || "Customer";
+
     if (userType === "NurseryOwner") {
       const nurseyOwner = await NurseryOwnerModel.findOne({
         userID: context.user._id,
