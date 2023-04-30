@@ -39,7 +39,6 @@ async function startApolloServer(typeDefs, resolvers) {
     resolvers,
     context: ({ req }) => {
       const user = req.user || null;
-      console.log(user);
       return { user };
     },
     csrfPrevention: true,

@@ -1,7 +1,9 @@
+import { NurseryModel } from "../Nurseries/db.js";
 import { ProductModel } from "./db.js";
 export const ProductQuery = {
-  products: async (parent, args) => {
+  products: async (parent, args, context) => {
     const query = {};
+    const userType = context.userType || "Customer";
     if (args.data) {
       const { name, description, category } = args.data;
       if (name) {
@@ -15,8 +17,10 @@ export const ProductQuery = {
         query.category = { $regex: category, $options: "i" };
       }
     }
-    console.log(query);
-    const products = await ProductModel.find(query).sort({ name: 1 });
+    if (userType === "NurseryOwner") {
+      const nursery = await NurseryModel.findOne({ owner: context.user._id });
+    }
+    const products = await ProductModel.find({ ...query }).sort({ name: 1 });
     return products;
   },
   product: async (parent, args) => {
