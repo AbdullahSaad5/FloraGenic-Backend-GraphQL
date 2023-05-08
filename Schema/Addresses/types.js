@@ -20,7 +20,7 @@ export const AddressTypes = `
 
     extend type Query {
         address(id: ID!): Address
-        addresses(userID: ID!, model_type: String!): [Address]
+        addresses: [Address]
     }
 
     extend type Mutation {
