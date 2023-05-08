@@ -11,6 +11,7 @@ import { NurseryModel } from "../Nurseries/db.js";
 import { NurseryOwnerModel } from "../NurseryOwner/db.js";
 import { ProductModel } from "../Products/db.js";
 import { UserModel } from "./db.js";
+import { ReviewModel } from "../Reviews/db.js";
 import jwtDecode from "jwt-decode";
 
 export const UserMutation = {
@@ -477,6 +478,12 @@ export const UserMutation = {
       await user.remove({ session });
       switch (user.userType) {
         case "Customer":
+          await ReviewModel.deleteMany(
+            {
+              userID: user._id,
+            },
+            { session }
+          );
           await CartItemModel.deleteMany(
             {
               userID: user._id,
@@ -493,6 +500,7 @@ export const UserMutation = {
             { userID: user._id },
             { session }
           );
+
           break;
 
         case "Admin":
