@@ -1,13 +1,15 @@
 import { AddressModel } from "./db.js";
 
 export const AddressQuery = {
-  addresses: async (parent, args) => {
-    const { userID, model_type } = args;
-    let addresses = [];
-    return await AddressModel.find({ userID, model_type });
+  addresses: async (parent, args, context) => {
+    const { user } = context;
+    const { id: userID } = user;
+    return await AddressModel.find({ userID });
   },
-  address: async (parent, args) => {
+  address: async (parent, args, context) => {
     const { id } = args;
-    return await AddressModel.findById(id);
+    const { user } = context;
+    const { id: userID } = user;
+    return await AddressModel.findOne({ _id: id, userID });
   },
 };

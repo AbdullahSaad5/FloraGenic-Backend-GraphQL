@@ -2,7 +2,6 @@ export const AddressTypes = `
     type Address {
         id: ID!
         userID: ID!
-        model_type: String!
         name: String!
         location: String!
         city: String!
@@ -11,7 +10,6 @@ export const AddressTypes = `
 
     input AddressInput {
         userID: ID!
-        model_type: String!
         name: String!
         location: String!
         city: String!

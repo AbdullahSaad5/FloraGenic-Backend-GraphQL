@@ -2,20 +2,6 @@ import { OrderModel } from "./db.js";
 
 export const OrderQuery = {
   orders: async (_, args, ctx) => {
-    // const { customerID, productID } = args?.input;
-    // const orders = await OrderModel.find({
-    //   $or: [
-    //     { customerID },
-    //     {
-    //       products: {
-    //         $elemMatch: {
-    //           productID,
-    //         },
-    //       },
-    //     },
-    //   ],
-    // });
-
     const userType = ctx?.user?.userType;
 
     if (!userType) throw new Error("You are not authenticated");

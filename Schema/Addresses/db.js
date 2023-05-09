@@ -4,11 +4,7 @@ const Schema = mongoose.Schema;
 const addressSchema = new Schema({
   userID: {
     type: Schema.Types.ObjectId,
-    refPath: "model_type",
-  },
-  model_type: {
-    type: String,
-    enum: ["Customer", "Nursery", "Gardener"],
+    ref: "User",
     required: true,
   },
   name: {
