@@ -23,9 +23,9 @@ const paymentSchema = new Schema({
     type: String,
     required: true,
   },
-  customer: {
+  userID: {
     type: Schema.Types.ObjectId,
-    ref: "Customer",
+    ref: "User",
     required: true,
   },
 });

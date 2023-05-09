@@ -5,7 +5,6 @@ export const PaymentTypes = `
         cardNumber: String!
         cardExpiryDate: String!
         cardCVV: String!
-        customerDetails: Customer!
     }
 
     input PaymentInput {
@@ -23,7 +22,7 @@ export const PaymentTypes = `
     }
 
     extend type Query {
-        payments(customerID: ID!): [Payment!]!
+        payments: [Payment!]!
         payment(id: ID!): Payment!
     }
 
