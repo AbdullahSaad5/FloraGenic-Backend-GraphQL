@@ -5,6 +5,7 @@ export const PaymentTypes = `
         cardNumber: String!
         cardExpiryDate: String!
         cardCVV: String!
+        userID: ID!
     }
 
     input PaymentInput {

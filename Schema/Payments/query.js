@@ -11,6 +11,8 @@ export const PaymentQuery = {
     return await PaymentModel.find({ userID });
   },
   payment: async (parent, args, context) => {
-    return await PaymentModel.findById(args.id);
+    const { user } = context;
+    if (!user) throw new AuthenticationError("You are not authenticated");
+    return await PaymentModel.findById({ id: args.id, userID: user.id });
   },
 };
