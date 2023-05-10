@@ -4,14 +4,15 @@ export const AddressTypes = `
         userID: ID!
         name: String!
         location: String!
+        pin: String!
         city: String!
         setAsDefault: Boolean!
     }
 
     input AddressInput {
-        userID: ID!
         name: String!
         location: String!
+        pin: String!
         city: String!
         setAsDefault: Boolean!
     }

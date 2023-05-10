@@ -406,17 +406,12 @@ export const UserMutation = {
   },
 
   updateCustomer: async (_, args) => {
-    const { id, credentials, details } = args;
+    const { id, details } = args;
 
     const user = await UserModel.findById(id);
     if (!user) {
       throw new ApolloError("Error: User not found on the provided ID");
     }
-    user.userType = credentials.userType;
-    if (credentials.password) {
-      user.password = credentials.password;
-    }
-    await user.save();
     await CustomerModel.findOneAndUpdate({ userID: id }, { $set: details });
     return "Customer details updated successfully";
   },

@@ -52,10 +52,10 @@ export const UserTypes = `
         registerGardener(credentials: UserRegisterInput!, details: GardenerCreateInput!): String!
         registerNurseryOwner(credentials: UserRegisterInput!, details: NurseryOwnerCreateInput!): String!
         
-        updateAdmin(id: ID!, credentials: UserUpdateInput!, details: AdminUpdateInput!): String!
-        updateGardener(id: ID!, credentials: UserUpdateInput!, details: GardenerUpdateInput!): String!
-        updateNurseryOwner(id: ID!, credentials: UserUpdateInput!, details: NurseryOwnerUpdateInput!): String!
-        updateCustomer(id: ID!, credentials: UserUpdateInput!, details: CustomerUpdateInput!): String!
+        updateAdmin(id: ID!, details: AdminUpdateInput!): String!
+        updateGardener(id: ID!, details: GardenerUpdateInput!): String!
+        updateNurseryOwner(id: ID!, details: NurseryOwnerUpdateInput!): String!
+        updateCustomer(id: ID!, details: CustomerUpdateInput!): String!
         
         addCustomer(userID: ID!, details: CustomerCreateInput!): String!
         deleteUser(id: ID!): String!
