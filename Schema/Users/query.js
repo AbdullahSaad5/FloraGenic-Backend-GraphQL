@@ -1,4 +1,4 @@
-import { ApolloError } from "apollo-server-core";
+import { ApolloError, AuthenticationError } from "apollo-server-core";
 import db from "../../connection.js";
 import { AdminModel } from "../Admins/db.js";
 import { CustomerModel } from "../Customers/db.js";
@@ -67,6 +67,38 @@ export const UserQuery = {
   user: async (_, args) => {
     const { id } = args;
     const user = await UserModel.findById(id);
+    if (!user) {
+      throw new ApolloError("User not found");
+    }
+    let userDetails;
+    switch (user.userType) {
+      case "Customer":
+        userDetails = await CustomerModel.findOne({ userID: user.id });
+        console.log(userDetails);
+        break;
+      case "Admin":
+        userDetails = await AdminModel.findOne({ userID: user.id });
+        break;
+      case "Gardener":
+        userDetails = await GardenerModel.findOne({ userID: user.id });
+        break;
+      case "NurseryOwner":
+        userDetails = await NurseryOwnerModel.findOne({ userID: user.id });
+        break;
+      default:
+        throw new ApolloError("User type not found");
+    }
+    user.details = userDetails;
+    return user;
+  },
+  profileDetails: async (_, args, ctx) => {
+    const { user } = ctx;
+    if (!user) {
+      throw new AuthenticationError("You are not authenticated");
+    }
+
+    const { id } = user;
+    const userr = await UserModel.findById(id);
     if (!user) {
       throw new ApolloError("User not found");
     }

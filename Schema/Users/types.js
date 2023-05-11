@@ -26,6 +26,8 @@ export const UserTypes = `
     extend type Query{
         users: [User!]
         user(id: ID!): User
+    
+        profileDetails: User!
     }
 
     input UserRegisterInput {
@@ -38,11 +40,10 @@ export const UserTypes = `
         password: String
         userType: String
     }
-
+    
     extend type Mutation{
         login(credentials: UserLoginInput!): User
         loginWithToken(token: String!): User
-
 
         register(credentials: UserRegisterInput!): String!
         registerWithToken(token: String!, userType: String!): String!
