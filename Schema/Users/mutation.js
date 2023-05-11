@@ -515,17 +515,18 @@ export const UserMutation = {
             null,
             { session }
           );
+
           // Delete all nurseries of the nursery owner
           await NurseryModel.deleteMany(
             {
-              id: { $in: nurseryOwner.nurseries },
+              id: { $in: nurseryOwner?.nurseries },
             },
             { session }
           );
           // Get all products of the nursery owner
           const products = await ProductModel.find(
             {
-              nurseryID: { $in: nurseryOwner.nurseries },
+              nurseryID: { $in: nurseryOwner?.nurseries },
             },
             null,
             { session }
@@ -533,7 +534,7 @@ export const UserMutation = {
           // Delete all products of the nursery owner
           await ProductModel.deleteMany(
             {
-              nurseryID: { $in: nurseryOwner.nurseries },
+              nurseryID: { $in: nurseryOwner?.nurseries },
             },
             { session }
           );
