@@ -3,6 +3,7 @@ export const ReviewTypes = `
         id: ID!
         userID: ID!
         productID: ID!
+        productType: String!
         rating: Int!
         review: String!
         likes: Int!
@@ -20,6 +21,7 @@ export const ReviewTypes = `
     input ReviewCreateInput {
         userID: ID!
         productID: ID!
+        productType: String
         rating: Int!
         review: String!
     }

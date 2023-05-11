@@ -10,6 +10,12 @@ const reviewSchema = new Schema({
     type: String,
     required: true,
   },
+  productType: {
+    type: String,
+    required: true,
+    default: "Product",
+    enum: ["Product", "Gardener"],
+  },
   rating: {
     type: Number,
     required: true,
