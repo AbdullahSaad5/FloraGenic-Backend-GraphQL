@@ -3,8 +3,9 @@ import { NurseryOwnerModel } from "../NurseryOwner/db.js";
 export const NurseryQuery = {
   nurseries: async (parent, args, context) => {
     const { user } = context;
+
     let nurseries;
-    if (user.userType === "NurseryOwner") {
+    if (user?.userType === "NurseryOwner") {
       const nurseryOwner = await NurseryOwnerModel.findOne({
         userId: user._id,
       });
@@ -19,7 +20,7 @@ export const NurseryQuery = {
   nursery: async (parent, args, context) => {
     const { user } = context;
     let nursery;
-    if (user.userType === "NurseryOwner") {
+    if (user?.userType === "NurseryOwner") {
       const nurseryOwner = await NurseryOwnerModel.findOne({
         userId: user._id,
       });
