@@ -10,7 +10,7 @@ export const ComplaintMutation = {
   complaintDelete: async (_, args) => {
     const { id } = args;
     const complaint = await ComplaintModel.findByIdAndDelete(id);
-    return complaint;
+    return "Complaint deleted successfully";
   },
   complaintRead: async (_, args) => {
     const { id } = args;
