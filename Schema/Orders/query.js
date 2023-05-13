@@ -1,3 +1,4 @@
+import { NurseryOwnerModel } from "../NurseryOwner/db.js";
 import { OrderModel } from "./db.js";
 
 export const OrderQuery = {
@@ -9,6 +10,14 @@ export const OrderQuery = {
     let orders = [];
     if (userType === "Customer") {
       orders = await OrderModel.find({ customerID: ctx?.user?.id });
+    } else if (userType === "NurseryOwner") {
+      const nurseryOwner = await NurseryOwnerModel.findOne({
+        userID: ctx?.user?.id,
+      });
+
+      orders = await OrderModel.find({
+        "products.nurseryID": { $in: nurseryOwner.nurseries },
+      });
     } else {
       orders = await OrderModel.find();
     }
@@ -20,16 +29,24 @@ export const OrderQuery = {
     const userType = ctx?.user?.userType;
 
     if (!userType) throw new Error("You are not authenticated");
-
+    let order;
     if (userType === "Customer") {
-      const order = await OrderModel.findOne({
+      order = await OrderModel.findOne({
         _id: id,
         customerID: ctx?.user?.id,
       });
       return order;
+    } else if (userType === "NurseryOwner") {
+      const nurseryOwner = await NurseryOwnerModel.findOne({
+        userID: ctx?.user?.id,
+      });
+      order = await OrderModel.findOne({
+        _id: id,
+        "products.nurseryID": { $in: nurseryOwner.nurseries },
+      });
+    } else {
+      order = await OrderModel.findById(id);
     }
-
-    const order = await OrderModel.findById(id);
     return order;
   },
 };

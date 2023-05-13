@@ -18,12 +18,11 @@ function authMiddleware(req, res, next) {
   const authHeader = req.headers.authorization;
   if (authHeader) {
     const token = authHeader;
-    console.log(token);
     try {
       const user = jwt.verify(token, process.env.JWT_SECRET_KEY);
       req.user = user;
     } catch (error) {
-      // console.error(error);
+      console.error(error);
     }
   }
   next();
