@@ -49,6 +49,14 @@ export const UserTypes = `
         image: String
     }
 
+    type updateProfileResponse {
+        firstName: String!
+        lastName: String!
+        phoneNumber: String!
+        gender: String!
+        image: String!
+    }
+
     
     extend type Mutation{
         login(credentials: UserLoginInput!): User
@@ -72,7 +80,7 @@ export const UserTypes = `
 
 
         changePassword(oldPassword: String!, newPassword: String!): String!
-        updateProfile(details: updateProfileInput!): String!
+        updateProfile(details: updateProfileInput!): updateProfileResponse!
         
         requestPasswordReset(email: String!): String!
         resetPassword(token: String!, password: String!): String!

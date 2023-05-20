@@ -632,6 +632,12 @@ export const UserMutation = {
         throw new ApolloError("Error: Invalid user type");
     }
 
-    return updatedProfile;
+    return {
+      firstName: updatedProfile?.firstName,
+      lastName: updatedProfile?.lastName,
+      phoneNumber: updatedProfile?.phoneNumber,
+      gender: updatedProfile?.gender,
+      image: updatedProfile?.image,
+    };
   },
 };
