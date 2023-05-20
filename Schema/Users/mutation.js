@@ -594,4 +594,39 @@ export const UserMutation = {
     await user.save();
     return "Password changed successfully";
   },
+
+  updateProfile: async (_, args, ctx) => {
+    const userType = ctx?.user?.userType;
+
+    if (!userType) throw new Error("You are not authenticated");
+
+    switch (userType) {
+      case "Customer":
+        await CustomerModel.findOneAndUpdate(
+          { userID: ctx?.user?.id },
+          { $set: args.details }
+        );
+        break;
+      case "Admin":
+        await AdminModel.findOneAndUpdate(
+          { userID: ctx?.user?.id },
+          { $set: args.details }
+        );
+        break;
+      case "Gardener":
+        await GardenerModel.findOneAndUpdate(
+          { userID: ctx?.user?.id },
+          { $set: args.details }
+        );
+        break;
+      case "NurseryOwner":
+        await NurseryOwnerModel.findOneAndUpdate(
+          { userID: ctx?.user?.id },
+          { $set: args.details }
+        );
+        break;
+      default:
+        throw new ApolloError("Error: Invalid user type");
+    }
+  },
 };

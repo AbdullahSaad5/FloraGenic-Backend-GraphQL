@@ -40,6 +40,15 @@ export const UserTypes = `
         password: String
         userType: String
     }
+
+    input updateProfileInput {
+        firstName: String
+        lastName: String
+        phoneNumber: String
+        gender: String
+        image: String
+    }
+
     
     extend type Mutation{
         login(credentials: UserLoginInput!): User
@@ -63,6 +72,7 @@ export const UserTypes = `
 
 
         changePassword(oldPassword: String!, newPassword: String!): String!
+        updateProfile(details: updateProfileInput!): String!
         
         requestPasswordReset(email: String!): String!
         resetPassword(token: String!, password: String!): String!
