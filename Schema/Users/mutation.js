@@ -578,11 +578,11 @@ export const UserMutation = {
     const { oldPassword, newPassword } = args;
 
     const userType = ctx?.user?.userType;
-
+    console.log("userType: ", userType);
     if (!userType) throw new Error("You are not authenticated");
 
     const user = await UserModel.findById(ctx?.user?.id);
-
+    console.log("user: ", user);
     if (!user) throw new Error("You are not authenticated");
 
     const isMatch = await bcrypt.compare(oldPassword, user.password);
