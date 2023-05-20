@@ -628,5 +628,7 @@ export const UserMutation = {
       default:
         throw new ApolloError("Error: Invalid user type");
     }
+
+    return "Profile updated successfully";
   },
 };
