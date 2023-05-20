@@ -590,7 +590,9 @@ export const UserMutation = {
     if (!isMatch) {
       throw new ApolloError("Error: Incorrect old password");
     }
+
     user.password = newPassword;
+
     await user.save();
     return "Password changed successfully";
   },
@@ -600,27 +602,28 @@ export const UserMutation = {
 
     if (!userType) throw new Error("You are not authenticated");
 
+    let updatedProfile = null;
     switch (userType) {
       case "Customer":
-        await CustomerModel.findOneAndUpdate(
+        updatedProfile = await CustomerModel.findOneAndUpdate(
           { userID: ctx?.user?.id },
           { $set: args.details }
         );
         break;
       case "Admin":
-        await AdminModel.findOneAndUpdate(
+        updatedProfile = await AdminModel.findOneAndUpdate(
           { userID: ctx?.user?.id },
           { $set: args.details }
         );
         break;
       case "Gardener":
-        await GardenerModel.findOneAndUpdate(
+        updatedProfile = await GardenerModel.findOneAndUpdate(
           { userID: ctx?.user?.id },
           { $set: args.details }
         );
         break;
       case "NurseryOwner":
-        await NurseryOwnerModel.findOneAndUpdate(
+        updatedProfile = await NurseryOwnerModel.findOneAndUpdate(
           { userID: ctx?.user?.id },
           { $set: args.details }
         );
@@ -629,6 +632,6 @@ export const UserMutation = {
         throw new ApolloError("Error: Invalid user type");
     }
 
-    return "Profile updated successfully";
+    return updatedProfile;
   },
 };
