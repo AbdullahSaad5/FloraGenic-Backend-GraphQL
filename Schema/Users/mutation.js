@@ -573,4 +573,25 @@ export const UserMutation = {
 
     return `User ${user.bannedStatus ? "blocked" : "unblocked"} successfully`;
   },
+
+  changePassword: async (_, args, ctx) => {
+    const { oldPassword, newPassword } = args;
+
+    const userType = ctx?.user?.userType;
+
+    if (!userType) throw new Error("You are not authenticated");
+
+    const user = await UserModel.findById(ctx?.user?.id);
+
+    if (!user) throw new Error("You are not authenticated");
+
+    const isMatch = await bcrypt.compare(oldPassword, user.password);
+
+    if (!isMatch) {
+      throw new ApolloError("Error: Incorrect old password");
+    }
+    user.password = newPassword;
+    await user.save();
+    return "Password changed successfully";
+  },
 };

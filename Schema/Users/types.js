@@ -60,6 +60,9 @@ export const UserTypes = `
         
         addCustomer(userID: ID!, details: CustomerCreateInput!): String!
         deleteUser(id: ID!): String!
+
+
+        changePassword(oldPassword: String!, newPassword: String!): String!
         
         requestPasswordReset(email: String!): String!
         resetPassword(token: String!, password: String!): String!
