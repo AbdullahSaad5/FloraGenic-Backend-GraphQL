@@ -123,6 +123,12 @@ import {
   CategoryResolvers,
 } from "./Category/index.js";
 
+import {
+  GardenerOrderTypes,
+  GardenerOrderQuery,
+  GardenerOrderMutation,
+} from "./GardenerOrder/index.js";
+
 import { DashboardQuery, DashboardTypes } from "./Dashboard/index.js";
 
 import { StripeTypes, StripeMutation } from "./Stripe/index.js";
@@ -155,6 +161,7 @@ export const typeDefs = gql`
   ${CategoryTypes}
   ${DashboardTypes}
   ${StripeTypes}
+  ${GardenerOrderTypes}
 `;
 export const resolvers = {
   Query: {
@@ -178,6 +185,7 @@ export const resolvers = {
     ...NurseryOwnerQuery,
     ...CategoryQuery,
     ...DashboardQuery,
+    ...GardenerOrderQuery,
   },
   Mutation: {
     ...CustomerMutation,
@@ -200,6 +208,7 @@ export const resolvers = {
     ...NurseryOwnerMutation,
     ...CategoryMutation,
     ...StripeMutation,
+    ...GardenerOrderMutation,
   },
   Customer: CustomerResolvers,
   User: UserResolvers,
