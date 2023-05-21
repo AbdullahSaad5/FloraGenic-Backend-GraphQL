@@ -9,12 +9,18 @@ export const NurseryMutation = {
       throw new Error("Nursery Owner ID is required");
     }
     if (user.userType === "NurseryOwner") {
-      data.nurseryOwnerID = user.id;
+      const nurseryOwner = await NurseryOwnerModel.findOne({
+        userID: user.id,
+      });
+      if (!nurseryOwner) throw new Error("Nursery Owner not found");
+      data.nurseryOwnerID = nurseryOwner._id;
     }
     const nursery = new NurseryModel(data);
     await nursery.save();
     const nurseryOwner = await NurseryOwnerModel.findById(data.nurseryOwnerID);
+    console.log(nurseryOwner);
     nurseryOwner.nurseries.push(nursery._id);
+    console.log(nurseryOwner);
     await nurseryOwner.save();
     return "Nursery created successfully";
   },
