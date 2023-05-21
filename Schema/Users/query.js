@@ -8,10 +8,26 @@ import { UserModel } from "./db.js";
 
 export const UserQuery = {
   users: async (parent, args, ctx) => {
+    const { user } = ctx;
+
+    if (!user) {
+      throw new AuthenticationError("You are not authenticated");
+    }
+
+    if (user.userType !== "Admin") {
+      throw new AuthenticationError("You are not authenticated");
+    }
+
     const session = await db.startSession();
     try {
       session.startTransaction();
-      const users = await UserModel.find(null, null, { session });
+      const users = await UserModel.find(
+        {
+          userType: { $ne: "Admin" },
+        },
+        null,
+        { session }
+      );
       await Promise.all(
         users.map(async (user) => {
           let userDetails;
