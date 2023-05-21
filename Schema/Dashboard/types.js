@@ -9,6 +9,12 @@ export const DashboardTypes = `
       usersByType: [UsersByType]
     }
 
+    type NurseryDashboard {
+      totalNurseries: Int!
+      totalProducts: Int!
+      totalOrders: Int!
+    }
+
     type FeedbackByType {
       type: FeedbackType!
       count: Int!
@@ -40,6 +46,7 @@ export const DashboardTypes = `
 
     extend type Query {
       stats: AdminDashboard!
+      statsNursery: NurseryDashboard!
     }
 
 `;

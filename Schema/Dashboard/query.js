@@ -4,6 +4,7 @@ import { OrderModel } from "../Orders/db.js";
 import { ProductModel } from "../Products/db.js";
 import { NurseryModel } from "../Nurseries/db.js";
 import { ComplaintModel } from "../Complaints/db.js";
+import { NurseryOwnerModel } from "../NurseryOwner/db.js";
 
 export const DashboardQuery = {
   stats: async (parent, args) => {
@@ -85,6 +86,49 @@ export const DashboardQuery = {
       feedbackByType,
       productsByCategory,
       usersByType,
+    };
+  },
+
+  statsNursery: async (parent, args, context) => {
+    const user = context.user;
+    if (!user) {
+      throw new Error("You are not authenticated!");
+    }
+
+    const nurseryOwner = await NurseryOwnerModel.findOne({
+      userID: context.user.id,
+    });
+
+    if (!nurseryOwner) {
+      throw new Error("You are not a nursery owner!");
+    }
+
+    const totalNurseries = await NurseryModel.countDocuments({
+      _id: {
+        $in: nurseryOwner.nurseries,
+      },
+    });
+
+    const totalProducts = await ProductModel.countDocuments({
+      nurseryID: {
+        $in: nurseryOwner.nurseries,
+      },
+    });
+
+    const totalOrders = await OrderModel.countDocuments({
+      products: {
+        $elemMatch: {
+          nurseryID: {
+            $in: nurseryOwner.nurseries,
+          },
+        },
+      },
+    });
+
+    return {
+      totalNurseries,
+      totalProducts,
+      totalOrders,
     };
   },
 };
