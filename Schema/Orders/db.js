@@ -19,6 +19,11 @@ const orderSchema = new Schema({
         type: Number,
         required: true,
       },
+      status: {
+        type: String,
+        required: true,
+        default: "Pending",
+      },
     },
   ],
   totalPrice: {
@@ -27,15 +32,15 @@ const orderSchema = new Schema({
   },
   discount: {
     type: Number,
-    required: true,
+    default: 0,
   },
   totalPriceAfterDiscount: {
     type: Number,
     required: true,
   },
   shippingAddress: {
-    type: String,
-    required: true,
+    type: Schema.Types.ObjectId,
+    ref: "Address",
   },
   orderingDate: {
     type: Date,
@@ -50,10 +55,10 @@ const orderSchema = new Schema({
     type: Date,
     default: null,
   },
-  paymentID: {
-    type: Schema.Types.ObjectId,
-    ref: "Payment",
+  paymentType: {
+    type: String,
     required: true,
+    enum: ["Stripe", "COD"],
   },
   paymentStatus: {
     type: String,

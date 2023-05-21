@@ -21,6 +21,7 @@ export const OrderTypes = `
     type ProductOrder {
         productID: ID!
         quantity: Int!
+        status: String!
     }
 
     input ProductGetInput {
@@ -36,13 +37,12 @@ export const OrderTypes = `
 
 
     input OrderCreateInput {
-        customerID: ID!
+        customerID: ID
         products: [ProductOrderCreateInput!]!
-        discount: Float!
-        shippingAddress: String!
-        paymentID: ID!
+        discount: Float
+        shippingAddress: ID!
         paymentStatus: String
-        orderStatus: String
+        paymentType: String!
     }
 
     input OrderUpdateInput {

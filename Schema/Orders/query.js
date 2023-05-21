@@ -1,5 +1,6 @@
 import { NurseryOwnerModel } from "../NurseryOwner/db.js";
 import { OrderModel } from "./db.js";
+import { ProductModel } from "../Products/db.js";
 
 export const OrderQuery = {
   orders: async (_, args, ctx) => {
@@ -7,7 +8,7 @@ export const OrderQuery = {
 
     if (!userType) throw new Error("You are not authenticated");
 
-    let orders = [];
+    let orders;
     if (userType === "Customer") {
       orders = await OrderModel.find({ customerID: ctx?.user?.id });
     } else if (userType === "NurseryOwner") {
@@ -15,12 +16,19 @@ export const OrderQuery = {
         userID: ctx?.user?.id,
       });
 
+      const nurseryIDs = nurseryOwner.nurseries; // Get the nursery IDs owned by the nursery owner
+
       orders = await OrderModel.find({
-        "products.nurseryID": { $in: nurseryOwner.nurseries },
+        products: {
+          $elemMatch: {
+            nurseryID: { $in: nurseryIDs },
+          },
+        },
       });
     } else {
       orders = await OrderModel.find();
     }
+    console.log(orders.map((order) => order.products));
     return orders;
   },
   order: async (_, args) => {
