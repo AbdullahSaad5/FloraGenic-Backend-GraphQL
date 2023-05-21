@@ -57,6 +57,7 @@ export const NurseryMutation = {
     const { id } = args;
 
     const user = ctx.user;
+    if (!user) throw new Error("You are not authorized to delete this nursery");
     let nurseryOwner;
     let nursery;
     if (user?.userType === "Admin") {
