@@ -26,6 +26,10 @@ export const NurseryMutation = {
   },
   nurseryUpdate: async (parent, args, ctx) => {
     const { id, data } = args;
+    const user = ctx.user;
+
+    if (!user) throw new Error("You are not authorized to update this nursery");
+
     const nursery = await NurseryModel.findById(id);
     if (!nursery) throw new Error("Nursery not found");
     const nurseryOwner = await NurseryOwnerModel.findOne({
@@ -33,7 +37,8 @@ export const NurseryMutation = {
         $in: [nursery._id],
       },
     });
-    if (data.nurseryOwnerID) {
+
+    if (data.nurseryOwnerID && user?.userType === "Admin") {
       // If nursery owner is not the same as the one in the data
       if (nurseryOwner._id != data.nurseryOwnerID) {
         nurseryOwner.nurseries.pull(nursery._id);
@@ -45,18 +50,8 @@ export const NurseryMutation = {
         await newNurseryOwner.save();
       }
     }
-    // Updating the nursery
     await nursery.updateOne({ $set: data });
 
-    // const nursery = await NurseryModel.findByIdAndUpdate(
-    //   id,
-    //   {
-    //     $set: data,
-    //   },
-    //   {
-    //     new: true,
-    //   }
-    // );
     return "Nursery Update Successful";
   },
   nurseryDelete: async (parent, args, ctx) => {

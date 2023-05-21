@@ -23,13 +23,13 @@ export const ProductQuery = {
     let products = [];
 
     if (userType === "NurseryOwner") {
-      const nurseyOwner = await NurseryOwnerModel.findOne({
-        userID: context.user._id,
+      const nurseryOwner = await NurseryOwnerModel.findOne({
+        userID: context.user.id,
       });
 
       products = await ProductModel.find({
         nurseryID: {
-          $in: nurseyOwner.nurseries,
+          $in: nurseryOwner.nurseries,
         },
       }).sort({ name: 1 });
     } else {
