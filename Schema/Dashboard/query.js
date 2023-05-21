@@ -7,8 +7,20 @@ import { ComplaintModel } from "../Complaints/db.js";
 import { NurseryOwnerModel } from "../NurseryOwner/db.js";
 
 export const DashboardQuery = {
-  stats: async (parent, args) => {
-    const totalUsers = await UserModel.countDocuments();
+  stats: async (parent, args, ctx) => {
+    const user = ctx.user;
+
+    if (!user) {
+      throw new AuthenticationError("You are not authenticated");
+    }
+
+    if (user.userType !== "Admin") {
+      throw new AuthenticationError("You are not authenticated");
+    }
+
+    const totalUsers = await UserModel.countDocuments({
+      userType: { $ne: "Admin" },
+    });
     const totalNurseries = await NurseryModel.countDocuments();
     const totalProducts = await ProductModel.countDocuments();
     const totalOrders = await OrderModel.countDocuments();
