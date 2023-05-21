@@ -57,24 +57,25 @@ export const NurseryMutation = {
     const { id } = args;
 
     const user = ctx.user;
-
-    if (user.userType === "Admin") {
-      const nursery = await NurseryModel.findById(id);
+    let nurseryOwner;
+    let nursery;
+    if (user?.userType === "Admin") {
+      nursery = await NurseryModel.findById(id);
       if (!nursery) throw new Error("Nursery not found");
       // Finding the owner
-      const nurseryOwner = await NurseryOwnerModel.findOne({
+      nurseryOwner = await NurseryOwnerModel.findOne({
         nurseries: {
           $in: [nursery._id],
         },
       });
-    } else if (user.userType === "NurseryOwner") {
-      const nursery = await NurseryModel.findOne({
+    } else if (user?.userType === "NurseryOwner") {
+      nursery = await NurseryModel.findOne({
         _id: id,
         nurseryOwnerID: user.id,
       });
       if (!nursery) throw new Error("Nursery not found");
       // Finding the owner
-      const nurseryOwner = await NurseryOwnerModel.findById(user.id);
+      nurseryOwner = await NurseryOwnerModel.findById(user.id);
     } else {
       throw new Error("You are not authorized to delete this nursery");
     }
