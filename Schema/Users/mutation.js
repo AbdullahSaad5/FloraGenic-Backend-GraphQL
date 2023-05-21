@@ -607,25 +607,29 @@ export const UserMutation = {
       case "Customer":
         updatedProfile = await CustomerModel.findOneAndUpdate(
           { userID: ctx?.user?.id },
-          { $set: args.details }
+          { $set: args.details },
+          { new: true }
         );
         break;
       case "Admin":
         updatedProfile = await AdminModel.findOneAndUpdate(
           { userID: ctx?.user?.id },
-          { $set: args.details }
+          { $set: args.details },
+          { new: true }
         );
         break;
       case "Gardener":
         updatedProfile = await GardenerModel.findOneAndUpdate(
           { userID: ctx?.user?.id },
-          { $set: args.details }
+          { $set: args.details },
+          { new: true }
         );
         break;
       case "NurseryOwner":
         updatedProfile = await NurseryOwnerModel.findOneAndUpdate(
           { userID: ctx?.user?.id },
-          { $set: args.details }
+          { $set: args.details },
+          { new: true }
         );
         break;
       default:
