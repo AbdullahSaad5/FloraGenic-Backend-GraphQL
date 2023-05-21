@@ -14,7 +14,7 @@ const reviewSchema = new Schema({
     type: String,
     required: true,
     default: "Product",
-    enum: ["Product", "Gardener"],
+    enum: ["Product", "Gardener", "Nursery"],
   },
   rating: {
     type: Number,

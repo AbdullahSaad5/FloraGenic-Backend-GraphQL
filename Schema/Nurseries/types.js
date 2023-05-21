@@ -26,7 +26,7 @@ export const NurseryTypes = `
         
     }
     input NurseryCreateInput {
-        nurseryOwnerID: ID!
+        nurseryOwnerID: ID
         name: String!
         details: String!
         openingHours: String!

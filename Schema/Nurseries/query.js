@@ -3,12 +3,16 @@ import { NurseryOwnerModel } from "../NurseryOwner/db.js";
 export const NurseryQuery = {
   nurseries: async (parent, args, context) => {
     const { user } = context;
+    console.log(context);
 
     let nurseries;
     if (user?.userType === "NurseryOwner") {
+      console.log("user is nursery owner");
+
       const nurseryOwner = await NurseryOwnerModel.findOne({
-        userId: user._id,
+        userID: user.id,
       });
+
       nurseries = await NurseryModel.find({
         _id: { $in: nurseryOwner.nurseries },
       });
