@@ -2,13 +2,33 @@ import { CategoryModel } from "./db.js";
 import { ProductModel } from "../Products/db.js";
 
 export const CategoryMutation = {
-  categoryCreate: async (_, args) => {
+  categoryCreate: async (_, args, ctx) => {
+    const { user } = ctx;
+
+    if (!user) {
+      throw new AuthenticationError("You are not authenticated");
+    }
+
+    if (user.userType !== "Admin") {
+      throw new AuthenticationError("You are not authenticated");
+    }
+
     const { data } = args;
     const category = await CategoryModel.create(data);
     return category;
   },
 
-  categoryUpdate: async (_, args) => {
+  categoryUpdate: async (_, args, ctx) => {
+    const { user } = ctx;
+
+    if (!user) {
+      throw new AuthenticationError("You are not authenticated");
+    }
+
+    if (user.userType !== "Admin") {
+      throw new AuthenticationError("You are not authenticated");
+    }
+
     const { id, data } = args;
     await CategoryModel.findByIdAndUpdate(id, {
       $set: data,
@@ -16,7 +36,17 @@ export const CategoryMutation = {
     return "Category updated successfully";
   },
 
-  categoryDelete: async (_, args) => {
+  categoryDelete: async (_, args, ctx) => {
+    const { user } = ctx;
+
+    if (!user) {
+      throw new AuthenticationError("You are not authenticated");
+    }
+
+    if (user.userType !== "Admin") {
+      throw new AuthenticationError("You are not authenticated");
+    }
+
     const { id } = args;
     const products = await ProductModel.find({ category: id });
     if (products.length > 0) {
@@ -25,7 +55,17 @@ export const CategoryMutation = {
     await CategoryModel.findByIdAndDelete(id);
     return "Category deleted successfully";
   },
-  categoryHide: async (_, args) => {
+  categoryHide: async (_, args, ctx) => {
+    const { user } = ctx;
+
+    if (!user) {
+      throw new AuthenticationError("You are not authenticated");
+    }
+
+    if (user.userType !== "Admin") {
+      throw new AuthenticationError("You are not authenticated");
+    }
+
     const { id } = args;
     const category = await CategoryModel.findById(id);
     if (!category) throw new Error("Category not found");
