@@ -8,7 +8,6 @@ export const CustomerQuery = {
     return customer;
   },
   customers: async (_, args, { req }) => {
-    console.log(req.headers.authorization);
     const customers = await CustomerModel.find({});
     return customers;
   },
