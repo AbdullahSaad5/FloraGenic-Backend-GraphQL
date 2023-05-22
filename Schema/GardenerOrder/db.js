@@ -20,7 +20,7 @@ const gardenerOrderSchema = new mongoose.Schema({
     required: true,
   },
   requestedTime: {
-    type: String,
+    type: Number,
     required: true,
   },
   duration: {
