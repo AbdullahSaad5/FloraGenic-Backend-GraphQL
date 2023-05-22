@@ -63,7 +63,6 @@ export const NurseryMutation = {
     if (user?.userType === "Admin") {
       nursery = await NurseryModel.findById(id);
       if (!nursery) throw new Error("Nursery not found");
-      // Finding the owner
       nurseryOwner = await NurseryOwnerModel.findOne({
         nurseries: {
           $in: [nursery._id],
@@ -91,6 +90,7 @@ export const NurseryMutation = {
     // Saving the owner and removing the nursery
     await nurseryOwner.save();
     await nursery.remove();
+    await ProductModel.deleteMany({ nurseryID: nursery._id });
     return "Nursery deleted successfully";
   },
 
