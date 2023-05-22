@@ -582,7 +582,7 @@ export const UserMutation = {
 
       await ProductModel.updateMany(
         { nurseryID: { $in: nurseryOwner?.nurseries } },
-        { $set: { blockedStatus: !user.bannedStatus } }
+        { $set: { hidden: !user.bannedStatus } }
       );
     }
 

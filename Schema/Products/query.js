@@ -32,6 +32,10 @@ export const ProductQuery = {
           $in: nurseryOwner.nurseries,
         },
       }).sort({ name: 1 });
+    } else if (userType === "Customer") {
+      products = await ProductModel.find({ ...query, hidden: false }).sort({
+        name: 1,
+      });
     } else {
       products = await ProductModel.find({ ...query }).sort({ name: 1 });
     }
