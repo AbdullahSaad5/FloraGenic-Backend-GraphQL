@@ -90,7 +90,6 @@ export const UserQuery = {
     switch (user.userType) {
       case "Customer":
         userDetails = await CustomerModel.findOne({ userID: user.id });
-        console.log(userDetails);
         break;
       case "Admin":
         userDetails = await AdminModel.findOne({ userID: user.id });
@@ -122,7 +121,6 @@ export const UserQuery = {
     switch (user.userType) {
       case "Customer":
         userDetails = await CustomerModel.findOne({ userID: user.id });
-        console.log(userDetails);
         break;
       case "Admin":
         userDetails = await AdminModel.findOne({ userID: user.id });

@@ -7,6 +7,7 @@ export const NurseryResolvers = {
         $in: [parent._id],
       },
     });
+
     if (!nurseryOwner) throw new Error("Nursery Owner not found");
     return nurseryOwner._id;
   },

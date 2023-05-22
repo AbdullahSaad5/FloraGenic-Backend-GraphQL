@@ -3,7 +3,6 @@ import { NurseryOwnerModel } from "../NurseryOwner/db.js";
 export const NurseryQuery = {
   nurseries: async (parent, args, context) => {
     const { user } = context;
-    console.log(context);
 
     let nurseries;
     if (user?.userType === "NurseryOwner") {
@@ -26,7 +25,7 @@ export const NurseryQuery = {
     let nursery;
     if (user?.userType === "NurseryOwner") {
       const nurseryOwner = await NurseryOwnerModel.findOne({
-        userId: user._id,
+        userId: user.id,
       });
       nursery = await NurseryModel.findOne({
         _id: args.id,
@@ -44,7 +43,7 @@ export const NurseryQuery = {
     let nurseries;
     if (user.userType === "NurseryOwner") {
       const nurseryOwner = await NurseryOwnerModel.findOne({
-        userId: user._id,
+        userId: user.id,
       });
       nurseries = await NurseryModel.find({
         name: { $regex: search, $options: "i" },

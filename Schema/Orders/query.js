@@ -28,7 +28,6 @@ export const OrderQuery = {
     } else {
       orders = await OrderModel.find();
     }
-    console.log(orders.map((order) => order.products));
     return orders;
   },
   order: async (_, args) => {

@@ -23,7 +23,6 @@ export const UserMutation = {
       throw new ApolloError("Error: Invalid Credentials. Please try again");
     }
     const isMatch = await user.comparePassword(password);
-    console.log(!isMatch);
     if (!isMatch) {
       throw new ApolloError("Error: Incorrect Password. Please try again");
     }

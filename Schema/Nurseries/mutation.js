@@ -18,9 +18,7 @@ export const NurseryMutation = {
     const nursery = new NurseryModel(data);
     await nursery.save();
     const nurseryOwner = await NurseryOwnerModel.findById(data.nurseryOwnerID);
-    console.log(nurseryOwner);
     nurseryOwner.nurseries.push(nursery._id);
-    console.log(nurseryOwner);
     await nurseryOwner.save();
     return "Nursery created successfully";
   },
@@ -83,8 +81,6 @@ export const NurseryMutation = {
     }
 
     // Finding nursery
-
-    console.log(nursery._id);
 
     if (!nurseryOwner) throw new Error("Nursery Owner not found");
     // Removing the nursery from the owner's nurseries array
