@@ -8,7 +8,8 @@ export const GardenerOrderTypes = `
         gardener: Gardener!
         service: String!
         date: String!
-        requestedTimeInDays: String!
+        requestedTime: Int!
+        duration: String!
         status: String!
         totalPrice: Int!
         createdAt: String!
@@ -25,8 +26,8 @@ export const GardenerOrderTypes = `
         gardener: ID!
         service: String!
         date: String!
-        requestedTimeInDays: String!
-        totalPrice: Int!
+        duration: String!
+        requestedTime: Int!
     }
     
     extend type Mutation{

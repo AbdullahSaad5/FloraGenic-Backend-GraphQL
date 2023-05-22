@@ -19,9 +19,14 @@ const gardenerOrderSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
-  requestedTimeInDays: {
+  requestedTime: {
     type: String,
     required: true,
+  },
+  duration: {
+    type: String,
+    required: true,
+    enum: ["Hours", "Days"],
   },
   status: {
     type: String,
