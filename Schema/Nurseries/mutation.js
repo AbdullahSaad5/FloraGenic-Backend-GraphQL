@@ -1,5 +1,6 @@
 import { NurseryOwnerModel } from "../NurseryOwner/db.js";
 import { NurseryModel } from "./db.js";
+import { ProductModel } from "../Products/db.js";
 
 export const NurseryMutation = {
   nurseryCreate: async (parent, args, ctx) => {
@@ -98,6 +99,12 @@ export const NurseryMutation = {
     const nursery = await NurseryModel.findById(id);
     if (!nursery) throw new Error("Nursery not found");
     nursery.blockedStatus = !nursery.blockedStatus;
+
+    await ProductModel.updateMany(
+      { nurseryID: nursery._id },
+      { $set: { hidden: nursery.blockedStatus } }
+    );
+
     await nursery.save();
     return `Nursery ${
       nursery.blockedStatus ? "blocked" : "unblocked"
