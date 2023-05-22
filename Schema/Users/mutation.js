@@ -14,6 +14,8 @@ import { UserModel } from "./db.js";
 import { ReviewModel } from "../Reviews/db.js";
 import jwtDecode from "jwt-decode";
 import bcrypt from "bcrypt";
+import sgMail from "@sendgrid/mail";
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 export const UserMutation = {
   login: async (_, args) => {
@@ -435,6 +437,16 @@ export const UserMutation = {
     user.passwordResetExpires = new Date() + 3600000;
     await user.save();
     // Sendgrid email here
+    const msg = {
+      to: email,
+      from: "floragenic.fyp@gmail.com",
+      subject: "Password reset request",
+      text: "Password reset token",
+      html: `<p>You have requested for password reset. Please use the following token to reset your password</p>
+      <p>Token: ${token}</p>
+      <p>If you did not request for password reset, please ignore this email</p>`,
+    };
+    await sgMail.send(msg);
 
     return "Password reset token has been sent to your email";
   },
