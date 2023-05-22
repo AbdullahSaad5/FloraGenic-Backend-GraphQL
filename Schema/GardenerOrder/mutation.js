@@ -70,6 +70,6 @@ export const GardenerOrderMutation = {
       totalPrice,
     });
 
-    return gardenerOrder;
+    return "Gardener Order created successfully!";
   },
 };

@@ -31,6 +31,6 @@ export const GardenerOrderTypes = `
     }
     
     extend type Mutation{
-        gardenerOrderCreate(data: GardenerOrderCreateInput!): Gardener!
+        gardenerOrderCreate(data: GardenerOrderCreateInput!): String!
     }
 `;
