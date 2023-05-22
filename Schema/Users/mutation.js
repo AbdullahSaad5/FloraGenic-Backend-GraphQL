@@ -568,6 +568,24 @@ export const UserMutation = {
   blockUser: async (_, args) => {
     const { id } = args;
     const user = await UserModel.findById(id);
+    if (!user) throw new Error("Error: User not found on the provided ID");
+
+    if (user?.userType === "NurseryOwner") {
+      const nurseryOwner = await NurseryOwnerModel.findOne({
+        userID: user._id,
+      });
+
+      await NurseryModel.updateMany(
+        { _id: { $in: nurseryOwner?.nurseries } },
+        { $set: { blockedStatus: !user.bannedStatus } }
+      );
+
+      await ProductModel.updateMany(
+        { nurseryID: { $in: nurseryOwner?.nurseries } },
+        { $set: { blockedStatus: !user.bannedStatus } }
+      );
+    }
+
     user.bannedStatus = !user.bannedStatus;
     await user.save();
 
