@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
-import { ProductModel } from "../Products/db";
-import { GardenerModel } from "../Gardeners/db";
-import { NurseryModel } from "../Nurseries/db";
+import { ProductModel } from "../Products/db.js";
+import { GardenerModel } from "../Gardeners/db.js";
+import { NurseryModel } from "../Nurseries/db.js";
 
 const reviewSchema = new Schema({
   userID: {
