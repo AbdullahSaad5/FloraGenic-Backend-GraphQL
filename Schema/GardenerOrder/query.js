@@ -11,7 +11,9 @@ export const GardenerOrderQuery = {
     }
 
     if (user.userType === "Admin") {
-      const gardenerOrders = await GardenerOrderModel.find();
+      const gardenerOrders = await GardenerOrderModel.find().sort({
+        date: 1,
+      });
       return gardenerOrders;
     } else if (user.userType === "Customer") {
       const customer = await CustomerModel.findOne({
@@ -19,6 +21,8 @@ export const GardenerOrderQuery = {
       });
       const gardenerOrders = await GardenerOrderModel.find({
         customer: customer.id,
+      }).sort({
+        date: 1,
       });
       return gardenerOrders;
     } else if (user.userType === "Gardener") {
@@ -28,6 +32,8 @@ export const GardenerOrderQuery = {
 
       const gardenerOrders = await GardenerOrderModel.find({
         gardener: gardener.id,
+      }).sort({
+        date: 1,
       });
       return gardenerOrders;
     } else {
