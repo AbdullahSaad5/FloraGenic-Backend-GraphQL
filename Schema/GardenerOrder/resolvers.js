@@ -5,7 +5,6 @@ export const GardenerOrderResolvers = {
   customer: async (parent, args, ctx) => {
     const { customer } = parent;
     const customerData = await CustomerModel.findById(customer);
-    console.log(customerData);
     return customerData;
   },
   gardener: async (parent, args, ctx) => {
