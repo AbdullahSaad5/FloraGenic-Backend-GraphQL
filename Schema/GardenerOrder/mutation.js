@@ -24,7 +24,7 @@ export const GardenerOrderMutation = {
       if (!customer) {
         throw new Error("Customer not found!");
       }
-      args.data.customer = customer.id;
+      data.customer = customer.id;
     }
 
     const gardener = await GardenerModel.findById(data.gardener);
