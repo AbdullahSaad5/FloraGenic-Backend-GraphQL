@@ -81,10 +81,20 @@ export const CartItemMutation = {
           ` You already have ${alreadyInCart.quantity} items in your cart!`
       );
 
+    if (alreadyInCart.quantity + quantity === 0) {
+      await CartItemModel.findOneAndDelete({
+        _id: id,
+        userID: user.id,
+      });
+      return await CartItemModel.find({
+        userID: user.id,
+      });
+    }
+
     const cartItem = await CartItemModel.findOneAndUpdate(
       { _id: id, userID: user.id },
       {
-        $set: quantity,
+        $inc: { quantity: data.quantity },
       },
       { new: true }
     );
