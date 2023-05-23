@@ -17,7 +17,6 @@ const addressSchema = new Schema({
   },
   pin: {
     type: String,
-    required: true,
   },
   city: {
     type: String,
