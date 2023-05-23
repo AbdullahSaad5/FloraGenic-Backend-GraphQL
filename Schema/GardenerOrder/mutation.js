@@ -5,6 +5,8 @@ import { GardenerOrderModel } from "./db.js";
 export const GardenerOrderMutation = {
   gardenerOrderCreate: async (_, args, ctx) => {
     const { user } = ctx;
+    const { data } = args;
+
     if (!user) {
       throw new Error("You are not authenticated!");
     }
@@ -24,8 +26,6 @@ export const GardenerOrderMutation = {
       }
       args.data.customer = customer.id;
     }
-
-    const { data } = args;
 
     const gardener = await GardenerModel.findById(data.gardener);
 
