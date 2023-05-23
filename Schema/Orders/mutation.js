@@ -32,7 +32,7 @@ export const OrderMutation = {
 
     await CartItemModel.deleteMany({ userID: args.input.customerID });
 
-    return order;
+    return "Order Placed Successfully";
   },
   orderUpdate: async (_, args) => {
     const { id, input } = args;

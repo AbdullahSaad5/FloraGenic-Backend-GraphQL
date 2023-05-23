@@ -59,7 +59,7 @@ export const OrderTypes = `
     }
 
     extend type Mutation {
-        orderCreate(input: OrderCreateInput): Order!
+        orderCreate(input: OrderCreateInput): String!
         orderUpdate(id: ID!, input: OrderUpdateInput): String!
         orderDelete(id: ID!): String!
     }
