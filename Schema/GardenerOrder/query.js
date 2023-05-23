@@ -1,3 +1,4 @@
+import { CustomerModel } from "../Customers/db.js";
 import { GardenerModel } from "../Gardeners/db.js";
 import { GardenerOrderModel } from "./db.js";
 
@@ -13,12 +14,17 @@ export const GardenerOrderQuery = {
       const gardenerOrders = await GardenerOrderModel.find();
       return gardenerOrders;
     } else if (user.userType === "Customer") {
+      const customer = await CustomerModel.findOne({
+        userID: user.id,
+      });
       const gardenerOrders = await GardenerOrderModel.find({
-        customer: user.id,
+        customer: customer.id,
       });
       return gardenerOrders;
     } else if (user.userType === "Gardener") {
-      const gardener = await GardenerModel.findById(user.id);
+      const gardener = await GardenerModel.findOne({
+        userID: user.id,
+      });
 
       const gardenerOrders = await GardenerOrderModel.find({
         gardener: gardener.id,
