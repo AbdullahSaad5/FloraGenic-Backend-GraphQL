@@ -18,7 +18,7 @@ export const GardenerOrderMutation = {
     }
 
     if (user.userType === "Customer") {
-      const customer = await CustomerModel.find({
+      const customer = await CustomerModel.findOne({
         userID: user.id,
       });
       if (!customer) {
