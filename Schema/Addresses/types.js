@@ -18,6 +18,14 @@ export const AddressTypes = `
         setAsDefault: Boolean!
     }
 
+    input AddressUpdateInput {
+        name: String
+        location: String
+        pin: String
+        city: String
+        setAsDefault: Boolean
+    }
+
     extend type Query {
         address(id: ID!): Address
         addresses: [Address]
@@ -25,7 +33,7 @@ export const AddressTypes = `
 
     extend type Mutation {
         addressCreate(input: AddressInput!): String!
-        addressUpdate(id: ID!, input: AddressInput!): Address
+        addressUpdate(id: ID!, input: AddressUpdateInput!): Address
         addressDelete(id: ID!): Address
         setDefaultAddress(id: ID!): [Address!]
     }
