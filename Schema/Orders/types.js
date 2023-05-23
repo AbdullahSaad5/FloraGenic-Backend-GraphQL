@@ -16,6 +16,7 @@ export const OrderTypes = `
         paymentDetails: Payment!
         customerDetails: Customer!
         productsDetails: [Product!]!
+        paymentType: String!
     }
 
     type ProductOrder {
