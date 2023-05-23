@@ -17,6 +17,9 @@ export const GardenerOrderMutation = {
 
     if (user.userType === "Customer") {
       const customer = await CustomerModel.findById(user.id);
+      if (!customer) {
+        throw new Error("Customer not found!");
+      }
       args.data.customer = customer.id;
     }
 
