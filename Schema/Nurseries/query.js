@@ -6,8 +6,6 @@ export const NurseryQuery = {
 
     let nurseries;
     if (user?.userType === "NurseryOwner") {
-      console.log("user is nursery owner");
-
       const nurseryOwner = await NurseryOwnerModel.findOne({
         userID: user.id,
       });

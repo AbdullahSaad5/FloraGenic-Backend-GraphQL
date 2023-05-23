@@ -10,15 +10,12 @@ export const OrderResolvers = {
   },
   productsDetails: async (parent, args, context) => {
     const { user } = context;
-    console.log(user);
 
     let products;
     if (user?.userType === "NurseryOwner") {
       const nurseryOwner = await NurseryOwnerModel.find({
         userID: user.id,
       });
-      console.log(nurseryOwner);
-      console.log(nurseryOwner);
       products = await ProductModel.find({
         _id: {
           $in: parent.products.map((product) => product.productID),
