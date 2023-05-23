@@ -89,7 +89,7 @@ export const CartItemMutation = {
       return await CartItemModel.find({
         userID: user.id,
       });
-    }
+    } 
 
     const cartItem = await CartItemModel.findOneAndUpdate(
       { _id: id, userID: user.id },
