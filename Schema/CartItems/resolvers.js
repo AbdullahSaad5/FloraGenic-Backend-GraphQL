@@ -6,11 +6,13 @@ export const CartItemResolvers = {
     return product;
   },
   customerDetails: async (cartItem) => {
-    const customer = await CustomerModel.findById(cartItem.userID);
+    const customer = await CustomerModel.findOne({
+      userID: cartItem.userID,
+    });
     return customer;
   },
   totalPrice: async (cartItem) => {
     const product = await ProductModel.findById(cartItem.productID);
-    return product.retailPrice * cartItem.quantity;
+    return product.retailPrice * cartItem.quantity; 
   },
 };

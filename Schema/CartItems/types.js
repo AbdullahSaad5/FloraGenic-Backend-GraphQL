@@ -12,21 +12,20 @@ export const CartItemTypes = `
     }
 
     extend type Query {
-        cartItems(userID: ID!): [CartItem!]!
+        cartItems: [CartItem!]!
         cartItem(id: ID!): CartItem!
     }
 
     input CartItemCreateInput {
         productID: ID!
-        userID: ID!
         quantity: Int!
     }
 
     extend type Mutation {
-        cartItemCreate(data: CartItemCreateInput!): CartItem!
-        cartItemUpdate(id: ID!, quantity: Int!): CartItem!
-        cartItemDelete(id: ID!): String!
-        cartItemDeleteAll(userID: ID!): String!
+        cartItemCreate(data: CartItemCreateInput!): [CartItem!]!
+        cartItemUpdate(id: ID!, quantity: Int!): [CartItem!]!
+        cartItemDelete(id: ID!): [CartItem!]!
+        cartItemDeleteAll: String!
     }
     
 `;
