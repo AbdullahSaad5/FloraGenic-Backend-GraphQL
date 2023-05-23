@@ -27,6 +27,7 @@ export const AddressTypes = `
         addressCreate(input: AddressInput!): String!
         addressUpdate(id: ID!, input: AddressInput!): Address
         addressDelete(id: ID!): Address
+        setDefaultAddress(id: ID!): [Address!]
     }
 
 `;
