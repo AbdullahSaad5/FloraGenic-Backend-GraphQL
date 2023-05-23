@@ -1,3 +1,4 @@
+import { CartItemModel } from "../CartItems/db.js";
 import { OrderModel } from "./db.js";
 
 export const OrderMutation = {
@@ -14,9 +15,23 @@ export const OrderMutation = {
       args.input.customerID = user.id;
     }
 
+    const cartItems = await CartItemModel.find({
+      userID: args.input.customerID,
+    });
+
     const { input } = args;
+
+    input.products = cartItems.map((item) => ({
+      productID: item.productID,
+      quantity: item.quantity,
+      status: "Pending",
+    }));
+
     const order = await OrderModel.create(input);
-    order.save();
+    await order.save();
+
+    await CartItemModel.deleteMany({ userID: args.input.customerID });
+
     return order;
   },
   orderUpdate: async (_, args) => {

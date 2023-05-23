@@ -38,7 +38,6 @@ export const OrderTypes = `
 
     input OrderCreateInput {
         customerID: ID
-        products: [ProductOrderCreateInput!]!
         discount: Float
         shippingAddress: ID!
         paymentStatus: String
