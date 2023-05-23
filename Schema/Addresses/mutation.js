@@ -11,6 +11,6 @@ export const AddressMutation = {
       userID: user.id,
     });
     await address.save();
-    return address;
+    return "Address created successfully!";
   },
 };

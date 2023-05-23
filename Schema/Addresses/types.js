@@ -24,7 +24,7 @@ export const AddressTypes = `
     }
 
     extend type Mutation {
-        addressCreate(input: AddressInput!): Address
+        addressCreate(input: AddressInput!): String!
         addressUpdate(id: ID!, input: AddressInput!): Address
         addressDelete(id: ID!): Address
     }
