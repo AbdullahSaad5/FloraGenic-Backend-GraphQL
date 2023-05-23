@@ -33,8 +33,8 @@ export const AddressTypes = `
 
     extend type Mutation {
         addressCreate(input: AddressInput!): String!
-        addressUpdate(id: ID!, input: AddressUpdateInput!): Address
-        addressDelete(id: ID!): Address
+        addressUpdate(id: ID!, input: AddressUpdateInput!): [Address!]
+        addressDelete(id: ID!): [Address!]
         setDefaultAddress(id: ID!): [Address!]
     }
 
