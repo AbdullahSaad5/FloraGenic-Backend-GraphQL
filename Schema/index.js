@@ -127,6 +127,7 @@ import {
   GardenerOrderTypes,
   GardenerOrderQuery,
   GardenerOrderMutation,
+  GardenerOrderResolvers,
 } from "./GardenerOrder/index.js";
 
 import { DashboardQuery, DashboardTypes } from "./Dashboard/index.js";
@@ -229,5 +230,6 @@ export const resolvers = {
   Tag: TagResolvers,
   NurseryOwner: NurseryOwnerResolvers,
   Category: CategoryResolvers,
+  GardenerOrder: GardenerOrderResolvers,
   ...UnionResolvers,
 };
