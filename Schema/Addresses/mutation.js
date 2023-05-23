@@ -22,7 +22,7 @@ export const AddressMutation = {
       input,
       { new: true }
     );
-    return AddressModel.find({ userID: user.id });
+    return await AddressModel.find({ userID: user.id });
   },
   addressDelete: async (root, args, context) => {
     const { id } = args;
@@ -32,7 +32,7 @@ export const AddressMutation = {
       _id: id,
       userID: user.id,
     });
-    return AddressModel.find({ userID: user.id });
+    return await AddressModel.find({ userID: user.id });
   },
   setDefaultAddress: async (root, args, context) => {
     const { id } = args;
