@@ -1,7 +1,7 @@
 import puppeteer from "puppeteer";
 
 export const scrapeGoogleResults = async (query) => {
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({ headless: "new" });
   const page = await browser.newPage();
 
   // Navigate to Google Search
