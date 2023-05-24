@@ -17,13 +17,17 @@ export const aiScan = async (req, res) => {
     predictions = response.data;
 
     if (predictions.plant_species) {
-      const speciesData = await scrapeGoogleResults(
-        predictions.plant_species.Species
-      );
-      predictions.plant_species = {
-        ...predictions.plant_species,
-        ...speciesData,
-      };
+      try {
+        const speciesData = await scrapeGoogleResults(
+          predictions.plant_species.Species
+        );
+        predictions.plant_species = {
+          ...predictions.plant_species,
+          ...speciesData,
+        };
+      } catch (err) {
+        console.log(err);
+      }
     }
 
     let diseasesData = [];
@@ -58,8 +62,11 @@ export const aiScan = async (req, res) => {
           return { disease, diseaseData };
         }
       );
-
-      diseasesData = await Promise.all(diseaseDataPromises);
+      try {
+        diseasesData = await Promise.all(diseaseDataPromises);
+      } catch (err) {
+        console.log(err);
+      }
 
       diseasesData = diseasesData.filter((diseaseData) => diseaseData !== null);
 
@@ -70,6 +77,6 @@ export const aiScan = async (req, res) => {
     }
     res.status(200).json({ predictions });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error });
   }
 };
