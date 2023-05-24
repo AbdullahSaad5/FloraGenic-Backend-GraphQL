@@ -5,7 +5,9 @@ import { NurseryModel } from "../Nurseries/db.js";
 
 export const ReviewResolvers = {
   customerDetails: async (parent, args, ctx, info) => {
-    const customer = await CustomerModel.findById(parent.userID);
+    const customer = await CustomerModel.findOne({
+      userID: parent.userID,
+    });
     return customer;
   },
   productDetails: async (parent, args, ctx, info) => {

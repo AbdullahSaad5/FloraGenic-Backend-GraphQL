@@ -9,7 +9,7 @@ export const ReviewTypes = `
         likes: Int!
         createdAt: String!
         updatedAt: String!
-        customerDetails: User!
+        customerDetails: Customer!
         productDetails: Product!
     }
 
@@ -19,7 +19,6 @@ export const ReviewTypes = `
 
 
     input ReviewCreateInput {
-        userID: ID!
         productID: ID!
         productType: String
         rating: Int!

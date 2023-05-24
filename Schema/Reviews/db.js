@@ -9,10 +9,12 @@ const reviewSchema = new Schema({
   userID: {
     type: String,
     required: true,
+    ref: "User",
   },
   productID: {
     type: String,
     required: true,
+    ref: "Product",
   },
   productType: {
     type: String,
