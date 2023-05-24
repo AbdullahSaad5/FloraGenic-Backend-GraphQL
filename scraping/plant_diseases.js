@@ -8,7 +8,7 @@ export const scrapePlantDisease = async (plant, disease) => {
   try {
     // Launch the browser and create a new page
     browser = await puppeteer.launch({
-      headless: false,
+      headless: true,
     });
 
     const page = await browser.newPage();
