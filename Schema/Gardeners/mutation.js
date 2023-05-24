@@ -1,7 +1,7 @@
 import { GardenerModel } from "./db.js";
 
 export const GardenerMutation = {
-  gardenerCreate: async (_, args) => {
+  gardenerCreate: async (_, args, ctx) => {
     const { user } = ctx;
 
     if (!user) {

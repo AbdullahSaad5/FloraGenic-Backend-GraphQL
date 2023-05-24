@@ -3,9 +3,23 @@ import { CustomerModel } from "./db.js";
 import { UserModel } from "../Users/db.js";
 
 export const CustomerMutation = {
-  customerCreate: async (_, args) => {
+  customerCreate: async (_, args, ctx) => {
+    const { user } = ctx;
+
+    if (!user) {
+      throw new Error("You are not authenticated!");
+    }
+
+    if (user.userType === "Customer") {
+      throw new Error("You are not authenticated!");
+    }
+
     const { data } = args;
-    const customer = await CustomerModel.create(data);
+    const customer = await CustomerModel.create({
+      ...data,
+      userID: user.id,
+    });
+
     return customer;
   },
 

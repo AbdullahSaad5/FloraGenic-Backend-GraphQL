@@ -1,10 +1,14 @@
 import { NurseryOwnerModel } from "./db.js";
 import { UserModel } from "../Users/db.js";
 export const NurseryOwnerMutation = {
-  nurseryOwnerCreate: async (_, args) => {
+  nurseryOwnerCreate: async (_, args, ctx) => {
     const { user } = ctx;
 
     if (!user) {
+      throw new Error("You are not authenticated!");
+    }
+
+    if (user.userType !== "NuerseryOwner") {
       throw new Error("You are not authenticated!");
     }
 
