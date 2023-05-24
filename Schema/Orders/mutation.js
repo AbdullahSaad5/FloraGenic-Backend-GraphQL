@@ -1,5 +1,6 @@
 import { CartItemModel } from "../CartItems/db.js";
 import { OrderModel } from "./db.js";
+import { ProductModel } from "../Products/db.js";
 
 export const OrderMutation = {
   orderCreate: async (_, args, ctx) => {
@@ -26,6 +27,16 @@ export const OrderMutation = {
       quantity: item.quantity,
       status: "Pending",
     }));
+
+    // Decrease the quantity of the product
+    const promises = input.products.map(async (item) => {
+      const product = await ProductModel.findById(item.productID);
+      product.stock -= item.quantity;
+      product.sold += item.quantity;
+      return product.save();
+    });
+
+    await Promise.all(promises);
 
     const order = await OrderModel.create(input);
     await order.save();
