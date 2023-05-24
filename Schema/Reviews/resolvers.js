@@ -2,6 +2,7 @@ import { CustomerModel } from "../Customers/db.js";
 import { GardenerModel } from "../Gardeners/db.js";
 import { ProductModel } from "../Products/db.js";
 import { NurseryModel } from "../Nurseries/db.js";
+import { ReviewModel } from "./db.js";
 
 export const ReviewResolvers = {
   customerDetails: async (parent, args, ctx, info) => {
@@ -21,5 +22,11 @@ export const ReviewResolvers = {
       product = await ProductModel.findById(parent.productID);
     }
     return product;
+  },
+  totalReviews: async (parent, args, ctx, info) => {
+    const productReviews = await ReviewModel.find({
+      productID: parent.productID,
+    });
+    return productReviews.length;
   },
 };

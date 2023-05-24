@@ -11,6 +11,7 @@ export const ReviewTypes = `
         updatedAt: String!
         customerDetails: Customer!
         productDetails: Product!
+        totalReviews: Int!
     }
 
     extend type Query {
