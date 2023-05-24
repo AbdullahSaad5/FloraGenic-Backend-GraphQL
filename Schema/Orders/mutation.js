@@ -1,6 +1,7 @@
 import { CartItemModel } from "../CartItems/db.js";
 import { OrderModel } from "./db.js";
 import { ProductModel } from "../Products/db.js";
+import { CustomerModel } from "../Customers/db.js";
 
 export const OrderMutation = {
   orderCreate: async (_, args, ctx) => {
@@ -12,8 +13,14 @@ export const OrderMutation = {
       throw new Error("You need to provide customerID");
     }
 
+    if (user?.userType === "Admin" && args.input.customerID) {
+      const customer = await CustomerModel.findById(args.input.customerID);
+      if (!customer) throw new Error("Customer not found");
+    }
+
     if (user?.userType === "Customer") {
-      args.input.customerID = user.id;
+      const customerID = await CustomerModel.findOne({ userID: user.id });
+      args.input.customerID = customerID._id;
     }
 
     const cartItems = await CartItemModel.find({
