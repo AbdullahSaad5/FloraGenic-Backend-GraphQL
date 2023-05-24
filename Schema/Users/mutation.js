@@ -432,7 +432,7 @@ export const UserMutation = {
     if (!user) {
       throw new Error("Error: You are not registered with us");
     }
-    const token = crypto.randomBytes(20).toString("hex");
+    const token = Math.floor(100000 + Math.random() * 900000);
     user.passwordResetToken = token;
     user.passwordResetExpires = new Date() + 3600000;
     await user.save();
