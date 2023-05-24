@@ -2,8 +2,17 @@ import { GardenerModel } from "./db.js";
 
 export const GardenerMutation = {
   gardenerCreate: async (_, args) => {
+    const { user } = ctx;
+
+    if (!user) {
+      throw new Error("You are not authenticated!");
+    }
+
     const { data } = args;
-    const gardener = await GardenerModel.create(data);
+    const gardener = await GardenerModel.create({
+      ...data,
+      userID: user.id,
+    });
     return gardener;
   },
   gardenerUpdate: async (_, args) => {

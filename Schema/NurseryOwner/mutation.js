@@ -2,8 +2,17 @@ import { NurseryOwnerModel } from "./db.js";
 import { UserModel } from "../Users/db.js";
 export const NurseryOwnerMutation = {
   nurseryOwnerCreate: async (_, args) => {
+    const { user } = ctx;
+
+    if (!user) {
+      throw new Error("You are not authenticated!");
+    }
+
     const { data } = args;
-    const nurseryOwner = new NurseryOwnerModel(data);
+    const nurseryOwner = new NurseryOwnerModel({
+      ...data,
+      userID: user.id,
+    });
     await nurseryOwner.save();
     return nurseryOwner;
   },
