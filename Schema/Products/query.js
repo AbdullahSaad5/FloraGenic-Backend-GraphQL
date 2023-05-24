@@ -7,7 +7,7 @@ export const ProductQuery = {
     const userType = context?.user?.userType || "Customer";
 
     if (args.data) {
-      const { name, description, category } = args.data;
+      const { name, description, category, nurseryID } = args.data;
       if (name) {
         query.$or = [
           { name: { $regex: name, $options: "i" } },
@@ -17,6 +17,10 @@ export const ProductQuery = {
 
       if (category) {
         query.category = { $regex: category, $options: "i" };
+      }
+
+      if (nurseryID) {
+        query.nurseryID = nurseryID;
       }
     }
 

@@ -23,6 +23,7 @@ export const ProductTypes = `
         name: String
         description: String
         category: String
+        nurseryID: ID
     }
 
     extend type Query {
