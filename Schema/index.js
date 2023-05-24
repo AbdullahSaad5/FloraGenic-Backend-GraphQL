@@ -131,6 +131,13 @@ import {
   GardenerOrderResolvers,
 } from "./GardenerOrder/index.js";
 
+import {
+  NurseryReviewTypes,
+  NurseryReviewQuery,
+  NurseryReviewMutation,
+  NurseryReviewResolvers,
+} from "./NurseryReviews/index.js";
+
 import { DashboardQuery, DashboardTypes } from "./Dashboard/index.js";
 
 import { StripeTypes, StripeMutation } from "./Stripe/index.js";
@@ -164,6 +171,7 @@ export const typeDefs = gql`
   ${DashboardTypes}
   ${StripeTypes}
   ${GardenerOrderTypes}
+  ${NurseryReviewTypes}
 `;
 export const resolvers = {
   Query: {
@@ -188,6 +196,7 @@ export const resolvers = {
     ...CategoryQuery,
     ...DashboardQuery,
     ...GardenerOrderQuery,
+    ...NurseryReviewQuery,
   },
   Mutation: {
     ...CustomerMutation,
@@ -211,6 +220,7 @@ export const resolvers = {
     ...CategoryMutation,
     ...StripeMutation,
     ...GardenerOrderMutation,
+    ...NurseryReviewMutation,
   },
   Customer: CustomerResolvers,
   User: UserResolvers,
@@ -233,5 +243,6 @@ export const resolvers = {
   Category: CategoryResolvers,
   GardenerOrder: GardenerOrderResolvers,
   ProductOrder: ProductOrderResolvers,
+  NurseryReview: NurseryReviewResolvers,
   ...UnionResolvers,
 };
