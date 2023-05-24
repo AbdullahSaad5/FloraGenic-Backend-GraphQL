@@ -82,7 +82,7 @@ export const UserTypes = `
         changePassword(oldPassword: String!, newPassword: String!): String!
         updateProfile(details: updateProfileInput!): updateProfileResponse!
         
-        requestPasswordReset(email: String!): String!
+        requestPasswordReset(email: String!, userType: String!): String!
         resetPassword(token: String!, password: String!): String!
         blockUser(id: ID!): String!
     }

@@ -427,8 +427,8 @@ export const UserMutation = {
   },
 
   requestPasswordReset: async (_, args) => {
-    const { email } = args;
-    const user = UserModel.findOne({ email });
+    const { email, userType } = args;
+    const user = UserModel.findOne({ email, Type });
     if (!user) {
       throw new Error("Error: You are not registered with us");
     }
