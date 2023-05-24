@@ -433,9 +433,16 @@ export const UserMutation = {
       throw new Error("Error: You are not registered with us");
     }
     const token = Math.floor(100000 + Math.random() * 900000);
-    user.passwordResetToken = token;
-    user.passwordResetExpires = new Date() + 3600000;
-    await user.save();
+    await UserModel.findOneAndUpdate(
+      { email, userType },
+      {
+        $set: {
+          passwordResetToken: token,
+          passwordResetExpires: Date.now() + 3600000,
+        },
+      }
+    );
+
     // Sendgrid email here
     const msg = {
       to: email,
