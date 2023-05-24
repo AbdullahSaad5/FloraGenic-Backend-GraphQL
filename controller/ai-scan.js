@@ -68,12 +68,14 @@ export const aiScan = async (req, res) => {
         console.log(err);
       }
 
-      diseasesData = diseasesData.filter((diseaseData) => diseaseData !== null);
-
-      predictions.plant_disease = {
-        ...predictions.plant_disease,
-        diseasesData,
-      };
+      predictions.plant_disease = predictions.plant_disease.map(
+        (disease, index) => {
+          return {
+            ...disease,
+            diseaseData: diseasesData[index].diseaseData,
+          };
+        }
+      );
     }
     res.status(200).json({ predictions });
   } catch (error) {
