@@ -18,8 +18,6 @@ export const OrderQuery = {
 
       const nurseryIDs = nurseryOwner.nurseries; // Get the nursery IDs owned by the nursery owner
 
-      console.log(nurseryIDs);
-
       orders = await OrderModel.find({
         products: {
           $elemMatch: {

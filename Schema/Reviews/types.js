@@ -15,7 +15,7 @@ export const ReviewTypes = `
     }
 
     extend type Query {
-        reviews: [Review!]!
+        reviews(productID: ID): [Review!]!
     }
 
 
