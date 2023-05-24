@@ -13,6 +13,7 @@ import db from "./connection.js";
 import { resolvers, typeDefs } from "./Schema/index.js";
 dotenv.config();
 import jwt from "jsonwebtoken";
+import { aiScan } from "./controller/ai-scan.js";
 
 function authMiddleware(req, res, next) {
   const authHeader = req.headers.authorization;
@@ -31,7 +32,12 @@ function authMiddleware(req, res, next) {
 async function startApolloServer(typeDefs, resolvers) {
   const app = express();
   app.use(cors());
+
+  app.use(express.json());
   app.use(authMiddleware);
+
+  app.post("/ai-scan", aiScan);
+
   const httpServer = http.createServer(app);
   const server = new ApolloServer({
     typeDefs,
