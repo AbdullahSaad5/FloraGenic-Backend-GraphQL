@@ -117,6 +117,7 @@ export const UserQuery = {
     if (!user) {
       throw new ApolloError("User not found");
     }
+
     let userDetails;
     switch (user.userType) {
       case "Customer":

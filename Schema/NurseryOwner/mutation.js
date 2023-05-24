@@ -8,7 +8,7 @@ export const NurseryOwnerMutation = {
       throw new Error("You are not authenticated!");
     }
 
-    if (user.userType !== "NuerseryOwner") {
+    if (user.userType !== "NurseryOwner") {
       throw new Error("You are not authenticated!");
     }
 
