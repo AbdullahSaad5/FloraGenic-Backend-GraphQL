@@ -7,8 +7,10 @@ export const aiScan = async (req, res) => {
 
   let predictions = null;
 
+  const EC2_URL = "http://54.159.138.87:8080";
+
   try {
-    const response = await axios.post("http://127.0.0.1:5000/identify", {
+    const response = await axios.post(`${EC2_URL}/identify`, {
       image_url,
     });
 
