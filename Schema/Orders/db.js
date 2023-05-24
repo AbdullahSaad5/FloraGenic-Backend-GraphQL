@@ -24,6 +24,11 @@ const orderSchema = new Schema({
         required: true,
         default: "Pending",
       },
+      nurseryID: {
+        type: Schema.Types.ObjectId,
+        ref: "Nursery",
+        required: true,
+      },
     },
   ],
   totalPrice: {

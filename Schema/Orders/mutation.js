@@ -25,14 +25,15 @@ export const OrderMutation = {
 
     const cartItems = await CartItemModel.find({
       userID: args.input.customerID,
-    });
+    }).populate("productID");
 
     const { input } = args;
 
     input.products = cartItems.map((item) => ({
-      productID: item.productID,
+      productID: item.productID._id,
       quantity: item.quantity,
       status: "Pending",
+      nurseryID: item.productID.nurseryID,
     }));
 
     // Decrease the quantity of the product
