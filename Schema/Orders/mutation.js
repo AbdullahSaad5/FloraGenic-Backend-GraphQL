@@ -24,8 +24,10 @@ export const OrderMutation = {
     }
 
     const cartItems = await CartItemModel.find({
-      userID: args.input.customerID,
+      userID: user.id,
     }).populate("productID");
+
+    if (!cartItems.length) throw new Error("Cart is empty");
 
     const { input } = args;
 
@@ -49,7 +51,7 @@ export const OrderMutation = {
     const order = await OrderModel.create(input);
     await order.save();
 
-    await CartItemModel.deleteMany({ userID: args.input.customerID });
+    await CartItemModel.deleteMany({ userID: user.id });
 
     return "Order Placed Successfully";
   },
