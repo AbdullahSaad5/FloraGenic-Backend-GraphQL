@@ -30,6 +30,8 @@ export const GardenerOrderQuery = {
         userID: user.id,
       });
 
+      if (!gardener) throw new Error("You are not authenticated!");
+
       const gardenerOrders = await GardenerOrderModel.find({
         gardener: gardener.id,
       }).sort({
