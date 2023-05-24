@@ -89,6 +89,7 @@ import {
   OrderQuery,
   OrderMutation,
   OrderResolvers,
+  ProductOrderResolvers,
 } from "./Orders/index.js";
 
 import { GigTypes, GigQuery, GigMutation, GigResolvers } from "./Gigs/index.js";
@@ -231,5 +232,6 @@ export const resolvers = {
   NurseryOwner: NurseryOwnerResolvers,
   Category: CategoryResolvers,
   GardenerOrder: GardenerOrderResolvers,
+  ProductOrder: ProductOrderResolvers,
   ...UnionResolvers,
 };

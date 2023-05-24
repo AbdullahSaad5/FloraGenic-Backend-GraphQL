@@ -23,6 +23,7 @@ export const OrderTypes = `
         productID: ID!
         quantity: Int!
         status: String!
+        productDetails: Product!
     }
 
     input ProductGetInput {

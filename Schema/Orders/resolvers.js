@@ -39,3 +39,10 @@ export const OrderResolvers = {
     return payment;
   },
 };
+
+export const ProductOrderResolvers = {
+  productDetails: async (parent) => {
+    const product = await ProductModel.findById(parent.productID);
+    return product;
+  },
+};
