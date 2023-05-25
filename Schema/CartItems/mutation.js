@@ -15,8 +15,9 @@ export const CartItemMutation = {
 
     const product = await ProductModel.findById(data.productID);
 
-
     if (!product) throw new Error("Product not found!!!!!!");
+
+    if (!data.quantity) data.quantity = 1;
 
     if (product.stock < data.quantity)
       throw new Error(`Only ${product.stock} items left in stock!`);

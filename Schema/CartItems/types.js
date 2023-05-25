@@ -18,7 +18,7 @@ export const CartItemTypes = `
 
     input CartItemCreateInput {
         productID: ID!
-        quantity: Int!
+        quantity: Int
     }
 
     extend type Mutation {
