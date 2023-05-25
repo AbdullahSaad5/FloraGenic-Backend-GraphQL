@@ -13,6 +13,7 @@ export const DashboardTypes = `
       totalNurseries: Int!
       totalProducts: Int!
       totalOrders: Int!
+      productsByCategory: [ProductsByCategory]
     }
 
     type FeedbackByType {

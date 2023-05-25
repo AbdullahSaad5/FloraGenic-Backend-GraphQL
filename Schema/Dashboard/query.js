@@ -127,6 +127,32 @@ export const DashboardQuery = {
       },
     });
 
+    const productsByCategory = await ProductModel.aggregate([
+      {
+        $match: {
+          nurseryID: { $in: nurseryOwner.nurseries },
+        },
+      },
+      {
+        $lookup: {
+          from: "categories",
+          localField: "category",
+          foreignField: "_id",
+          as: "categoryInfo",
+        },
+      },
+      {
+        $unwind: "$categoryInfo",
+      },
+      {
+        $group: {
+          _id: "$category",
+          category: { $first: "$categoryInfo.name" },
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+
     const totalOrders = await OrderModel.countDocuments({
       products: {
         $elemMatch: {
@@ -141,6 +167,7 @@ export const DashboardQuery = {
       totalNurseries,
       totalProducts,
       totalOrders,
+      productsByCategory,
     };
   },
 };
