@@ -6,7 +6,7 @@ export const NurseryMutation = {
   nurseryCreate: async (parent, args, ctx) => {
     const { data } = args;
     const user = ctx.user;
-    if (user.userType !== "NurseryOwner" && !args.nurseryOwnerID) {
+    if (user.userType !== "NurseryOwner" && !args?.input?.nurseryOwnerID) {
       throw new Error("Nursery Owner ID is required");
     }
     if (user.userType === "NurseryOwner") {
