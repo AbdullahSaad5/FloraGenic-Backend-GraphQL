@@ -1,6 +1,7 @@
 import { NurseryOwnerModel } from "../NurseryOwner/db.js";
 import { OrderModel } from "./db.js";
 import { ProductModel } from "../Products/db.js";
+import { CustomerModel } from "../Customers/db.js";
 
 export const OrderQuery = {
   orders: async (_, args, ctx) => {
@@ -10,7 +11,9 @@ export const OrderQuery = {
 
     let orders;
     if (userType === "Customer") {
-      orders = await OrderModel.find({ customerID: ctx?.user?.id });
+      const customer = await CustomerModel.findOne({ userID: ctx?.user?.id });
+      if (!customer) throw new Error("Customer not found");
+      orders = await OrderModel.find({ customerID: customer._id });
     } else if (userType === "NurseryOwner") {
       const nurseryOwner = await NurseryOwnerModel.findOne({
         userID: ctx?.user?.id,
